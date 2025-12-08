@@ -1,4 +1,4 @@
-import { HomeIcon, Trash, Workflow } from 'lucide-react';
+import { HomeIcon, Trash, Layers } from 'lucide-react';
 // import { NavLink } from 'react-router-dom';
 
 export function NavTab() {
@@ -11,7 +11,7 @@ export function NavTab() {
       </li>
       <li>
         <button className="flex items-center w-full gap-2 px-2 font-medium cursor-pointer md:px-4 md:w-auto hover:opacity-80 text-zinc-400 h-9">
-          <Workflow className="size-5" /> Workspace
+          <Layers className="size-5" /> Workspace
         </button>
       </li>
       <li>

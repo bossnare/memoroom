@@ -11,7 +11,7 @@ export const Button = ({
 
   return (
     <button
-      className={`flex items-center font-medium ${variants} px-6 gap-2 bg-blue-800 rounded-md md:hover:opacity-80 active:opacity-60 ${className}`}
+      className={`flex items-center font-medium ${variants} px-6 gap-2 bg-purple-800 rounded-md md:hover:opacity-80 active:opacity-60 ${className}`}
     >
       {children}
     </button>

@@ -1,7 +1,7 @@
-import { Star, ChevronRight, Plus, Earth } from 'lucide-react';
-import { Button } from './components/ui/button';
+import { ChevronRight, Earth, PenLine, Plus, Star } from 'lucide-react';
 import { Logo } from './components/brand/Logo';
 import { TopBar } from './components/navigation/TopBar';
+import { Button } from './components/ui/button';
 
 // type Note = {
 //   id: string;
@@ -58,8 +58,8 @@ function App() {
       </div>
 
       <div className="fixed bottom-6 right-4">
-        <button className="flex items-center justify-center p-2 bg-blue-800 rounded-full size-14 active:opacity-80 md:hover:opacity-80">
-          <Plus className="size-auto" />
+        <button className="flex items-center justify-center p-2 bg-purple-800 rounded-full size-14 active:opacity-80 md:hover:opacity-80">
+          <PenLine className="size-auto" />
         </button>
       </div>
     </div>
