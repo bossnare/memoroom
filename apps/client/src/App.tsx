@@ -56,6 +56,12 @@ function App() {
           </div>
         </main>
       </div>
+
+      <div className="fixed bottom-6 right-4">
+        <button className="flex items-center justify-center p-2 bg-blue-800 rounded-full size-14 active:opacity-80 md:hover:opacity-80">
+          <Plus className="size-auto" />
+        </button>
+      </div>
     </div>
   );
 }

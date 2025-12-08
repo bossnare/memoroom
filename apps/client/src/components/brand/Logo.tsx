@@ -8,8 +8,8 @@ export const Logo = ({ className }: { className?: string }) => {
         alt="Memo"
         className="size-6 md:size-8"
       />
-      <span className="text-xl font-black leading-none tracking-tight md:text-2xl">
-        memorizeoo
+      <span className="text-xl font-black leading-none tracking-tight select-none md:text-2xl">
+        memopad
       </span>
     </div>
   );
