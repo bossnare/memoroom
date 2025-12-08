@@ -8,19 +8,18 @@ export const TopBar = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <nav className="sticky inset-x-0 top-0 flex items-center justify-between h-12 gap-2 px-2 py-1 border-b rounded-b-xl md:px-4 md:h-14 bg-zinc-950/80 border-zinc-900">
+    <nav className="sticky inset-x-0 top-0 flex items-center h-12 gap-2 px-2 py-1 border-b rounded-b-xl md:px-4 md:h-14 bg-zinc-950/80 border-zinc-900">
       <Logo className="md:hidden" />
-
-      <div className="flex grow">
-        <ul className="hidden gap-2 md:inline-flex">
-          <NavTab />
-        </ul>
-
-        <div className="ml-auto size-8 bg-zinc-950"></div>
+      {/* desktop navigation */}
+      <ul className="hidden gap-2 md:inline-flex">
+        <NavTab />
+      </ul>
+      <div className="flex items-center justify-end gap-2 grow">
+        <div className="rounded-full bg-zinc-900 size-10"></div>
         {/* mobile menu button */}
         <button
           onClick={() => setOpenMenu(!openMenu)}
-          className="p-2 ml-auto rounded-full bg-zinc-950 md:hidden active:opacity-80 active:bg-black/80 md:hover:bg-black/80 md:hover:opacity-80"
+          className="p-2 rounded-full bg-zinc-950 md:hidden active:opacity-80 active:bg-black/80 md:hover:bg-black/80 md:hover:opacity-80"
         >
           <TextAlignJustify />
         </button>

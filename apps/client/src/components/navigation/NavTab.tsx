@@ -5,7 +5,7 @@ export function NavTab() {
   return (
     <>
       <li>
-        <button className="flex items-center w-full gap-2 px-2 font-semibold text-white rounded-md cursor-pointer md:px-4 md:w-auto hover:opacity-80 h-9 bg-zinc-900">
+        <button className="flex items-center w-full gap-2 px-2 font-semibold text-white bg-black rounded-md cursor-pointer md:px-4 md:w-auto hover:opacity-80 h-9">
           <HomeIcon className="size-5" /> Home
         </button>
       </li>

@@ -1,4 +1,4 @@
-import { Star, ChevronRight, Plus } from 'lucide-react';
+import { Star, ChevronRight, Plus, Earth } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Logo } from './components/brand/Logo';
 import { TopBar } from './components/navigation/TopBar';
@@ -49,11 +49,16 @@ function App() {
                 If you click this browse button, your app system down instead,
                 and keep click, calm. As a JS dev, click this button please.
               </p>
-              <Button>Browse notes</Button>
+              <Button>
+                <Earth /> Browse notes
+              </Button>
             </div>
           </div>
         </main>
       </div>
+
+      {/* soft fade */}
+      <div className="fixed inset-x-0 bottom-0 z-10 h-16 bg-linear-to-b from-transparent to-zinc-950/80 backdrop-blur-sm"></div>
     </div>
   );
 }
