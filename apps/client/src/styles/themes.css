@@ -1,0 +1,9 @@
+:root {
+  --font-sans: 'Geist', 'Inter';
+  --font-mono: 'Geist Mono', monospace;
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
