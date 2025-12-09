@@ -3,7 +3,7 @@
 
 @layer base {
   body {
-    @apply overflow-x-hidden bg-black text-zinc-50 font-sans;
+    @apply overflow-x-hidden font-sans bg-black text-zinc-50;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -16,7 +16,7 @@
   h4,
   h5,
   h6 {
-    @apply tracking-tight leading-none;
+    @apply leading-none tracking-tight;
   }
 
   button {
