@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   return (
-    <div className="relative max-h-screen h-dvh">
+    <div className="relative max-h-screen overflow-hidden h-dvh">
       {/* sidebar */}
       <div className="fixed inset-y-0 z-20 hidden w-64 overflow-y-auto border-r md:block border-zinc-800">
         <aside className="relative px-2 space-y-1 size-full">
