@@ -34,7 +34,7 @@ export const TopBar = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           // transition={{type}}
-          className="fixed w-2/3 p-2 rounded-lg shadow-xl bg-zinc-950 top-14 right-3 md:hidden"
+          className="fixed w-2/3 p-2 rounded-lg shadow-xl sm:w-1/2 bg-zinc-950 top-14 right-3 md:hidden"
         >
           <ul className="flex flex-col gap-1">
             <NavTab />
