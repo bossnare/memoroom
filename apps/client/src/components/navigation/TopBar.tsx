@@ -20,7 +20,7 @@ export const TopBar = ({
         {/* mobile menu button */}
         <ButtonIcon
           onClick={() => {
-            waitVibrate(200, 'subtle');
+            waitVibrate(150, 'subtle');
             setOpenSide(!openSide);
           }}
           className="md:hidden"
