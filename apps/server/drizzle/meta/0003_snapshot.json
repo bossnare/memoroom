@@ -1,6 +1,6 @@
 {
-  "id": "7eb872ae-31cb-4b52-8c8f-1bdb94bbd06a",
-  "prevId": "d53ea1e9-beed-4696-9f32-0021e3d0cfda",
+  "id": "68fb3c3d-0a60-4dbb-b5b9-9a755a1bec37",
+  "prevId": "2b5e533a-d6ff-4ccf-8b1d-6e3c98e223c4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -13,6 +13,12 @@
           "type": "varchar(24)",
           "primaryKey": true,
           "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(24)",
+          "primaryKey": false,
+          "notNull": false
         },
         "title": {
           "name": "title",
@@ -48,7 +54,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "notes_user_id_users_id_fk": {
+          "name": "notes_user_id_users_id_fk",
+          "tableFrom": "notes",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

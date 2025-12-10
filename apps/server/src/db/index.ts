@@ -1,5 +1,10 @@
-import { Database } from 'bun:sqlite';
-import { drizzle } from 'drizzle-orm/bun-sqlite';
+import { Client } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 
-const sqlite = new Database('notes.db');
-export const db = drizzle(sqlite);
+const client = new Client({
+  connectionString: process.env.DATABASE_URL!,
+});
+// connect client to db
+await client.connect();
+
+export const db = drizzle(client);

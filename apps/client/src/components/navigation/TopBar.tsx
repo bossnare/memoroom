@@ -3,6 +3,7 @@ import { TextAlignJustify, Ellipsis, Search } from 'lucide-react';
 import { Logo } from '../brand/Logo';
 import { useState } from 'react';
 import { ButtonIcon } from '../ui/button';
+import { waitVibrate } from '../../utils/vibration';
 
 export const TopBar = ({
   setOpenSide,
@@ -18,7 +19,10 @@ export const TopBar = ({
       <div className="flex items-center gap-2 shrink-0">
         {/* mobile menu button */}
         <ButtonIcon
-          onClick={() => setOpenSide(!openSide)}
+          onClick={() => {
+            waitVibrate(200, 'subtle');
+            setOpenSide(!openSide);
+          }}
           className="md:hidden"
         >
           <TextAlignJustify />

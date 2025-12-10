@@ -1,29 +1,22 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
-import { sql } from 'drizzle-orm';
+import { pgTable, varchar, timestamp, text } from 'drizzle-orm/pg-core';
+import { nanoid } from 'nanoid';
 
-export const users = sqliteTable('users', {
-  id: text('id').primaryKey(),
-  email: text('email').notNull().unique(),
-  password: text('password').notNull(),
-  username: text('username').notNull(),
-  role: text('role').notNull().default('user'),
-  createdAt: integer('created_at', { mode: 'timestamp' })
-    .notNull()
-    .default(sql`(strftime('%s', 'now'))`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' })
-    .notNull()
-    .default(sql`(strftime('%s', 'now'))`),
+export const users = pgTable('users', {
+  id: varchar('id', { length: 24 }).primaryKey().$default(nanoid),
+  email: varchar('email').notNull().unique(),
+  password: varchar('password').notNull(),
+  username: varchar('username').notNull(),
+  role: varchar('role').notNull().default('user'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
 });
 
-export const notes = sqliteTable('notes', {
-  id: text('id').primaryKey(),
+export const notes = pgTable('notes', {
+  id: varchar('id', { length: 24 }).primaryKey().$default(nanoid),
+  userId: varchar('user_id', { length: 24 }).references(() => users.id),
   title: text('title').notNull(),
   content: text('content').notNull(),
   color: text('color'),
-  createdAt: integer('created_at', { mode: 'timestamp' })
-    .notNull()
-    .default(sql`(strftime('%s', 'now'))`),
-  updatedAt: integer('updated_at', { mode: 'timestamp' })
-    .notNull()
-    .default(sql`(strftime('%s', 'now'))`),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
 });
