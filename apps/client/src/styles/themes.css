@@ -1,9 +1,13 @@
 :root {
   --font-sans: 'Geist', 'Inter', sans-serif;
   --font-mono: 'Geist Mono', monospace;
+  --muted: oklch(0.2264 0 274.4);
+  --muted-foreground: oklch(0.6111 0.0108 252.86);
 }
 
 @theme inline {
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
 }
