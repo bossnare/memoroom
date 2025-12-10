@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { TextAlignJustify, Ellipsis, Search } from 'lucide-react';
 import { Logo } from '../brand/Logo';
 import { useState } from 'react';
+import { ButtonIcon } from '../ui/button';
 
 export const TopBar = ({
   setOpenSide,
@@ -16,12 +17,12 @@ export const TopBar = ({
     <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 border-b h-14 md:px-3 bg-zinc-950 border-zinc-800">
       <div className="flex items-center gap-2 shrink-0">
         {/* mobile menu button */}
-        <button
+        <ButtonIcon
           onClick={() => setOpenSide(!openSide)}
-          className="p-2 rounded-full md:hidden active:opacity-80 active:bg-zinc-800 md:hover:bg-zinc-800 md:hover:opacity-80"
+          className="md:hidden"
         >
           <TextAlignJustify />
-        </button>
+        </ButtonIcon>
         <Logo className="md:hidden" />
       </div>
       {/* desktop navigation */}
@@ -36,12 +37,12 @@ export const TopBar = ({
       </div>
       <div className="flex items-center justify-end gap-3 md:gap-4 grow">
         <div className="hidden rounded-full size-10 md:flex bg-zinc-900"></div>
-        <button
+        <ButtonIcon
           onClick={() => setOpenMenu(!openMenu)}
-          className="p-2 rounded-full md:hidden active:bg-zinc-900 active:opacity-80 md:hover:bg-zinc-900 md:hover:opacity-80"
+          className="md:hidden"
         >
           <Ellipsis />
-        </button>
+        </ButtonIcon>
       </div>
 
       {/* mobile navigation tab */}

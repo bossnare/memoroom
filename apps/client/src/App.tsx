@@ -59,7 +59,7 @@ function App() {
         ref={sideBarRef}
         className={`${
           openSide ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden transition-transform duration-100 ease-in-out w-7/8 bg-black z-50 fixed inset-y-0 border-r border-zinc-800 rounded-r-2xl flex items-center justify-center`}
+        } md:hidden transition-transform duration-200 ease-in-out w-6/7 bg-black z-50 fixed inset-y-0 border-r border-zinc-800 rounded-r-2xl flex items-center justify-center`}
       >
         <div className="border-4 rounded-full border-zinc-100 size-20 animate-spin border-t-transparent"></div>
       </div>
@@ -97,7 +97,7 @@ function App() {
 
       {!openSide && (
         <div className="fixed bottom-24 md:bottom-6 right-4">
-          <button className="flex items-center justify-center p-2 bg-blue-800 rounded-full size-14 active:opacity-80 md:hover:opacity-80">
+          <button className="flex items-center justify-center p-2 bg-blue-800 rounded-full shadow-md shadow-blue-800/20 size-14 active:opacity-80 md:hover:opacity-80">
             <PenLine className="size-auto" />
           </button>
         </div>
