@@ -16,9 +16,7 @@ export const NotesService = {
   async create(body: NewNote) {
     return await db
       .insert(notes)
-      .values({
-        ...body,
-      })
+      .values(body)
       .returning();
   },
 };

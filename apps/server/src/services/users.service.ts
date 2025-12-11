@@ -3,6 +3,7 @@ import {  users } from '@/db/schema';
 import type { NewUser, User, Note } from '@/types/base.type';
 import argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
+import { NotesService } from './notes.service';
 
 export const UsersService = {
   async getAll() {
@@ -37,6 +38,15 @@ export const UsersService = {
         username: body.username,
       })
       .returning(); // returning: return new data json object
+
+    // default notes
+    await NotesService.create({
+      userId: user[0].id,
+      title: 'Welcome to Memoroom!',
+      content:
+        'This is your first note. Feel free to edit or delete it. Start adding your own notes to keep track of your thoughts and ideas!',
+      color: '#f5f5f5',
+    });
 
     return user[0];
   },
