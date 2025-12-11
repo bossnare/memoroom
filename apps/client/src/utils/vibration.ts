@@ -5,7 +5,7 @@ export function vibrate(type: VibrationType) {
 
   switch (type) {
     case 'low':
-      navigator.vibrate(25);
+      navigator.vibrate([50, 50]);
       break;
     case 'subtle':
       navigator.vibrate([80, 40, 55]);
