@@ -51,7 +51,7 @@ function Overview() {
 
         <div
           onClick={() => {
-            waitVibrate(200, 'low');
+            waitVibrate(100, 'low');
             setOpenSide(false);
           }}
           className={`${
