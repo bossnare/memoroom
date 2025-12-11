@@ -5,11 +5,6 @@ WORKDIR /app
 # Cache packages installation
 COPY package.json bun.lock tsconfig.json ./
 
-# Force pure js for pg
-ENV BUN_PURE_JS=1
-ENV NO_PG_NATIVE=1
-ENV PG_FORCE_NATIVE=0
-
 RUN bun install --production
 
 COPY ./src ./src
