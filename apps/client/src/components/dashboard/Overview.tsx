@@ -51,7 +51,7 @@ function Overview() {
 
         <div
           onClick={() => {
-            waitVibrate(100, 'low');
+            waitVibrate(200, 'low');
             setOpenSide(false);
           }}
           className={`${
@@ -71,7 +71,7 @@ function Overview() {
           <aside
             className={`${
               openSide ? 'scale-100' : 'scale-0'
-            } size-full tansition-transform will-change-transform duration-300 ease-in-out overflow-y-auto flex items-center justify-center`}
+            } size-full tansition-transform will-change-transform duration-250 ease-in-out overflow-y-auto flex items-center justify-center`}
           >
             <div className="border-4 rounded-full border-zinc-100 size-20 animate-spin border-t-transparent"></div>
           </aside>
