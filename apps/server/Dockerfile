@@ -28,6 +28,8 @@ COPY --from=build /app/server server
 
 ENV NODE_ENV=production
 
+CMD bunx drizzle-kit migrate
+
 CMD ["./server"]
 
 EXPOSE 3000
