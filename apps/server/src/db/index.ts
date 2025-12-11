@@ -1,11 +1,13 @@
-import { Client } from 'pg';
+import { Pool } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from './schema';
 
-const client = new Client({
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL!,
+  // avoid ssl reject supabase
+  ssl: { rejectUnauthorized: false },
 });
-// connect client to db
-await client.connect();
+// connect pool to db
+await pool.connect();
 
-export const db = drizzle(client, { schema }); // important, drizzle need it *schema* for .query
+export const db = drizzle(pool, { schema }); // important, drizzle need it *schema* for .query

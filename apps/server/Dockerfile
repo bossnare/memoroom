@@ -5,6 +5,8 @@ WORKDIR /app
 # Cache packages installation
 COPY package.json bun.lock tsconfig.json ./
 
+ENV DATABASE_URL=$DATABASE_URL
+
 RUN bun install --production
 
 COPY ./src ./src
