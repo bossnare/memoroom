@@ -1,16 +1,12 @@
+import type { JWTPayload, LoginPayload } from '@/types/auth.type';
 import jwt from 'jsonwebtoken';
 import argon2 from 'argon2';
 import { db } from '@/db';
 import { eq } from 'drizzle-orm';
 import { users } from '@/db/schema';
 
-type LoginPayload = {
-  email: string;
-  password: string;
-};
-
 export const AuthService = {
-  async signToken(payload: { id: string; email: string; role: string }) {
+  async signToken(payload: JWTPayload) {
     const token = jwt.sign(payload, process.env.JWT_SECRET!, {
       expiresIn: '7d',
     });
@@ -25,7 +21,7 @@ export const AuthService = {
 
     const currentUser = user[0];
     if (!currentUser) {
-      throw new Error('Unauthorized User !');
+      throw new Error('User Not Found !');
     }
     const pwMatch = await argon2.verify(currentUser.password, body.password);
     if (!pwMatch) {
