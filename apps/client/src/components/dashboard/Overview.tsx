@@ -96,7 +96,7 @@ function Overview() {
         >
           <TopBar setOpenSide={setOpenSide} openSide={openSide} />
 
-          <main className="h-[calc(100dvh-3.5rem)] bg-linear-to-b from-background to-background/20 overflow-y-auto px-4 grid grid-cols-4 items-start gap-2">
+          <main className="grid items-start min-h-full grid-cols-4 gap-2 px-4 overflow-y-auto bg-linear-to-b from-background to-background/20">
             <div className="flex justify-center py-6 col-span-full">
               <div className="flex flex-col items-center justify-center w-full gap-4 p-10 rounded-lg md:w-2/3 bg-muted">
                 <h4 className="text-lg font-black">Browse your notes</h4>
@@ -137,7 +137,7 @@ function Overview() {
                     : 'translateX(0)',
                 }
           }
-          className="fixed inset-x-0 bottom-0 z-20 h-16 px-2 transition-transform duration-200 ease-in-out border-t bg-zinc-950/94 backdrop-blur-sm md:hidden border-zinc-800"
+          className="fixed inset-x-0 bottom-0 z-20 h-16 px-2 pb-2 transition-transform duration-200 ease-in-out border-t bg-zinc-950/94 backdrop-blur-sm md:hidden border-zinc-800"
         >
           <nav className="select-none size-full">
             <ul className="flex items-center justify-around size-full">
