@@ -8,4 +8,4 @@ const client = new Client({
 // connect client to db
 await client.connect();
 
-export const db = drizzle(client, { schema }); // important, drizzle need it *schema* fro .query
+export const db = drizzle(client, { schema }); // important, drizzle need it *schema* for .query

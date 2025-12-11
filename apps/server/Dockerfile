@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Cache packages installation
 COPY package.json bun.lock tsconfig.json ./
-RUN bun install
+RUN bun install --production
 
 COPY ./src ./src
 
