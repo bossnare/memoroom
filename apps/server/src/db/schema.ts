@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { pgTable, varchar, timestamp, text } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
@@ -20,3 +21,14 @@ export const notes = pgTable('notes', {
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  notes: many(notes),
+}));
+
+export const notesRelations = relations(notes, ({ one }) => ({
+  user: one(users, {
+    fields: [notes.userId],
+    references: [users.id],
+  }),
+}));
