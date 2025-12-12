@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { motion } from 'motion/react';
 import { waitVibrate } from '@/utils/vibration';
+import { useUser } from '@/api/user.api';
 
 // type Note = {
 //   id: string;
@@ -19,6 +20,7 @@ function Overview() {
   const [sidebarWidth, setSidebarWidth] = useState(0);
   const sideBarRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useIsMobile();
+  const { data: me } = useUser();
 
   useEffect(() => {
     if (sideBarRef.current) {
@@ -99,7 +101,9 @@ function Overview() {
           <main className="grid items-start min-h-full grid-cols-4 gap-2 px-4 overflow-y-auto bg-linear-to-b from-background to-background/20">
             <div className="flex justify-center py-6 col-span-full">
               <div className="flex flex-col items-center justify-center w-full gap-4 p-10 rounded-lg md:w-2/3 bg-muted">
-                <h4 className="text-lg font-black">Browse your notes</h4>
+                <h4 className="text-lg font-black">
+                  Good morning {me?.username}
+                </h4>
                 <p className="text-sm text-center text-muted-foreground">
                   If you click this browse button, your Overview system down
                   instead, and keep click, calm. As a JS dev, click this button
