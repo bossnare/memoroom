@@ -11,14 +11,14 @@ const app = new Elysia({ prefix: '/api' })
     cors(
       ENV === 'production'
         ? {
-            origin: 'https://memoroom.vercel.app',
+            origin: ['https://memoroom.vercel.app'],
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            allowedHeaders: ['application/json', 'Authorization'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
             maxAge: 3600,
             credentials: true,
           }
         : {
-            origin: 'http://127.0.0.1:5173',
+            origin: ['http://127.0.0.1:5173'],
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true,
           }
