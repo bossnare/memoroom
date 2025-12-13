@@ -26,8 +26,6 @@ WORKDIR /app
 
 COPY --from=build /app/server server
 
-CMD bunx drizzle-kit migrate
-
 ENV NODE_ENV=production
 
 CMD ["./server"]
