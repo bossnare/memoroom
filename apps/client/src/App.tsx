@@ -24,8 +24,8 @@ function App() {
       }
     );
 
-    if (session) navigate('/dashboard');
-    else navigate('/');
+    if (session) navigate('/dashboard', { replace: true });
+    else navigate('/', { replace: true });
 
     return () => listener.subscription.unsubscribe();
   }, [navigate, session]);
