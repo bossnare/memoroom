@@ -186,7 +186,7 @@ function DashboardLayout() {
                     : 'translateX(0)',
                 }
           }
-          className="fixed inset-x-0 bottom-0 z-20 h-16 transition-transform duration-200 ease-in-out border-t bg-sidebar backdrop-blur-sm md:hidden border-sidebar-border"
+          className="fixed inset-x-0 bottom-0 z-20 h-16 pb-3 transition-transform duration-200 ease-in-out border-t bg-sidebar backdrop-blur-sm md:hidden border-sidebar-border"
         >
           <nav className="select-none size-full">
             <ul className="flex items-center justify-around size-full">

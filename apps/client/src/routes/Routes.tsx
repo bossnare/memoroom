@@ -23,7 +23,9 @@ export const AppRoutes = () => {
       ) : (
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route element={<ProtectedRoutes session={session} />}>
+          <Route
+            element={<ProtectedRoutes pending={pending} session={session} />}
+          >
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Overview />} />
               <Route path="search" element={<div>Search Route</div>} />
