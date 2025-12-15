@@ -1,9 +1,7 @@
-import { useAuth } from '@/hooks/use-auth';
 import { Navigate, Outlet } from 'react-router-dom';
+import type { Session } from '@supabase/supabase-js';
 
-export const ProtectedRoutes = () => {
-  const { session } = useAuth();
-
+export const ProtectedRoutes = ({ session }: { session: Session | null }) => {
   if (!session) {
     return <Navigate to="/" replace />;
   }

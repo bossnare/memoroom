@@ -7,7 +7,7 @@ export function NavTab() {
       <li>
         <NavLink to="/dashboard">
           {({ isActive }) => (
-            <button className="relative flex items-center p-4 justify-center w-full gap-2 font-semibold ease-in-out cursor-pointer text-sidebar-foreground md:rounded-md md:justify-start md:bg-muted md:px-3 md:h-9">
+            <button className="relative flex items-center justify-center w-full gap-2 p-4 font-semibold ease-in-out cursor-pointer text-sidebar-foreground md:rounded-md md:justify-start md:bg-muted md:px-3 md:h-9">
               <Layers className="md:size-5" />{' '}
               <span className="hidden md:block">Overview</span>{' '}
               {/* underline */}

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { TextAlignJustify, Ellipsis, Search } from 'lucide-react';
+import { TextAlignJustify, Ellipsis, Search, BellIcon } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 import { useId, useState } from 'react';
 import { ButtonIcon } from '@/components/ui/button';
@@ -44,6 +44,12 @@ export const TopBar = ({
         />
       </div>
       <div className="flex items-center justify-end gap-3 md:gap-4 grow">
+        <ButtonIcon className="relative">
+          <BellIcon />
+          {/* badge */}
+          <span className="absolute p-1 rounded-full top-1 size-2 right-0.5 bg-destructive"></span>
+        </ButtonIcon>
+
         <div className="hidden rounded-full size-10 md:flex bg-input"></div>
         <ButtonIcon
           onClick={() => setOpenMenu(!openMenu)}

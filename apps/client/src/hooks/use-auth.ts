@@ -1,12 +1,19 @@
 import { supabase } from '@/auth-services/clients.service';
 import type { Session, User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+const publicRoutePatterns = [/^\/$/, /^\/login/, /^\/register/];
 
 export const useAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [pending, setPending] = useState(true);
+  const location = useLocation();
+
+  const isPublicRoute = publicRoutePatterns.some((r) =>
+    r.test(location.pathname)
+  );
 
   const navigate = useNavigate();
 
@@ -37,8 +44,8 @@ export const useAuth = () => {
 
   useEffect(() => {
     // redirect
-    if (session) navigate('/dashboard', { replace: true });
-  }, [session, navigate]);
+    if (session && isPublicRoute) navigate('/dashboard', { replace: true });
+  }, [session, navigate, isPublicRoute]);
 
   return { session, user, pending };
 };

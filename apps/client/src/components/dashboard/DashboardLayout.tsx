@@ -100,7 +100,7 @@ function DashboardLayout() {
                 <Button
                   onClick={async () => await supabase.auth.signOut()}
                   size="medium"
-                  className="w-full font-normal border bg-muted text-foreground/90 border-sidebar-border"
+                  className="w-full font-normal border bg-muted text-foreground/90 border-input"
                 >
                   Logout
                 </Button>
