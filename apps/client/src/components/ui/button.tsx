@@ -1,50 +1,44 @@
 import { cn } from '@/lib/utils';
+import { forwardRef } from 'react';
 
-export const Button = ({
-  children,
-  size = 'large',
-  className,
-  onClick,
-}: {
-  children: React.ReactNode;
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  children?: React.ReactNode;
   size?: 'medium' | 'large';
-  className?: string;
-  onClick?: () => void;
-}) => {
-  const variants = size === 'large' ? 'h-10 px-6' : 'h-9 px-5';
-
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'flex transition-opacity will-change-opacity text-white duration-300 ease-in-out items-center justify-center font-medium px-6 gap-2 bg-primary rounded-md md:hover:opacity-80 active:opacity-60',
-        variants,
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
 };
 
-export const ButtonIcon = ({
-  children,
-  className,
-  onClick,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-}) => {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'transition-colors will-change-colors duration-300 ease-in-out p-2 rounded-full md:hover:opacity-80 active:opacity-80 active:bg-muted-foreground/40 md:hover:bg-muted-foreground/40',
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
-};
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, size = 'large', className, ...props }, ref) => {
+    const variants = size === 'large' ? 'h-10 px-6' : 'h-9 px-5';
+
+    return (
+      <button
+        ref={ref}
+        {...props}
+        className={cn(
+          'flex transition-opacity will-change-opacity text-white duration-300 ease-in-out items-center justify-center font-medium px-6 gap-2 bg-primary rounded-md md:hover:opacity-80 active:opacity-60',
+          variants,
+          className
+        )}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        {...props}
+        className={cn(
+          'transition-colors will-change-colors duration-300 ease-in-out p-2 rounded-full md:hover:opacity-80 active:opacity-80 active:bg-muted-foreground/40 md:hover:bg-muted-foreground/40',
+          className
+        )}
+      >
+        {children}
+      </button>
+    );
+  }
+);

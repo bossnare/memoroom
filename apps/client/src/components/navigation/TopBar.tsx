@@ -1,12 +1,11 @@
 import {
   TextAlignJustify,
-  Ellipsis,
   Search,
   BellIcon,
   TriangleAlert,
 } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import { ButtonIcon } from '@/components/ui/button';
 import { waitVibrate } from '@/utils/vibration';
 import { useAuth } from '@/hooks/use-auth';
@@ -19,7 +18,6 @@ export const TopBar = ({
   setOpenSide: React.Dispatch<React.SetStateAction<boolean>>;
   openSide: boolean;
 }) => {
-  const [openMenu, setOpenMenu] = useState(false);
   const inputId = useId();
   const { user } = useAuth();
 
@@ -57,7 +55,6 @@ export const TopBar = ({
           {/* badge */}
           <span className="absolute p-1 rounded-full top-1 size-2 right-0.5 bg-destructive"></span>
         </ButtonIcon>
-
         <div
           title={user?.user_metadata.name.split('(')[0]}
           className="relative hidden cursor-pointer size-8 md:block active:bg-input md:hover:bg-input active:opacity-60"
@@ -69,22 +66,15 @@ export const TopBar = ({
             loading="lazy"
           />
           {/* badge */}
-          {!user?.user_metadata.email_verified && (
+          {user && !user.user_metadata.email_verified && (
             <span className="absolute p-1 bg-yellow-200 rounded-full -top-1 -right-1">
               <TriangleAlert className="text-yellow-600 size-4" />
             </span>
           )}
         </div>
-        <ButtonIcon
-          onClick={() => setOpenMenu(!openMenu)}
-          className="md:hidden"
-        >
-          <Ellipsis />
-        </ButtonIcon>
+        {/* mobile navigation tab */}
+        {!openSide && <MiniNav />}{' '}
       </div>
-
-      {/* mobile navigation tab */}
-      {!openSide && openMenu && <MiniNav />}
     </nav>
   );
 };

@@ -82,7 +82,7 @@ function DashboardLayout() {
           ref={sideBarRef}
           className={`${
             openSide ? 'translate-x-0' : '-translate-x-full'
-          } md:hidden transition-transform will-change-transform duration-200 px-4 py-2 z-50 ease-in-out w-6/7 bg-background fixed inset-y-0 border-r border-border rounded-tr-3xl overflow-hidden`}
+          } md:hidden transition-transform will-change-transform duration-200 px-4 py-3 z-50 ease-in-out w-6/7 bg-background fixed inset-y-0 border-r border-border rounded-tr-3xl overflow-hidden`}
         >
           <aside className={`relative size-full rounded-xl overflow-y-auto`}>
             <div className="flex items-center gap-3 mb-4">
@@ -171,7 +171,7 @@ function DashboardLayout() {
           className="fixed inset-x-0 bottom-0 z-20 h-16 py-2 transition-transform duration-200 ease-in-out border-t bg-sidebar backdrop-blur-sm md:hidden border-sidebar-border"
         >
           <nav className="select-none size-full">
-            <ul className="flex items-center justify-around size-full">
+            <ul className="flex items-center justify-around size-full pb-1">
               <NavTab />
             </ul>
           </nav>
