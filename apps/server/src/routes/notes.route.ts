@@ -1,5 +1,5 @@
 import Elysia, { t } from 'elysia';
-import { NotesService } from '../services/notes.service';
+import { NotesService } from '@/services/notes.service';
 
 export const notesRoute = new Elysia({
   prefix: '/notes',

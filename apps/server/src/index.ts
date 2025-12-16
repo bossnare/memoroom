@@ -1,6 +1,5 @@
 import { cors } from '@elysiajs/cors';
 import { Elysia } from 'elysia';
-import { authRoute } from './routes/auth.route';
 import { notesRoute } from './routes/notes.route';
 import { usersRoute } from './routes/users.route';
 
@@ -27,7 +26,6 @@ const app = new Elysia({ prefix: '/api' })
   .get('/', () => 'Hello Elysia --powered by bun server')
   .use(usersRoute)
   .use(notesRoute)
-  .use(authRoute)
   .listen(process.env.PORT || 3000);
 
 console.log(

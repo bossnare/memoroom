@@ -9,13 +9,11 @@ export const usersRoute = new Elysia({
     const { data, count } = await UsersService.getAll();
     set.status = 200;
 
-    const safeUser = data.map(({ password, ...rest }) => rest); // return without password
-
     return {
       success: true,
       timestamp: Date.now(),
       count,
-      data: safeUser,
+      data,
     };
   })
   .get('/me', async ({ headers, set }) => {
@@ -40,24 +38,4 @@ export const usersRoute = new Elysia({
       timestamp: Date.now(),
       data: userById,
     };
-  })
-  .post(
-    '/register',
-    async ({ body, set }) => {
-      const user = await UsersService.create(body);
-      set.status = 201;
-
-      return {
-        success: true,
-        timestamp: Date.now(),
-        data: user,
-      };
-    },
-    {
-      body: t.Object({
-        email: t.String(),
-        password: t.String(),
-        username: t.String(),
-      }),
-    }
-  );
+  });

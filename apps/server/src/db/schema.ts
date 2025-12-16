@@ -1,20 +1,23 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, varchar, timestamp, text } from 'drizzle-orm/pg-core';
+import { pgTable, varchar, timestamp, text, uuid } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
-export const users = pgTable('users', {
-  id: varchar('id', { length: 24 }).primaryKey().$default(nanoid),
-  email: varchar('email').notNull().unique(),
-  password: varchar('password').notNull(),
-  username: varchar('username').notNull(),
-  role: varchar('role').notNull().default('user'),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+// supabase mirror
+export const users = pgTable('auth.users', {
+  id: uuid('id').primaryKey(),
+  email: varchar('email'),
+});
+
+export const profiles = pgTable('profiles', {
+  id: uuid('id')
+    .primaryKey()
+    .references(() => users.id),
+  avarata_url: text('avatar_url'),
 });
 
 export const notes = pgTable('notes', {
   id: varchar('id', { length: 24 }).primaryKey().$default(nanoid),
-  userId: varchar('user_id', { length: 24 }).references(() => users.id),
+  userId: varchar('user_id', { length: 24 }).references(() => profiles.id),
   title: text('title').notNull(),
   content: text('content').notNull(),
   color: text('color'),
@@ -22,13 +25,13 @@ export const notes = pgTable('notes', {
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(profiles, ({ many }) => ({
   notes: many(notes),
 }));
 
 export const notesRelations = relations(notes, ({ one }) => ({
-  user: one(users, {
+  user: one(profiles, {
     fields: [notes.userId],
-    references: [users.id],
+    references: [profiles.id],
   }),
 }));
