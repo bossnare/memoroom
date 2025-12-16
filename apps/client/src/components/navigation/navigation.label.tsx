@@ -3,11 +3,12 @@ import {
   UserCog,
   Trash,
   Archive,
-  Search,
   Layers,
   Tags,
   Bell,
 } from 'lucide-react';
+
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 const miniNavLabel = [
   {
