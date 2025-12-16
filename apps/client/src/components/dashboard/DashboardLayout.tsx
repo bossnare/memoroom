@@ -92,7 +92,7 @@ function DashboardLayout() {
                 loading="lazy"
                 alt="user_avatar"
               />
-              <div className="flex flex-col -space-y-2 overflow-hidden grow">
+              <div className="flex flex-col -space-y-1 overflow-hidden grow">
                 <span className="text-lg font-bold tracking-tight truncate line-clamp-1">
                   {user?.user_metadata.name.split(' (')[0] || 'User Memoroom'}
                 </span>

@@ -84,7 +84,7 @@ export const TopBar = ({
       </div>
 
       {/* mobile navigation tab */}
-      {openMenu && <MiniNav />}
+      {!openSide && openMenu && <MiniNav />}
     </nav>
   );
 };
