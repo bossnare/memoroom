@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { useAuth } from '@/hooks/use-auth';
+import { PublicLayout } from './PublicLayout';
 
 export const AppRoutes = () => {
   const { pending, session } = useAuth();
@@ -22,7 +23,11 @@ export const AppRoutes = () => {
         </div>
       ) : (
         <Routes>
-          <Route path="/" element={<Login />} />
+          {/* public */}
+          <Route element={<PublicLayout session={session} />}>
+            <Route path="/" element={<Login />} />
+          </Route>
+          {/* protected */}
           <Route element={<ProtectedRoutes session={session} />}>
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Overview />} />

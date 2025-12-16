@@ -2,11 +2,11 @@ import { supabase } from '@/auth-services/clients.service';
 import { Logo } from '@/components/brand/Logo';
 import { NavTab } from '@/components/navigation/NavTab';
 import { TopBar } from '@/components/navigation/TopBar';
-import { Button } from '@/components/ui/button';
+import { Button, ButtonIcon } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import RefreshWrapper from '@/pull-to-refresh';
 import { waitVibrate } from '@/utils/vibration';
-import { PenLine, Plus } from 'lucide-react';
+import { PenLine, Plus, Settings } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
@@ -45,7 +45,7 @@ function DashboardLayout() {
 
             <ToggleTheme />
 
-            <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-4 pb-6 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/40 dark:to-zinc-950/80 min-h-15">
+            <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-4 pb-6 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
               <div className="w-full active:bg-muted">
                 <Button size="medium" className="w-full">
                   <Plus /> Create new note
@@ -84,9 +84,7 @@ function DashboardLayout() {
             openSide ? 'translate-x-0' : '-translate-x-full'
           } md:hidden transition-transform will-change-transform duration-200 p-4 z-50 ease-in-out w-5/6 bg-background fixed inset-y-0 border-r border-border rounded-r-2xl overflow-hidden`}
         >
-          <aside
-            className={`size-full rounded-xl overflow-y-auto`}
-          >
+          <aside className={`relative size-full rounded-xl overflow-y-auto`}>
             <div className="flex items-center gap-3 mb-4">
               <img
                 src={user?.user_metadata.avatar_url}
@@ -94,19 +92,33 @@ function DashboardLayout() {
                 loading="lazy"
                 alt="user_avatar"
               />
-              <div className="flex flex-col -space-y-2 overflow-hidden">
+              <div className="flex flex-col -space-y-2 overflow-hidden grow">
                 <span className="text-lg font-bold tracking-tight truncate line-clamp-1">
-                  {user?.user_metadata.name.split('(')[0] || 'User Memoroom'}{' '}
+                  {user?.user_metadata.name.split(' (')[0] || 'User Memoroom'}
                 </span>
                 <span className="text-sm text-muted-foreground">
-                  @{user?.user_metadata.user_name}
+                  {user?.user_metadata.email_verified && 'Account verified'}
                 </span>
+              </div>
+              <div className="ml-auto shrink-0">
+                <ButtonIcon>
+                  <Settings />
+                </ButtonIcon>
               </div>
             </div>
 
             <div className="h-1 my-6 border-t border-sidebar-border"></div>
 
             <ToggleTheme />
+            <div className="absolute inset-x-0 w-full px-2 bottom-2 active:bg-muted">
+              <Button
+                onClick={async () => await supabase.auth.signOut()}
+                size="medium"
+                className="w-full font-normal border bg-muted text-foreground/90 border-input"
+              >
+                Logout
+              </Button>
+            </div>
           </aside>
         </div>
 
@@ -125,7 +137,7 @@ function DashboardLayout() {
         >
           <TopBar setOpenSide={setOpenSide} openSide={openSide} />
           <RefreshWrapper onRefresh={async () => window.location.reload()}>
-            <main className="grid items-start min-h-full grid-cols-4 gap-2 px-4 overflow-y-auto">
+            <main className="grid items-start min-h-full grid-cols-4 gap-2 px-4 py-2 overflow-y-auto">
               {/* nested routes here */}
               <Outlet />
             </main>
