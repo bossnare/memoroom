@@ -13,7 +13,7 @@ export const MiniNav = () => {
       <ul className="flex flex-col gap-1">
         {miniNavLabel.map((m) => (
           <li key={m.id}>
-            <button className="flex items-center w-full gap-2 px-2 rounded-md h-9 active:bg-muted active:opacity-80">
+            <button className="flex items-center w-full gap-2 px-2 rounded-md text-foreground/90 h-9 active:bg-muted active:opacity-70">
               <m.icon /> {m.label}
             </button>
           </li>

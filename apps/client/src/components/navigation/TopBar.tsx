@@ -1,4 +1,10 @@
-import { TextAlignJustify, Ellipsis, Search, BellIcon } from 'lucide-react';
+import {
+  TextAlignJustify,
+  Ellipsis,
+  Search,
+  BellIcon,
+  TriangleAlert,
+} from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 import { useId, useState } from 'react';
 import { ButtonIcon } from '@/components/ui/button';
@@ -18,7 +24,7 @@ export const TopBar = ({
   const { user } = useAuth();
 
   return (
-    <nav className="sticky inset-x-0 top-0 flex items-center gap-2 z-99 px-2 py-1 pl-1 border-b shadow-lg h-14 md:px-3 bg-background border-border">
+    <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 border-b shadow-lg z-99 h-14 md:px-3 bg-background border-border">
       <div className="flex items-center gap-2 shrink-0">
         {/* mobile menu button */}
         <ButtonIcon
@@ -54,14 +60,20 @@ export const TopBar = ({
 
         <div
           title={user?.user_metadata.name.split('(')[0]}
-          className="hidden overflow-hidden rounded-full cursor-pointer size-8 md:block bg-input"
+          className="relative hidden cursor-pointer size-8 md:block active:bg-input md:hover:bg-input active:opacity-60"
         >
           <img
             src={user?.user_metadata.avatar_url}
             alt="user_avatar"
-            className="object-cover size-full"
+            className="object-cover rounded-full size-full bg-input"
             loading="lazy"
           />
+          {/* badge */}
+          {!user?.user_metadata.email_verified && (
+            <span className="absolute p-1 bg-yellow-200 rounded-full -top-1 -right-1">
+              <TriangleAlert className="text-yellow-600 size-4" />
+            </span>
+          )}
         </div>
         <ButtonIcon
           onClick={() => setOpenMenu(!openMenu)}
