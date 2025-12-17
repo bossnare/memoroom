@@ -23,7 +23,7 @@ function Overview() {
               </Button>
               <Button
                 size="medium"
-                className="shadow-xs bg-secondary text-secondary-foreground"
+                className="bg-secondary text-secondary-foreground"
               >
                 Configure
               </Button>
