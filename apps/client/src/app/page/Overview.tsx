@@ -8,7 +8,7 @@ function Overview() {
     <>
       <div className="flex py-2 col-span-full">
         <div className="flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs bg-muted/50">
-          <h4 className="font-bold">System</h4>
+          <h4 className="font-bold">Complete your profile</h4>
           <div className="flex flex-col justify-center gap-3 md:items-center md:flex-row md:justify-between">
             <p className="md:text-sm text-muted-foreground">
               {user?.user_metadata.name.split(' (')[0]} If you know, you know.
