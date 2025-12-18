@@ -4,6 +4,7 @@ import { ButtonIcon, Button } from '../ui/button';
 import { Overlay } from './Overlay';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/services/auth-client.service';
+import { sideOverLabel } from './navigation.label';
 
 export const SideOver = ({
   openSideOver,
@@ -23,7 +24,7 @@ export const SideOver = ({
       <nav
         className={cn(
           openSideOver ? 'translate-x-0' : 'translate-x-full',
-          'fixed inset-y-0 right-0 w-1/4 hidden md:flex flex-col transition-transform ease-in-out duration-200 px-3 py-2 border-l z-200 bg-sidebar text-sidebar-foreground border-input'
+          'fixed inset-y-0 right-0 md:w-1/3 lg:w-1/4 hidden md:flex flex-col transition-transform ease-in-out duration-200 px-3 py-2 border-l z-200 bg-sidebar text-sidebar-foreground border-input'
         )}
       >
         <MiniProfile
@@ -33,9 +34,14 @@ export const SideOver = ({
             </ButtonIcon>
           }
         />
-        <div className="flex flex-col gap-3 grow">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="w-full h-10 rounded-md bg-muted"></div>
+        <div className="flex flex-col gap-2 grow">
+          {sideOverLabel.map((s) => (
+            <button
+              key={s.id}
+              className="w-full flex justify-start gap-3 px-2 items-center text-sidebar-foreground/80 lg:hover:text-sidebar-foreground md:active:text-sidebar-foreground h-9 rounded-sm lg:hover:bg-muted md:active:bg-muted lg:active:text-sidebar-foreground/70"
+            >
+              <s.icon className="size-5" /> {s.label}
+            </button>
           ))}
           <div className="w-full mt-auto">
             <Button

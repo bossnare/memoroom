@@ -6,7 +6,6 @@ import { TopBar } from '@/components/navigation/TopBar';
 import { Button, ButtonIcon } from '@/components/ui/button';
 import { ToggleTheme } from '@/components/ui/toggle-theme';
 import { MiniProfile } from '@/components/users/MiniProfile';
-import { useAuth } from '@/hooks/use-auth';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { fabButtonVariants } from '@/motions/motion.variant';
 import RefreshWrapper from '@/pull-to-refresh';
@@ -22,8 +21,6 @@ function DashboardLayout() {
   const [sidebarWidth, setSidebarWidth] = useState(0);
   const sideBarRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useIsMobile();
-  const { user } = useAuth();
-  console.log(user);
 
   useEffect(() => {
     if (sideBarRef.current) {
@@ -38,7 +35,7 @@ function DashboardLayout() {
         <div className="fixed inset-y-0 z-20 hidden w-64 border-r text-sidebar-foreground bg-sidebar md:block border-sidebar-border">
           <Logo className="sticky top-0 hidden w-full px-5 py-3 md:flex" />
 
-          <aside className="relative space-y-4 px-3 w-full h-[calc(100%-8%)] overflow-y-auto scrollbar-none">
+          <aside className="relative space-y-4 px-3 w-full h-[calc(100%-6%)] overflow-y-auto scrollbar-none">
             <nav className="mt-1 rounded-md">
               <ul className="flex flex-col gap-2">
                 <NavTab />
@@ -49,7 +46,7 @@ function DashboardLayout() {
 
             <ToggleTheme />
 
-            <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-4 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
+            <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
               <div className="w-full active:bg-muted">
                 <Button className="w-full bg-secondary text-secondary-foreground">
                   <Plus /> Create new note

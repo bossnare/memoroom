@@ -12,9 +12,9 @@ export const Tab = ({
   const activeClass =
     ' font-semibold text-sidebar-foreground dark:md:bg-input/70 md:bg-secondary dark:md:text-sidebar-foreground md:text-secondary-foreground';
   const defaultClass =
-    'relative transition-colors duration-300 md:duration-100 ease-in-out flex items-center justify-center md:justify-start md:rounded-md w-full cursor-pointer gap-3 p-3 md:px-2 md:h-9 ease-in-out';
+    'relative transition-colors duration-300 md:duration-100 ease-in-out flex items-center justify-center md:justify-start md:rounded-sm w-full cursor-pointer gap-3 p-3 md:px-2 md:h-9 ease-in-out';
   const inactiveClass =
-    'font-medium rounded-full md:hover:opacity-80 text-muted-foreground md:text-current active:bg-muted-foreground/20 md:hover:bg-muted/70';
+    'font-medium rounded-full md:hover:opacity-80 text-muted-foreground md:text-current active:bg-muted-foreground/20 md:hover:bg-muted';
 
   return (
     <button

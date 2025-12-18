@@ -41,7 +41,7 @@ export const TopBar = ({
         <Logo className="md:hidden" />
       </div>
       {/* desktop navigation */}
-      <div className="hidden h-10 py-1 px-2 rounded-md bg-input gap-2 md:inline-flex w-[36%] items-center shrink-0">
+      <div className="hidden h-10 py-1 px-2 rounded-md bg-input gap-2 md:inline-flex md:w-[50%] lg:w-[36%] items-center shrink-0">
         <label htmlFor={inputId}>
           <Search className="text-muted-foreground size-5" />
         </label>

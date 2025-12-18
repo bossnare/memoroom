@@ -6,6 +6,8 @@ import {
   Tags,
   Trash,
   UserCog,
+  Palette,
+  KeyRound,
 } from 'lucide-react';
 
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
@@ -33,6 +35,33 @@ const kebabMenuLabel = [
   },
 ];
 
+const sideOverLabel = [
+  {
+    id: 1,
+    label: 'Account Settings',
+    icon: UserCog,
+    route: '/app',
+  },
+  {
+    id: 2,
+    label: 'Apparence',
+    icon: Palette,
+    route: '/app/search',
+  },
+  {
+    id: 3,
+    label: 'Authentication',
+    icon: KeyRound,
+    route: '/app/notification',
+  },
+  {
+    id: 4,
+    label: 'Trash',
+    icon: Trash,
+    route: '/app/tags',
+  },
+];
+
 const tabLabel = [
   {
     id: 1,
@@ -47,17 +76,17 @@ const tabLabel = [
     route: '/app/search',
   },
   {
-    id: 1,
+    id: 3,
     label: 'Notofications',
     icon: Bell,
     route: '/app/notification',
   },
   {
-    id: 1,
+    id: 4,
     label: 'Tags',
     icon: Tags,
     route: '/app/tags',
   },
 ];
 
-export { kebabMenuLabel, tabLabel };
+export { kebabMenuLabel, tabLabel, sideOverLabel };
