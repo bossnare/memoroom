@@ -1,26 +1,29 @@
+import { Logo } from '@/components/brand/Logo';
+import { ButtonIcon } from '@/components/ui/_button';
+import { useAuth } from '@/hooks/use-auth';
+import { useLayoutStore } from '@/stores/UXStore';
+import { waitVibrate } from '@/utils/vibration';
 import {
-  TextAlignJustify,
-  Search,
   BellIcon,
+  Search,
+  TextAlignJustify,
   TriangleAlert,
 } from 'lucide-react';
-import { Logo } from '@/components/brand/Logo';
-import { useId } from 'react';
-import { ButtonIcon } from '@/components/ui/button';
-import { waitVibrate } from '@/utils/vibration';
-import { useAuth } from '@/hooks/use-auth';
-import { KebabMenu } from './KebabMenu';
 import { AnimatePresence } from 'motion/react';
-import { useUX } from '@/contexts/UXContext';
+import { useId } from 'react';
+import { KebabMenu } from './KebabMenu';
 
 export const TopBar = () => {
   const inputId = useId();
   const { user } = useAuth();
-  const { toggleIsOpenMobileSidebar, isOpenMobileSidebar, toggleOpenSideOver } =
-    useUX();
+  const isOpenMobileSidebar = useLayoutStore((s) => s.isOpenMobileSidebar);
+  const toggleIsOpenMobileSidebar = useLayoutStore(
+    (s) => s.toggleIsOpenMobileSidebar
+  );
+  const toggleOpenSideOver = useLayoutStore((s) => s.toggleOpenSideOver);
 
   return (
-    <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 border-b shadow-lg h-13 z-99 md:h-14 md:px-2 bg-sidebar border-border">
+    <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 shadow-lg h-13 z-99 md:h-14 md:px-2 bg-sidebar">
       <div className="flex items-center gap-2 shrink-0">
         {/* mobile menu button */}
         <ButtonIcon

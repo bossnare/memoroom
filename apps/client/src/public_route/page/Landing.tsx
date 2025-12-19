@@ -1,5 +1,5 @@
 import { Logo } from '@/components/brand/Logo';
-import { ButtonIcon, Button } from '@/components/ui/button';
+import { Button, ButtonIcon } from '@/components/ui/_button';
 import { useToggle } from '@/hooks/use-toggle';
 import { landingMenuVariants } from '@/motions/motion.variant';
 import { TextAlignJustify, X } from 'lucide-react';
@@ -42,14 +42,10 @@ export const LandingPage = () => {
       </header>
       {/* main */}
       <main>
-        <div className="flex flex-col items-center justify-center gap-6 h-[calc(100dvh-48px)]">
-          <h1 className="text-5xl font-black tracking-tighter rounded-lg">
-            Memoroom
+        <div className="flex flex-col items-center justify-center gap-6 px-2 h-[calc(100dvh-48px)]">
+          <h1 className="text-4xl font-extrabold tracking-tight text-center scroll-m-20 text-balance">
+            Create Your Second Brain
           </h1>
-          <p className="text-4xl font-semibold tracking-tight">
-            Create Your <span className="font-black text-blue-600">Second</span>{' '}
-            Brain
-          </p>
 
           <div className="flex gap-3">
             <Button className="bg-secondary text-secondary-foreground">

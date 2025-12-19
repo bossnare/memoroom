@@ -1,4 +1,5 @@
-import { Button } from '@/components/ui/button';
+import { Paragraphe } from '@/components/Paragraphe';
+import { Button } from '@/components/ui/_button';
 import { useAuth } from '@/hooks/use-auth';
 
 function Overview() {
@@ -10,10 +11,10 @@ function Overview() {
         <div className="flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs bg-muted/50">
           <h4 className="font-bold">Complete your profile</h4>
           <div className="flex flex-col justify-center gap-3 md:items-center md:flex-row md:justify-between">
-            <p className="md:text-sm text-muted-foreground">
+            <Paragraphe className="text-muted-foreground md:text-sm">
               {user?.user_metadata.name.split(' (')[0]} If you know, you know.
               As a social media fan, you maybe know it.
-            </p>
+            </Paragraphe>
             <div className="flex justify-end gap-4">
               <Button
                 size="medium"

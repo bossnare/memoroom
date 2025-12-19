@@ -1,6 +1,6 @@
+import { useLayoutStore } from '@/stores/UXStore';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { NavTab } from './NavTab';
-import { useUX } from '@/contexts/UXContext';
 
 export const BottomBar = ({
   mobileSidebarWidth,
@@ -8,7 +8,7 @@ export const BottomBar = ({
   mobileSidebarWidth: number;
 }) => {
   const isMobile = useIsMobile;
-  const { isOpenMobileSidebar } = useUX();
+  const isOpenMobileSidebar = useLayoutStore((s) => s.isOpenMobileSidebar);
 
   return (
     <div

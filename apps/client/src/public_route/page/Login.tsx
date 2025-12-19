@@ -1,8 +1,8 @@
 import logo from '@/assets/icon_32x32_mono.svg';
-import { Button } from '@/components/ui/button';
-import { AuthService } from '@/services/auth-client.service';
-import google from '@/assets/providers/google.svg';
 import github from '@/assets/providers/github.svg';
+import google from '@/assets/providers/google.svg';
+import { Button } from '@/components/ui/_button';
+import { AuthService } from '@/services/auth-client.service';
 
 export const Login = () => {
   return (

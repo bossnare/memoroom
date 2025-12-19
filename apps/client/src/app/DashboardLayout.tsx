@@ -2,18 +2,18 @@ import { BottomBar } from '@/components/navigation/BottomBar';
 import { DesktopSidebar, MobileSidebar } from '@/components/navigation/Sidebar';
 import { SideOver } from '@/components/navigation/SideOver';
 import { TopBar } from '@/components/navigation/TopBar';
-import { ButtonIcon } from '@/components/ui/button';
-import { useUX } from '@/contexts/UXContext';
+import PullToRefreshWrapper from '@/components/pull-to-refresh';
+import { ButtonIcon } from '@/components/ui/_button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { fabButtonVariants } from '@/motions/motion.variant';
-import PullToRefreshWrapper from '@/pull-to-refresh';
+import { useLayoutStore } from '@/stores/UXStore';
 import { PenLine } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 function DashboardLayout() {
-  const { isOpenMobileSidebar } = useUX();
+  const isOpenMobileSidebar = useLayoutStore((s) => s.isOpenMobileSidebar);
   const [mobileSidebarWidth, setMobileSidebarWidth] = useState(0);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useIsMobile();

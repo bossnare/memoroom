@@ -4,10 +4,12 @@ import {
   KeyRound,
   Layers,
   Palette,
+  PowerOff,
   Settings,
   Tags,
-  Trash,
+  Trash2,
   UserCog,
+  UserRoundX,
 } from 'lucide-react';
 
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
@@ -31,7 +33,7 @@ const kebabMenuLabel = [
   {
     id: 4,
     label: 'Trash',
-    icon: Trash,
+    icon: Trash2,
   },
 ];
 
@@ -58,7 +60,23 @@ const sideBarLabel = [
   {
     id: 4,
     label: 'Trash',
-    icon: Trash,
+    icon: Trash2,
+    route: '/app/tags',
+  },
+  {
+    id: 5,
+    label: 'Log out',
+    icon: PowerOff,
+    route: '/app/tags',
+  },
+];
+
+const desctructiveLabel = [
+  {
+    id: 1,
+    danger: true,
+    label: 'Delete my account',
+    icon: UserRoundX,
     route: '/app/tags',
   },
 ];
@@ -90,4 +108,4 @@ const tabLabel = [
   },
 ];
 
-export { kebabMenuLabel, sideBarLabel, tabLabel };
+export { desctructiveLabel, kebabMenuLabel, sideBarLabel, tabLabel };

@@ -1,22 +1,23 @@
 import { Plus, Settings } from 'lucide-react';
 import { forwardRef } from 'react';
+import { Button, ButtonIcon } from '../ui/_button';
 import { MiniProfile } from '../users/MiniProfile';
-import { ButtonIcon, Button } from '../ui/button';
 // import { ToggleTheme } from '../ui/toggle-theme';
 import { supabase } from '@/services/auth-client.service';
-import { sideBarLabel } from './navigation.label';
-import { SideBarTabWrapper } from './sideBarTab';
-import { NavTab } from './NavTab';
-import { Logo } from '../brand/Logo';
-import { Overlay } from './Overlay';
+import { useLayoutStore } from '@/stores/UXStore';
 import { waitVibrate } from '@/utils/vibration';
-import { useUX } from '@/contexts/UXContext';
+import { Logo } from '../brand/Logo';
+import { desctructiveLabel, sideBarLabel } from './navigation.label';
+import { NavTab } from './NavTab';
+import { Overlay } from './Overlay';
+import { SideBarTabWrapper } from './sideBarTab';
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const MobileSidebar = forwardRef<HTMLDivElement, SidebarProps>(
   ({ ...props }, ref) => {
-    const { setIsOpenMobileSidebarFalse, isOpenMobileSidebar } = useUX();
+    const setOpen = useLayoutStore((s) => s.setIsOpenMobileSidebar);
+    const open = useLayoutStore((s) => s.isOpenMobileSidebar);
 
     return (
       <>
@@ -25,16 +26,16 @@ export const MobileSidebar = forwardRef<HTMLDivElement, SidebarProps>(
           className="z-40 md:hidden"
           onClick={() => {
             waitVibrate(200, 'low');
-            setIsOpenMobileSidebarFalse();
+            setOpen(false);
           }}
-          open={isOpenMobileSidebar}
+          open={open}
         />
 
         <div
           {...props}
           ref={ref}
           className={`${
-            isOpenMobileSidebar ? 'translate-x-0' : '-translate-x-full'
+            open ? 'translate-x-0' : '-translate-x-full'
           } md:hidden transition-transform will-change-transform text-sidebar-foreground duration-200 px-4 py-2 z-50 ease-in-out w-6/7 bg-sidebar fixed inset-y-0 border-r border-sidebar-border overflow-hidden`}
         >
           <aside className={`relative size-full rounded-xl overflow-y-auto`}>
@@ -59,6 +60,15 @@ export const MobileSidebar = forwardRef<HTMLDivElement, SidebarProps>(
                   )}
                 </>
               ))}
+              <>
+                {desctructiveLabel.map((s) => (
+                  <li key={s.id}>
+                    <SideBarTabWrapper isDanger={true}>
+                      <s.icon className="size-5" /> {s.label}
+                    </SideBarTabWrapper>
+                  </li>
+                ))}
+              </>
             </ul>
             <div className="absolute inset-x-0 w-full px-2 bottom-2 active:bg-muted">
               <Button
