@@ -3,8 +3,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/services/auth-client.service';
 import { useLayoutStore } from '@/stores/UXStore';
 import { X } from 'lucide-react';
-import { Button } from '../ui/_button';
-import { Button as Btn } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { desctructiveLabel, sideBarLabel } from './navigation.label';
 import { Overlay } from './Overlay';
 import { SideBarTabWrapper } from './sideBarTab';
@@ -29,9 +28,9 @@ export const SideOver = () => {
       >
         <MiniProfile
           btnAction={
-            <Btn size="icon" variant="ghost" onClick={toggleOpen}>
+            <Button size="icon" variant="ghost" onClick={toggleOpen}>
               <X />
-            </Btn>
+            </Button>
           }
         />
         <ul className="flex flex-col gap-2 grow">
@@ -54,8 +53,9 @@ export const SideOver = () => {
           <div className="w-full mt-auto">
             <Button
               onClick={async () => await supabase.auth.signOut()}
-              size="medium"
-              className="w-full font-normal border bg-muted text-foreground/90 border-input"
+              size="lg"
+              variant="outline"
+              className="w-full"
             >
               Log out
             </Button>

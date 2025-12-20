@@ -3,7 +3,7 @@ import { DesktopSidebar, MobileSidebar } from '@/components/navigation/Sidebar';
 import { SideOver } from '@/components/navigation/SideOver';
 import { TopBar } from '@/components/navigation/TopBar';
 import PullToRefreshWrapper from '@/components/pull-to-refresh';
-import { ButtonIcon } from '@/components/ui/_button';
+import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { fabButtonVariants } from '@/motions/motion.variant';
 import { useLayoutStore } from '@/stores/UXStore';
@@ -62,9 +62,9 @@ function DashboardLayout() {
               exit="exit"
               className="fixed bottom-24 md:bottom-12 right-4"
             >
-              <ButtonIcon className="text-white shadow-lg bg-primary size-14 active:bg-primary md:hover:bg-primary">
+              <Button className="text-white shadow-lg size-14 rounded-full">
                 <PenLine className="size-auto" />
-              </ButtonIcon>
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>

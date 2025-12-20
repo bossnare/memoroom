@@ -1,7 +1,7 @@
 import logo from '@/assets/icon_32x32_mono.svg';
 import github from '@/assets/providers/github.svg';
 import google from '@/assets/providers/google.svg';
-import { Button } from '@/components/ui/_button';
+import { Button } from '@/components/ui/button';
 import { AuthService } from '@/services/auth-client.service';
 
 export const Login = () => {
@@ -12,10 +12,7 @@ export const Login = () => {
         <h2>Sign in</h2>{' '}
       </span>
       <div className="flex flex-col gap-4 md:flex-row">
-        <Button
-          className="bg-secondary text-secondary-foreground"
-          onClick={() => AuthService.googleSign()}
-        >
+        <Button variant="secondary" onClick={() => AuthService.googleSign()}>
           <img
             src={google}
             className="size-5"
@@ -24,10 +21,7 @@ export const Login = () => {
           />{' '}
           Continue with Google
         </Button>
-        <Button
-          className="bg-secondary text-secondary-foreground"
-          onClick={() => AuthService.githubSign()}
-        >
+        <Button variant="secondary" onClick={() => AuthService.githubSign()}>
           <img
             src={github}
             className="size-5 text-blue-400"

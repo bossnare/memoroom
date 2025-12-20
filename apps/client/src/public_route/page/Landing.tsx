@@ -1,5 +1,5 @@
 import { Logo } from '@/components/brand/Logo';
-import { Button, ButtonIcon } from '@/components/ui/_button';
+import { Button } from '@/components/ui/button';
 import { useToggle } from '@/hooks/use-toggle';
 import { landingMenuVariants } from '@/motions/motion.variant';
 import { TextAlignJustify, X } from 'lucide-react';
@@ -12,28 +12,31 @@ export const LandingPage = () => {
   return (
     <div className="relative h-screen">
       <header className="sticky">
-        <nav className="sticky inset-x-0 top-0 flex items-center h-12 gap-2 px-2 py-1 border-b shadow-lg z-99 md:px-3 bg-sidebar border-sidebar-border">
+        <nav className="sticky inset-x-0 top-0 flex items-center h-12 gap-2 px-2 py-1 shadow-lg z-99 md:px-3 bg-sidebar">
           <div className="flex items-center gap-2 shrink-0">
             <Logo />
           </div>
 
           <div className="flex items-center justify-end gap-3 md:gap-4 grow">
             {/* mobile menu button */}
-            <ButtonIcon onClick={toggleOpenMenu} className="md:hidden">
+            <Button
+              size="icon-lg"
+              variant="ghost"
+              onClick={toggleOpenMenu}
+              className="md:hidden"
+            >
               <TextAlignJustify className="size-[26px]" />
-            </ButtonIcon>
+            </Button>
 
             <div className="hidden gap-3 md:flex">
               <Button
-                size="medium"
+                size="sm"
                 className="shadow-xs bg-background text-foreground"
+                variant="ghost"
               >
                 Sign up
               </Button>
-              <Button
-                size="medium"
-                className="bg-secondary text-secondary-foreground"
-              >
+              <Button size="sm" variant="secondary">
                 Sign in
               </Button>
             </div>
@@ -73,9 +76,14 @@ export const LandingPage = () => {
             className="fixed inset-0 bg-sidebar z-100"
           >
             <div className="flex justify-end px-1 py-1">
-              <ButtonIcon onClick={toggleOpenMenu} className="md:hidden">
-                <X className="size-8" />
-              </ButtonIcon>
+              <Button
+                size="icon-lg"
+                variant="ghost"
+                onClick={toggleOpenMenu}
+                className="md:hidden"
+              >
+                <X />
+              </Button>
             </div>
             <Login />
           </motion.nav>
