@@ -48,7 +48,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
           />
           <div className="h-1 my-4 border-t border-sidebar-border"></div>
 
-          <ul className="flex flex-col gap-2 font-medium">
+          <ul className="flex flex-col gap-3 font-medium">
             {sideBarLabel.map((s) => (
               <>
                 {s.hiddenOnMobile ? null : (

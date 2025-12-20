@@ -58,7 +58,7 @@ export const KebabMenu = () => {
             {kebabMenuLabel.map((m) => (
               <li key={m.id}>
                 <button
-                  onClick={() => handleWait(setOpenKebabToFalse, 250)}
+                  onClick={() => handleWait(setOpenKebabToFalse, 230)}
                   className="flex items-center w-full h-9.5 gap-3 px-2 rounded-md text-foreground/90 active:bg-muted active:opacity-70"
                 >
                   <m.icon className="size-5" /> {m.label}

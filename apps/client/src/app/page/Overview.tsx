@@ -7,8 +7,8 @@ function Overview() {
 
   return (
     <>
-      <div className="flex py-2 col-span-full">
-        <div className="flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs bg-muted/50">
+      <div className="py-2 space-y-4">
+        <div className="flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs md:p-3 bg-muted/80 dark:bg-muted/50">
           <h4 className="font-bold">Complete your profile</h4>
           <div className="flex flex-col justify-center gap-3 md:items-center md:flex-row md:justify-between">
             <Paragraphe className="text-muted-foreground md:text-sm">
@@ -28,6 +28,16 @@ function Overview() {
               </Button>
             </div>
           </div>
+        </div>
+
+        {/* content */}
+        <div className="grid grid-cols-2 md:grid-cols-4 pt-4 gap-3 flex-wrap *:bg-muted/70 dark:*:bg-muted/40  *:rounded-lg *:h-20">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
     </>

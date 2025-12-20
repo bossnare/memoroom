@@ -33,7 +33,7 @@ export const SideOver = () => {
             </Button>
           }
         />
-        <ul className="flex flex-col gap-2 grow">
+        <ul className="flex flex-col gap-3 grow">
           {sideBarLabel.map((s) => (
             <li key={s.id}>
               <SideBarTabWrapper>

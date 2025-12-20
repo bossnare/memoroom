@@ -48,7 +48,7 @@ function DashboardLayout() {
           <PullToRefreshWrapper
             onRefresh={async () => window.location.reload()}
           >
-            <main className="grid items-start min-h-full grid-cols-4 gap-2 px-2 py-2 overflow-y-auto md:px-4 overscroll-contain">
+            <main className=" min-h-full grid-cols-4 gap-2 px-2 py-2 overflow-y-auto md:px-4 overscroll-contain">
               <Outlet />
             </main>
           </PullToRefreshWrapper>
