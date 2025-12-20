@@ -5,6 +5,7 @@ import { Ellipsis } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { kebabMenuLabel } from './navigation.label';
+import { handleWait } from '@/utils/handle-wait';
 
 export const KebabMenu = () => {
   const {
@@ -57,7 +58,7 @@ export const KebabMenu = () => {
             {kebabMenuLabel.map((m) => (
               <li key={m.id}>
                 <button
-                  onClick={setOpenKebabToFalse}
+                  onClick={() => handleWait(setOpenKebabToFalse)}
                   className="flex items-center w-full h-9.5 gap-3 px-2 rounded-md text-foreground/90 active:bg-muted active:opacity-70"
                 >
                   <m.icon className="size-5" /> {m.label}
