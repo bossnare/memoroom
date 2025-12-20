@@ -25,7 +25,7 @@ export const LandingPage = () => {
               onClick={toggleOpenMenu}
               className="md:hidden"
             >
-              <TextAlignJustify className="size-[26px]" />
+              <TextAlignJustify className="size-[26px]!" />
             </Button>
 
             <div className="hidden gap-3 md:flex">
