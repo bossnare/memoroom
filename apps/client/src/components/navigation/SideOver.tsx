@@ -3,7 +3,8 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/services/auth-client.service';
 import { useLayoutStore } from '@/stores/UXStore';
 import { X } from 'lucide-react';
-import { Button, ButtonIcon } from '../ui/_button';
+import { Button } from '../ui/_button';
+import { Button as Btn } from '@/components/ui/button';
 import { desctructiveLabel, sideBarLabel } from './navigation.label';
 import { Overlay } from './Overlay';
 import { SideBarTabWrapper } from './sideBarTab';
@@ -28,9 +29,9 @@ export const SideOver = () => {
       >
         <MiniProfile
           btnAction={
-            <ButtonIcon onClick={toggleOpen}>
+            <Btn size="icon" variant="ghost" onClick={toggleOpen}>
               <X />
-            </ButtonIcon>
+            </Btn>
           }
         />
         <ul className="flex flex-col gap-2 grow">

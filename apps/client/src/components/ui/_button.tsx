@@ -15,7 +15,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         className={cn(
-          'flex transition-opacity will-change-opacity text-white duration-300 ease-in-out items-center justify-center font-medium px-6 gap-3 bg-primary rounded-md  md:active:opacity-60 md:hover:opacity-80 active:opacity-60',
+          'flex transition-opacity will-change-opacity text-white duration-300 ease-in-out items-center justify-center font-medium px-6 gap-3 bg-primary rounded-md hover:opacity-80 active:opacity-60',
           variants,
           className
         )}
@@ -33,7 +33,7 @@ export const ButtonIcon = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         className={cn(
-          'flex items-center justify-center transition-colors will-change-colors duration-300 ease-in-out p-2 rounded-full md:hover:opacity-90 active:opacity-80 md:active:opacity-60 active:bg-muted-foreground/40 md:hover:bg-muted-foreground/40',
+          'flex items-center justify-center transition-colors will-change-colors duration-300 ease-in-out p-2 rounded-full hover:opacity-80 active:opacity-70 active:bg-muted-foreground/40 hover:bg-muted-foreground/40',
           className
         )}
       >

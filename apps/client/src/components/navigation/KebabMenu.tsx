@@ -1,4 +1,4 @@
-import { ButtonIcon } from '@/components/ui/_button';
+import { Button } from '@/components/ui/button';
 import { useToggle } from '@/hooks/use-toggle';
 import { kebabMenuVariants } from '@/motions/motion.variant';
 import { Ellipsis } from 'lucide-react';
@@ -34,13 +34,15 @@ export const KebabMenu = () => {
   return (
     <>
       {/* trigger button */}
-      <ButtonIcon
+      <Button
+        variant="ghost"
+        size="icon-lg"
         ref={triggerRef}
         onClick={toggleOpenKebabMenu}
-        className="md:hidden"
+        className="md:hidden duration-300"
       >
         <Ellipsis />
-      </ButtonIcon>
+      </Button>
       {/* Kebab menu */}
       {openKebabMenu && (
         <motion.div
@@ -49,7 +51,6 @@ export const KebabMenu = () => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          // transition={{type}}
           className="fixed w-3/4 p-2 rounded-lg shadow-xl sm:w-3/4 bg-background dark:bg-sidebar top-16 right-3 md:hidden"
         >
           <ul className="flex flex-col gap-2">

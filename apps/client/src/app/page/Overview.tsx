@@ -1,5 +1,5 @@
 import { Paragraphe } from '@/components/Paragraphe';
-import { Button } from '@/components/ui/_button';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
 
 function Overview() {
@@ -17,15 +17,13 @@ function Overview() {
             </Paragraphe>
             <div className="flex justify-end gap-4">
               <Button
-                size="medium"
-                className="font-normal shadow-xs bg-input text-foreground/80"
+                size="sm"
+                variant="ghost"
+                className="shadow-xs bg-accent dark:bg-accent/50 text-foreground/80"
               >
                 Later
               </Button>
-              <Button
-                size="medium"
-                className="bg-secondary text-secondary-foreground"
-              >
+              <Button size="sm" variant="secondary">
                 Configure
               </Button>
             </div>

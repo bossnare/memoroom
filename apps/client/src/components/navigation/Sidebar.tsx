@@ -1,6 +1,6 @@
 import { Plus, Settings } from 'lucide-react';
-import { Button, ButtonIcon } from '../ui/_button';
-import { MiniProfile } from '../users/MiniProfile';
+import { Button } from '@/components/ui/button';
+import { MiniProfile } from '@/components/users/MiniProfile';
 // import { ToggleTheme } from '../ui/toggle-theme';
 import { supabase } from '@/services/auth-client.service';
 import { useLayoutStore } from '@/stores/UXStore';
@@ -41,9 +41,9 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
         <aside className={`relative size-full rounded-xl overflow-y-auto`}>
           <MiniProfile
             btnAction={
-              <ButtonIcon>
+              <Button variant="ghost" size="icon-lg">
                 <Settings />
-              </ButtonIcon>
+              </Button>
             }
           />
           <div className="h-1 my-4 border-t border-sidebar-border"></div>
@@ -73,8 +73,9 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
           <div className="absolute inset-x-0 w-full px-2 bottom-2 active:bg-muted">
             <Button
               onClick={async () => await supabase.auth.signOut()}
-              size="large"
-              className="w-full font-normal border bg-muted text-foreground/90 border-input"
+              size="lg"
+              variant="outline"
+              className="w-full"
             >
               Logout
             </Button>
@@ -107,7 +108,11 @@ export const DesktopSidebar = ({ ref, ...props }: SidebarProps) => {
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">
-            <Button className="w-full bg-secondary text-secondary-foreground">
+            <Button
+              size="lg"
+              variant="secondary"
+              className="w-full font-semibold"
+            >
               <Plus /> Create new note
             </Button>
           </div>

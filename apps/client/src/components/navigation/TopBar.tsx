@@ -1,5 +1,5 @@
 import { Logo } from '@/components/brand/Logo';
-import { ButtonIcon } from '@/components/ui/_button';
+import { Button } from '@/components/ui/button';
 import { UserAvatar } from '@/components/users/UserAvatar';
 import { useAuth } from '@/hooks/use-auth';
 import { useLayoutStore } from '@/stores/UXStore';
@@ -27,7 +27,9 @@ export const TopBar = () => {
     <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 shadow-lg h-13 z-99 md:h-14 md:px-2 bg-sidebar">
       <div className="flex items-center gap-2 shrink-0">
         {/* mobile menu button */}
-        <ButtonIcon
+        <Button
+          size="icon-lg"
+          variant="ghost"
           onClick={() => {
             waitVibrate(200, 'low');
             toggleIsOpenMobileSidebar();
@@ -35,7 +37,7 @@ export const TopBar = () => {
           className="md:hidden"
         >
           <TextAlignJustify className="size-[26px]" />
-        </ButtonIcon>
+        </Button>
         <Logo className="md:hidden" />
       </div>
       {/* desktop navigation */}
@@ -52,11 +54,11 @@ export const TopBar = () => {
         />
       </div>
       <div className="flex items-center justify-end gap-3 md:gap-4 grow">
-        <ButtonIcon className="relative">
+        <Button size="icon-lg" variant="ghost" className="relative">
           <BellIcon />
           {/* badge */}
           <span className="absolute p-1 rounded-full top-1 size-2 right-0.5 bg-destructive"></span>
-        </ButtonIcon>
+        </Button>
         <div
           role="button"
           onClick={toggleOpenSideOver}
