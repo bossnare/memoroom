@@ -1,5 +1,6 @@
 import { Logo } from '@/components/brand/Logo';
 import { ButtonIcon } from '@/components/ui/_button';
+import { UserAvatar } from '@/components/users/UserAvatar';
 import { useAuth } from '@/hooks/use-auth';
 import { useLayoutStore } from '@/stores/UXStore';
 import { waitVibrate } from '@/utils/vibration';
@@ -62,12 +63,7 @@ export const TopBar = () => {
           title={user?.user_metadata.name.split('(')[0]}
           className="relative hidden cursor-pointer size-8 md:block active:bg-input md:hover:bg-input active:opacity-60"
         >
-          <img
-            src={user?.user_metadata.avatar_url}
-            alt="user_avatar"
-            className="object-cover rounded-full size-full bg-input"
-            loading="lazy"
-          />
+          <UserAvatar user={user} className="size-full bg-input" />
           {/* badge */}
           {user && !user.user_metadata.email_verified && (
             <span className="absolute p-1 bg-yellow-200 rounded-full -top-1 -right-1">

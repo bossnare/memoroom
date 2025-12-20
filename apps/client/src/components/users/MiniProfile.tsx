@@ -1,16 +1,12 @@
 import { useAuth } from '@/hooks/use-auth';
+import { UserAvatar } from './UserAvatar';
 
 export const MiniProfile = ({ btnAction }: { btnAction?: React.ReactNode }) => {
   const { user } = useAuth();
 
   return (
     <div className="flex items-center gap-3 mb-4">
-      <img
-        src={user?.user_metadata.avatar_url}
-        className="object-cover rounded-full shrink-0 size-10 bg-muted"
-        loading="lazy"
-        alt="user_avatar"
-      />
+      <UserAvatar user={user} />
       <div className="flex flex-col -space-y-1 overflow-hidden grow">
         <span className="text-lg font-bold tracking-tight truncate md:text-base line-clamp-1">
           {user?.user_metadata.name.split(' (')[0] || 'User Memoroom'}
