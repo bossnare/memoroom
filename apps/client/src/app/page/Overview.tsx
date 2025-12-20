@@ -31,7 +31,7 @@ function Overview() {
         </div>
 
         {/* content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 pt-4 gap-3 flex-wrap *:bg-muted/70 dark:*:bg-muted/40  *:rounded-lg *:h-20">
+        <div className="grid *:hover:bg-blue-800 grid-cols-2 md:grid-cols-4 pt-4 gap-3 flex-wrap *:bg-muted/70 dark:*:bg-muted/40  *:rounded-lg *:h-20">
           <div></div>
           <div></div>
           <div></div>
