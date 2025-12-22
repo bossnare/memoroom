@@ -25,8 +25,8 @@ export const AppRoutes = () => {
           {/* public */}
           <Route element={<PublicLayout session={session} />}>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/community" element={<LandingPage />} />
-            <Route path="/explore" element={<LandingPage />} />
+            <Route path="/about" element={<LandingPage />} />
+            <Route path="/pricing" element={<LandingPage />} />
             <Route path="/contact" element={<LandingPage />} />
             {/* auth - public */}
             <Route path="/auth">
