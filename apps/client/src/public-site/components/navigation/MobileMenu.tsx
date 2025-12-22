@@ -5,12 +5,12 @@ import { Footer } from '@/shared/components/brand/Footer';
 import { X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { NavLink } from 'react-router-dom';
-import { landingPageLabel } from '../../../app/components/navigation/navigation.label';
+import { landingPageLabel } from './label';
 
 {
   /* mobile only menu content */
 }
-export const LandingPageMenu = ({
+export const MobileMenu = ({
   open,
   toggleOpen,
 }: {
@@ -31,7 +31,7 @@ export const LandingPageMenu = ({
             stiffness: 100,
             damping: 10,
           }}
-          className="fixed flex flex-col inset-0 md:hidden bg-background z-100"
+          className="fixed inset-0 flex flex-col gap-2 md:hidden bg-background z-100"
         >
           <nav className="flex justify-end px-1 py-1">
             <Button size="icon-lg" variant="ghost" onClick={toggleOpen}>
@@ -39,7 +39,7 @@ export const LandingPageMenu = ({
             </Button>
           </nav>
 
-          <div className="px-4 relative grow">
+          <div className="relative px-4 grow">
             <ul className="space-y-4">
               {landingPageLabel.map((l) => (
                 <li key={l.id}>
@@ -51,7 +51,7 @@ export const LandingPageMenu = ({
                             ? 'text-primary bg-primary/20 dark:bg-primary/16 w-full'
                             : 'active:text-muted-foreground',
                           'relative flex justify-center',
-                          'transition-colors duration-100 font-bold rounded-sm text-lg ease-inpx-2 flex items-center justify-start h-10'
+                          'transition-colors duration-100 font-bold rounded-sm text-lg ease-in px-2 flex items-center justify-start h-10'
                         )}
                       >
                         {l.label}
@@ -73,8 +73,8 @@ export const LandingPageMenu = ({
               ))}
             </ul>
 
-            <div className="py-2 absolute inset-x-0 bottom-0">
-              <Footer />
+            <div className="absolute inset-x-0 bottom-0 py-2">
+              <Footer content="noContent" />
             </div>
           </div>
         </motion.nav>

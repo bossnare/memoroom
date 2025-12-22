@@ -6,7 +6,7 @@ import { handleWait } from '@/utils/handle-wait';
 import { Ellipsis } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
-import { kebabMenuLabel } from './navigation.label';
+import { kebabMenuLabel } from './label';
 
 export const KebabMenu = () => {
   const {

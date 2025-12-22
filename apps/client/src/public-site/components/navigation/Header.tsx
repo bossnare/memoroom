@@ -1,4 +1,3 @@
-import { landingPageLabel } from '@/app/components/navigation/navigation.label';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { lineVariants } from '@/motions/motion.variant';
@@ -7,6 +6,7 @@ import { TextAlignJustify } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { landingPageLabel } from './label';
 
 export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
   const [scroll, setScroll] = useState(0);

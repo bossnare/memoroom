@@ -108,37 +108,4 @@ const tabLabel = [
   },
 ];
 
-const landingPageLabel = [
-  {
-    id: 1,
-    label: 'Home',
-    icon: Tags,
-    route: '/',
-  },
-  {
-    id: 2,
-    label: 'About',
-    icon: Tags,
-    route: '/about',
-  },
-  {
-    id: 3,
-    label: 'Pricing',
-    icon: Tags,
-    route: '/pricing',
-  },
-  {
-    id: 4,
-    label: 'Contact',
-    icon: Tags,
-    route: '/contact',
-  },
-];
-
-export {
-  desctructiveLabel,
-  kebabMenuLabel,
-  sideBarLabel,
-  tabLabel,
-  landingPageLabel,
-};
+export { desctructiveLabel, kebabMenuLabel, sideBarLabel, tabLabel };
