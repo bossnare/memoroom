@@ -10,6 +10,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  html {
+    scroll-behavior: smooth;
+  }
 
   h1,
   h2,
@@ -24,22 +27,6 @@
   a,
   [role='button'] {
     @apply cursor-pointer touch-manipulation;
-  }
-
-  @import 'tailwindcss';
-
-  @layer base {
-    body {
-      @apply min-w-[320px] min-h-screen relative m-0;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .landing-cover {
-      background-image: url('../assets/landing_cover.png');
-    }
   }
 }
 

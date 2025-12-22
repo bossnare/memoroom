@@ -5,7 +5,7 @@ import {
   landingMenuVariants,
   landingBodyVariants,
 } from '@/motions/motion.variant';
-import { Merge, TextAlignJustify, X } from 'lucide-react';
+import { Merge, TextAlignJustify, X, ArrowDownCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Login } from './Login';
 import { Paragraphe } from '@/components/Paragraphe';
@@ -26,7 +26,7 @@ export const LandingPage = () => {
 
           {/* nav */}
           <div className="hidden md:flex grow">
-            <ul className="flex gap-8 text-accent-foreground *:px-2 mx-auto text-sm">
+            <ul className="flex md:gap-4 lg:gap-8 text-accent-foreground *:px-2 mx-auto text-sm">
               {landingPageLabel.map((l) => (
                 <li key={l.id}>
                   <NavLink to={l.route}>
@@ -34,9 +34,10 @@ export const LandingPage = () => {
                       <button
                         className={cn(
                           isActive
-                            ? 'text-primary font-bold'
-                            : 'hover:not-focus:opacity-80 active:text-muted-foreground font-medium',
-                          'relative flex justify-center'
+                            ? 'text-primary'
+                            : 'hover:not-focus:opacity-80 active:text-muted-foreground',
+                          'relative flex justify-center',
+                          'transition-colors duration-100 ease font-medium'
                         )}
                       >
                         {l.label}
@@ -91,12 +92,19 @@ export const LandingPage = () => {
         {/* overlay blur */}
         <div className="absolute z-10 bg-background/50 backdrop-blur-3xl size-full"></div>
 
-        <div className="relative flex items-center justify-center px-4 z-12 h-dvh">
+        <section className="relative flex items-center justify-center px-4 z-12 h-dvh">
           <motion.div
             variants={landingBodyVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
+            transition={{
+              type: 'spring',
+              mass: 0.5,
+              stiffness: 600,
+              damping: 60,
+              duration: 4000,
+            }}
             className="flex flex-col items-center justify-center max-w-lg gap-6"
           >
             <span className="space-y-2">
@@ -115,11 +123,11 @@ export const LandingPage = () => {
                 Explore community
               </Button>
               <Button size="lg" className="font-bold">
-                Get started
+                <ArrowDownCircle /> Get started
               </Button>
             </div>
           </motion.div>
-        </div>
+        </section>
       </main>
 
       {/* mobile menu content */}

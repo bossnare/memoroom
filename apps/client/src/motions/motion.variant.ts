@@ -5,9 +5,9 @@ export const landingMenuVariants = {
 };
 
 export const landingBodyVariants = {
-  hidden: { opacity: 0, y: '50' },
+  hidden: { opacity: 0, y: 100 },
   visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: '50' },
+  exit: { opacity: 0, y: 100 },
 };
 
 export const kebabMenuVariants = {
