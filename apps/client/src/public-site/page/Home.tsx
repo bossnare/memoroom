@@ -1,10 +1,10 @@
 import { useToggle } from '@/hooks/use-toggle';
-import { LandingPageMenu } from '@/public-site/components/navigation/MobileMenu';
-import { Footer } from '@/shared/components/brand/Footer';
-import { Header } from '@/public-site/components/navigation/Header';
 import { Hero } from '@/public-site/components/Hero';
-import { WhyItMatters } from '@/public-site/components/WhyItMatters';
 import { HowItWorks } from '@/public-site/components/HowItWorks';
+import { Header } from '@/public-site/components/navigation/Header';
+import { MobileMenu } from '@/public-site/components/navigation/MobileMenu';
+import { WhyItMatters } from '@/public-site/components/WhyItMatters';
+import { Footer } from '@/shared/components/brand/Footer';
 
 export const LandingPage = () => {
   const { value: openMenu, toggle: toggleOpenMenu } = useToggle();
@@ -23,10 +23,10 @@ export const LandingPage = () => {
       </main>
 
       {/* Menu content - mobile */}
-      <LandingPageMenu open={openMenu} toggleOpen={toggleOpenMenu} />
+      <MobileMenu open={openMenu} toggleOpen={toggleOpenMenu} />
 
       {/* Footer */}
-      <footer className="px-3 py-6 bg-sidebar">
+      <footer className="px-3 py-4 bg-sidebar">
         <Footer />
       </footer>
     </div>

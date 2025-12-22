@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { tabLabel } from './navigation.label';
+import { tabLabel } from './label';
 import { Tab } from './Tab';
 
 export function NavTab() {
