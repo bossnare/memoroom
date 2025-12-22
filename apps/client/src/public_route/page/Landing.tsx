@@ -92,7 +92,7 @@ export const LandingPage = () => {
         <div className="absolute rounded-full left-10 top-2 brightness-140 bg-primary h-70 w-50 lg:w-120 lg:h-80 -z-1"></div>
         <div className="absolute right-0 rounded-full bg-primary bottom-10 size-60 lg:size-80 -z-1"></div>
         {/* grainy noise */}
-        <span className="absolute z-11 mix-blend-overlay size-full bg-[url('./assets/noise.svg')]"></span>
+        <span className="absolute z-11 opacity-60 dark:opacity-80 mix-blend-overlay size-full bg-[url('./assets/noise.svg')]"></span>
         {/* box with line */}
         <div className="absolute bottom-0 z-12 size-50 md:size-90 right-2">
           <img
@@ -174,7 +174,7 @@ export const LandingPage = () => {
                           className={cn(
                             isActive
                               ? 'text-primary ng-primary/20 dark:bg-primary/16 w-full'
-                              : 'active:text-muted-foreground w-1/3',
+                              : 'active:text-muted-foreground',
                             'relative flex justify-center',
                             'transition-colors duration-100 font-bold rounded-sm text-lg ease px-2 flex items-center justify-start h-10'
                           )}
