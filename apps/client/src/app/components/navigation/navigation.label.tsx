@@ -117,15 +117,15 @@ const landingPageLabel = [
   },
   {
     id: 2,
-    label: 'Community',
+    label: 'About',
     icon: Tags,
-    route: '/community',
+    route: '/about',
   },
   {
     id: 3,
-    label: 'Explore App',
+    label: 'Pricing',
     icon: Tags,
-    route: '/explore',
+    route: '/pricing',
   },
   {
     id: 4,

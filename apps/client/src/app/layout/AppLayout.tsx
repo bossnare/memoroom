@@ -1,8 +1,11 @@
-import { BottomBar } from '@/components/navigation/BottomBar';
-import { DesktopSidebar, MobileSidebar } from '@/components/navigation/Sidebar';
-import { SideOver } from '@/components/navigation/SideOver';
-import { TopBar } from '@/components/navigation/TopBar';
-import PullToRefreshWrapper from '@/components/pull-to-refresh';
+import { BottomBar } from '@/app/components/navigation/BottomBar';
+import {
+  DesktopSidebar,
+  MobileSidebar,
+} from '@/app/components/navigation/Sidebar';
+import { SideOver } from '@/app/components/navigation/SideOver';
+import { TopBar } from '@/app/components/navigation/TopBar';
+import PullToRefreshWrapper from '@/app/components/pull-to-refresh';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useIsDesktop } from '@/hooks/use-desktop';

@@ -10,8 +10,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  html {
-    scroll-behavior: smooth;
+  html,
+  body {
+    @apply scroll-smooth;
   }
 
   h1,

@@ -1,8 +1,8 @@
-import { supabase } from '@/services/auth-client.service';
+import { supabase } from '@/services/supabase.service';
 import { type Session } from '@supabase/supabase-js';
 import axios, {
-  type InternalAxiosRequestConfig,
   type AxiosInstance,
+  type InternalAxiosRequestConfig,
 } from 'axios';
 
 //creation d'instance axios

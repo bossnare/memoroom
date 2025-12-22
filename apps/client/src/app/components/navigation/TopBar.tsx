@@ -1,7 +1,7 @@
-import { Logo } from '@/components/brand/Logo';
+import { UserAvatar } from '@/app/components/users/UserAvatar';
 import { Button } from '@/components/ui/button';
-import { UserAvatar } from '@/components/users/UserAvatar';
 import { useAuth } from '@/hooks/use-auth';
+import { Logo } from '@/shared/components/brand/Logo';
 import { useLayoutStore } from '@/stores/layoutStore';
 import { waitVibrate } from '@/utils/vibration';
 import {

@@ -2,7 +2,7 @@ import logo from '@/assets/icon_32x32_mono.svg';
 import github from '@/assets/providers/github.svg';
 import google from '@/assets/providers/google.svg';
 import { Button } from '@/components/ui/button';
-import { AuthService } from '@/services/auth-client.service';
+import { AuthService } from '@/services/supabase.service';
 
 export const Login = () => {
   return (

@@ -1,7 +1,7 @@
+import { MiniProfile } from '@/app/components/users/MiniProfile';
 import { Button } from '@/components/ui/button';
-import { MiniProfile } from '@/components/users/MiniProfile';
 import { cn } from '@/lib/utils';
-import { supabase } from '@/services/auth-client.service';
+import { supabase } from '@/services/supabase.service';
 import { useLayoutStore } from '@/stores/layoutStore';
 import { X } from 'lucide-react';
 import { desctructiveLabel, sideBarLabel } from './navigation.label';

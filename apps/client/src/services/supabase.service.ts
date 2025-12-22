@@ -12,4 +12,7 @@ export const AuthService = {
   async githubSign() {
     await supabase.auth.signInWithOAuth({ provider: 'github' });
   },
+  async signOut() {
+    await supabase.auth.signOut();
+  },
 };

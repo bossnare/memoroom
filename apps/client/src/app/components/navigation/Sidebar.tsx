@@ -1,15 +1,14 @@
+import { MiniProfile } from '@/app/components/users/MiniProfile';
 import { Button } from '@/components/ui/button';
-import { MiniProfile } from '@/components/users/MiniProfile';
 import { PanelLeftClose, PanelLeftOpen, Plus, Settings } from 'lucide-react';
-// import { ToggleTheme } from '../ui/toggle-theme';
-import { supabase } from '@/services/auth-client.service';
+import { supabase } from '@/services/supabase.service';
 import { useLayoutStore } from '@/stores/layoutStore';
 import { waitVibrate } from '@/utils/vibration';
-import { Logo } from '../brand/Logo';
 import { desctructiveLabel, sideBarLabel } from './navigation.label';
 import { NavTab } from './NavTab';
 import { Overlay } from './Overlay';
 import { SideBarTabWrapper } from './sideBarTab';
+import { Logo } from '@/shared/components/brand/Logo';
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;

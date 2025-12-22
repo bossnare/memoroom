@@ -3,7 +3,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { useEffect } from 'react';
 import { useTheme } from './hooks/use-theme';
 import { useIsPublicRoute } from './hooks/useIsPublicRoute';
-import { AppRoutes } from './routes/Routes';
+import { AppRoutes } from './routes/router';
 
 function App() {
   const isPublicRoute = useIsPublicRoute();

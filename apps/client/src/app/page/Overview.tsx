@@ -1,6 +1,6 @@
-import { Paragraphe } from '@/components/Paragraphe';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
+import { Paragraphe } from '@/shared/components/Paragraphe';
 import { X } from 'lucide-react';
 
 const labels = ['PayPal', 'Spotify', 'Melodayz'];
