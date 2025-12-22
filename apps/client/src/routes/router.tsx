@@ -1,4 +1,4 @@
-import DashboardLayout from '@/app/layout/DashboardLayout';
+import DashboardLayout from '@/app/layout/AppLayout';
 import Overview from '@/app/page/Overview';
 import { Login } from '@/public-site/page/Login';
 import { HomeScreenLoader } from '@/app/components/HomeScreenLoader';
@@ -8,7 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import { PublicLayout } from '../public-site/PublicLayout';
 import { NotFound } from '@/app/components/not-found';
-import { LandingPage } from '@/public-site/page/Landing';
+import { LandingPage } from '@/public-site/page/Home';
 import { SignUp } from '@/public-site/page/Signup';
 
 export const AppRoutes = () => {

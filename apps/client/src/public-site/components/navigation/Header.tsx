@@ -1,7 +1,7 @@
 import { landingPageLabel } from '@/app/components/navigation/navigation.label';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { landingBodyVariants } from '@/motions/motion.variant';
+import { heroVariants } from '@/motions/motion.variant';
 import { Logo } from '@/shared/components/brand/Logo';
 import { TextAlignJustify } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -35,7 +35,7 @@ export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
                       <AnimatePresence>
                         {isActive && (
                           <motion.span
-                            variants={landingBodyVariants}
+                            variants={heroVariants}
                             initial="hidden"
                             animate="visible"
                             exit="exit"
