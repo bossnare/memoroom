@@ -56,12 +56,12 @@ export const LandingPage = () => {
             <div className="flex gap-3 md:gap-4">
               <Button
                 size="sm"
-                className="shadow-xs bg-background text-foreground"
+                className="shadow-xs hidden md:inline-flex bg-background text-foreground"
                 variant="ghost"
               >
                 Sign up
               </Button>
-              <Button size="sm" variant="secondary">
+              <Button size="sm" variant="secondary" className="font-bold">
                 Sign in
               </Button>
             </div>
@@ -111,13 +111,13 @@ export const LandingPage = () => {
               <h1 className="text-4xl italic font-extrabold tracking-tight text-center scroll-m-20 text-balance">
                 Create Your Second Brain
               </h1>
-              <Paragraphe className="text-sm text-center text-muted-foreground">
+              <Paragraphe className="text-sm text-center text-foreground/80 font-medium">
                 Organize ideas, share knowledge, and grow together. Your ideas
                 don&apos;t belong alone.
               </Paragraphe>
             </span>
 
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <Button variant="secondary" size="lg" className="font-semibold">
                 <Merge />
                 Explore community
