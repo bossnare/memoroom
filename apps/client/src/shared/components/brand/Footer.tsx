@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Logo } from './Logo';
+import { useTheme } from '@/components/theme-provider';
+import { useState } from 'react';
 
 export const Footer = ({
   content = 'haveContent',
@@ -7,6 +9,10 @@ export const Footer = ({
   content?: 'haveContent' | 'noContent';
 }) => {
   const ulClass = 'flex flex-wrap items-center justify-center space-x-4';
+
+  const { theme, setTheme } = useTheme();
+  const [isDark, setIsDark] = useState(theme === 'dark');
+  const toggle = isDark ? 'light' : 'dark';
 
   return (
     <div className="text-sm flex flex-col flex-wrap items-center justify-center space-y-2 md:space-x-10 md:flex-row text-muted-foreground [&_.divide]:text-muted-foreground/50">
@@ -100,6 +106,18 @@ export const Footer = ({
             Christo Razafimanga
           </Button>
         </a>
+      </div>
+
+      <div>
+        <button
+          onClick={() => {
+            setTheme(toggle);
+            setIsDark(!isDark);
+          }}
+          className="flex px-2 py-2 border rounded-md active:opacity-80 active:scale-99 border-input bg-input/50"
+        >
+          Toggle | {theme}
+        </button>
       </div>
     </div>
   );
