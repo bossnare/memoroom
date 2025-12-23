@@ -5,9 +5,9 @@ import { Logo } from '@/shared/components/brand/Logo';
 import { useLayoutStore } from '@/stores/layoutStore';
 import { waitVibrate } from '@/utils/vibration';
 import { PanelLeftClose, PanelLeftOpen, Plus, Settings } from 'lucide-react';
+import { Overlay } from '../../../shared/components/Overlay';
 import { desctructiveLabel, sideBarLabel } from './label';
 import { NavTab } from './NavTab';
-import { Overlay } from './Overlay';
 import { SideBarTabWrapper } from './sideBarTab';
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement> & {

@@ -1,10 +1,9 @@
-@import 'tailwindcss';
 @import './styles/themes.css';
 
 @layer base {
   body {
     /* overscroll-none overflow-hidden */
-    @apply relative font-sans bg-background text-foreground;
+    @apply relative font-sans;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -29,11 +28,19 @@
   [role='button'] {
     @apply cursor-pointer touch-manipulation;
   }
+
+  /* util for disable transition logic on @/components/theme-provider.tsx */
+  html.disable-transition * {
+    transition: none !important;
+  }
 }
 
 @layer utilities {
   .scrollbar-none::-webkit-scrollbar {
     display: none !important;
+  }
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
