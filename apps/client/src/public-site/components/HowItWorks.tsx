@@ -62,7 +62,7 @@ export function HowItWorks() {
         {cardContents.map((c, i) => (
           <>
             <Card title={c.title} content={c.content} number={i + 1} />
-            <span className="w-px h-12 ml-10 border-l-2 divide md:ml-0 md:border-b md:h-auto md:w-auto border-foreground/90 dark:border-input"></span>
+            <span className="w-px h-12 ml-8 border-l-2 divide md:ml-0 md:border-b md:h-auto md:w-auto border-foreground/90 dark:border-input"></span>
           </>
         ))}
       </div>
