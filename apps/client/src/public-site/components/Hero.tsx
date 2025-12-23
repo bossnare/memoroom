@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { heroVariants } from '@/motions/motion.variant';
 import { Paragraphe } from '@/shared/components/Paragraphe';
 import { ArrowDownCircle, Merge } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 function Hero() {
@@ -44,44 +44,45 @@ function Hero() {
           className="dark:invert size-full invert-0"
         />
       </motion.div>
+      <AnimatePresence>
+        {mounted && (
+          <motion.div
+            variants={heroVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{
+              type: 'spring',
+              mass: 0.4,
+              stiffness: 600,
+              damping: 60,
+            }}
+            className="z-20 flex flex-col items-center justify-center max-w-lg gap-6 pb-20 md:pb-0"
+          >
+            <span className="space-y-2">
+              <h1 className="text-4xl font-extrabold tracking-tight text-center scroll-m-20 text-balance">
+                Create Your Second Brain
+              </h1>
+              <Paragraphe className="text-sm font-medium text-center text-foreground/80">
+                Organize ideas, share knowledge, and grow together. Your ideas
+                don&apos;t belong alone.
+              </Paragraphe>
+            </span>
 
-      {mounted && (
-        <motion.div
-          variants={heroVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{
-            type: 'spring',
-            mass: 0.4,
-            stiffness: 600,
-            damping: 60,
-          }}
-          className="z-20 flex flex-col items-center justify-center max-w-lg gap-6 pb-40 md:pb-0"
-        >
-          <span className="space-y-2">
-            <h1 className="text-4xl font-extrabold tracking-tight text-center scroll-m-20 text-balance">
-              Create Your Second Brain
-            </h1>
-            <Paragraphe className="text-sm font-medium text-center text-foreground/80">
-              Organize ideas, share knowledge, and grow together. Your ideas
-              don&apos;t belong alone.
-            </Paragraphe>
-          </span>
-
-          <div className="flex gap-4">
-            <Button variant="secondary" size="lg" className="font-semibold">
-              <Merge />
-              Explore community
-            </Button>
-            <a href="#why-it-matters">
-              <Button size="lg" className="font-bold">
-                <ArrowDownCircle /> Get started
+            <div className="flex gap-4">
+              <Button variant="secondary" size="lg" className="font-semibold">
+                <Merge />
+                Explore community
               </Button>
-            </a>
-          </div>
-        </motion.div>
-      )}
+              <a href="#why-it-matters">
+                <Button size="lg" className="font-bold">
+                  <ArrowDownCircle /> Get started
+                </Button>
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
