@@ -12,7 +12,7 @@ export function SectionHeader({
       <h2 className="text-3xl font-semibold tracking-tight text-center scroll-m-20 first:mt-0">
         {title}
       </h2>
-      <Paragraphe className="text-sm text-center text-muted-foreground">
+      <Paragraphe className="text-sm text-center  text-muted-foreground">
         {subtext}
       </Paragraphe>
     </header>

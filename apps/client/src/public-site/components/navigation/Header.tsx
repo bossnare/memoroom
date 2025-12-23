@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { landingPageLabel } from './label';
+import { ModeToggle } from '@/components/mode-toggle';
 
 export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
   const [scroll, setScroll] = useState(0);
@@ -71,6 +72,8 @@ export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
         </div>
 
         <div className="flex items-center justify-end gap-3 md:gap-4">
+          <ModeToggle className="hidden md:block" />
+
           <div className="flex gap-3 md:gap-4">
             <Button
               size="sm"

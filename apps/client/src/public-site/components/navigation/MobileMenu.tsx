@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { NavLink } from 'react-router-dom';
 import { landingPageLabel } from './label';
 import { Overlay } from '@/shared/components/Overlay';
+import { ModeToggle } from '@/components/mode-toggle';
 
 {
   /* mobile only menu content */
@@ -35,7 +36,9 @@ export const MobileMenu = ({
             }}
             className="fixed inset-0 flex flex-col gap-2 md:hidden bg-background z-100"
           >
-            <nav className="flex justify-end px-1 py-1">
+            <nav className="flex items-start justify-between px-1 py-1 pl-6">
+              <ModeToggle />
+
               <Button size="icon-lg" variant="ghost" onClick={toggleOpen}>
                 <X />
               </Button>

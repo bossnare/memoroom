@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-type OverlayProps = React.ButtonHTMLAttributes<HTMLDivElement> & {
+type OverlayProps = React.HTMLAttributes<HTMLDivElement> & {
   open?: boolean;
 };
 
