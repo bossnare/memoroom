@@ -8,13 +8,31 @@ import google from '@/assets/providers/google.svg';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from '@/components/ui/input';
 import { AuthService } from '@/services/supabase.service';
+import { handleWait } from '@/utils/handle-wait';
+import { Spinner } from '@/shared/components/Spinner';
+
+const LoadingCard = ({ open }: { open?: boolean }) => {
+  return (
+    <>
+      <Overlay className="z-97" open={open} />
+      {open && (
+        <div className="fixed flex items-center justify-center w-full max-w-sm gap-3 p-6 rounded-lg bg-background fixed-center z-98">
+          <Spinner variant="half" />{' '}
+          <span className="font-medium">waiting just one second...</span>
+        </div>
+      )}
+    </>
+  );
+};
 
 const LoginCard = ({
   open,
   toggle,
+  setIsPending,
 }: {
   open?: boolean;
-  toggle?: () => void;
+  toggle: () => void;
+  setIsPending: () => void;
 }) => {
   const isMobile = useIsMobile();
   const providerButtonSize = !isMobile ? 'default' : 'lg';
@@ -29,7 +47,7 @@ const LoginCard = ({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed fixed-center z-100 bg-card dark:bg-background overflow-y-auto scroll-touch border border-border space-y-4 w-[94%] lg:w-full h-1/2 md:h-[calc(100dvh-10rem)] p-4 rounded-xl max-w-md"
+            className="fixed fixed-center z-100 bg-card dark:bg-background overflow-y-auto scroll-touch border border-border space-y-4 w-[94%] lg:w-full min-h-1/2 md:min-h-[calc(100dvh-14rem)] p-4 md:p-5 rounded-xl max-w-md"
           >
             <header>
               <h4 className="text-2xl font-semibold tracking-tight text-center">
@@ -43,11 +61,13 @@ const LoginCard = ({
             <div className="flex justify-center gap-4 py-3">
               <span className="sr-only">Sign in with OAuth provider</span>
               <Button
-                onClick={async () => {
-                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                  toggle ? toggle() : null;
-                  await AuthService.googleSign();
-                }}
+                onClick={() =>
+                  handleWait(async () => {
+                    setIsPending();
+                    toggle();
+                    await AuthService.googleSign();
+                  }, 250)
+                }
                 variant="provider"
                 className="rounded-full md:rounded-md"
                 size={providerButtonSize}
@@ -61,11 +81,13 @@ const LoginCard = ({
                 With Google
               </Button>
               <Button
-                onClick={async () => {
-                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                  toggle ? toggle() : null;
-                  await AuthService.githubSign();
-                }}
+                onClick={() =>
+                  handleWait(async () => {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                    toggle ? toggle() : null;
+                    await AuthService.githubSign();
+                  }, 250)
+                }
                 className="rounded-full md:rounded-md"
                 variant="provider"
                 size={providerButtonSize}
@@ -104,4 +126,4 @@ const LoginCard = ({
   );
 };
 
-export { LoginCard };
+export { LoginCard, LoadingCard };

@@ -35,7 +35,7 @@ export const MobileMenu = ({
             }}
             className="fixed inset-0 flex flex-col gap-2 md:hidden bg-background z-100"
           >
-            <nav className="flex items-center justify-between px-1 py-1 pl-6">
+            <nav className="flex items-center justify-between px-1 py-1 pl-4">
               <ModeToggle />
 
               <Button size="icon-lg" variant="ghost" onClick={toggleOpen}>
