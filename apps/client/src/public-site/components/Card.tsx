@@ -29,7 +29,7 @@ const LoginCard = ({
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed fixed-center z-100 bg-card dark:bg-background overflow-y-auto scroll-touch border border-border space-y-4 w-[98%] lg:w-full h-[calc(100dvh-10rem)] p-4 rounded-xl max-w-md"
+            className="fixed fixed-center z-100 bg-card dark:bg-background overflow-y-auto scroll-touch border border-border space-y-4 w-[94%] lg:w-full h-1/2 md:h-[calc(100dvh-10rem)] p-4 rounded-xl max-w-md"
           >
             <header>
               <h4 className="text-2xl font-semibold tracking-tight text-center">
@@ -80,14 +80,14 @@ const LoginCard = ({
               </Button>
             </div>
 
-            <div className="py-4 text-center">OR</div>
+            <div className="py-3 text-center">OR</div>
 
             <form action="#" className="flex flex-col items-center gap-4">
               <Input
                 type="email"
                 name="email"
                 placeholder="Your email and continue..."
-                className="h-10"
+                className="h-12 md:h-10"
               />
               <Button
                 variant="secondary"
