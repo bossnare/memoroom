@@ -8,10 +8,10 @@ const spinnerVariants = cva('inline-flex rounded-full animate-spin', {
   variants: {
     variant: {
       default:
-        'border-secondary border-t-secondary/20 dark:border-t-secondary/12',
-      half: 'border-secondary border-t-secondary/20 dark:border-t-secondary/12 border-r-secondary/20 dark:border-r-secondary/12',
+        'border-secondary border-t-secondary/14 dark:border-t-secondary/12',
+      half: 'border-secondary border-t-secondary/14 dark:border-t-secondary/12 border-r-secondary/14 dark:border-r-secondary/12',
       invert:
-        'border-secondary/20 dark:border-secondary/12 border-t-secondary dark:border-t-secondary',
+        'border-secondary/14 dark:border-secondary/12 border-t-secondary dark:border-t-secondary',
     },
     size: {
       default: 'size-6 border-4',
