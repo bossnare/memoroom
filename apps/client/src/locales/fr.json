@@ -1,0 +1,40 @@
+{
+    "header": {
+        "home": "Accueil",
+        "about": "A propos",
+        "pricing": "Pricing",
+        "contact": "Contact"
+    },
+    "button": {
+        "signup": "Sign up",
+        "signin": "Sign in"
+    },
+    "hero": {
+        "title": "Créer Votre Sécond Mémoire",
+        "subtitle": "Organiser vos idées, partager vos connaisances, and grow together. Your ideas don't belong alone.",
+        "secondButton": "Explorer la communauté",
+        "primaryButton": "Démmarer"
+    },
+    "section": {
+        "whyItMatters": {
+            "title": "A space built for thinking, not just typing",
+            "subtitle": "Write freely. Organize ideas. Share knowledge with purpose."
+        },
+        "howItWorks": {
+            "title": "Comment ça marche ?",
+            "subtitle": "From idea to clarity in seconds.",
+            "card1": {
+                "title": "Create",
+                "description": "Open a space for your ideas."
+            },
+            "card2": {
+                "title": "Think",
+                "description": "Write freely, organize naturally."
+            },
+            "card3": {
+                "title": "Publish",
+                "description": "Publish when you're ready."
+            }
+        }
+    }
+}

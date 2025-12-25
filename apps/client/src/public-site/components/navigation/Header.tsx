@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { landingPageLabel } from './label';
 import { ModeToggle } from '@/components/mode-toggle';
+import { useTranslation } from 'react-i18next';
 
 export const Header = ({
   toggleOpenMenu,
@@ -18,6 +19,7 @@ export const Header = ({
 }) => {
   const [scroll, setScroll] = useState(0);
   const [isNeedBg, setIsNeedBg] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.addEventListener('scroll', () => setScroll(window.scrollY));
@@ -86,7 +88,7 @@ export const Header = ({
               className="hidden shadow-xs md:inline-flex bg-background text-foreground"
               variant="ghost"
             >
-              Sign up
+              {t('button.signup')}
             </Button>
             <Button
               onClick={setOpenLoginCard}
@@ -94,7 +96,7 @@ export const Header = ({
               variant="secondary"
               className="font-bold"
             >
-              Sign in
+              {t('button.signin')}
             </Button>
           </div>
 

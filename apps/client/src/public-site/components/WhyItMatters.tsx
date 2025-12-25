@@ -1,33 +1,13 @@
 import { NotebookPen, Brain, Globe } from 'lucide-react';
 import { SectionHeader } from './SectionHeader';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   title?: string;
   content?: string;
   Icon?: React.ElementType;
 };
-
-const cardContents = [
-  {
-    title: 'Capture Ideas Fast',
-    content:
-      'Write notes instantly, without friction. Focus on thoughts, not tools.',
-    icon: NotebookPen,
-  },
-  {
-    title: 'Organize Your Mind',
-    content:
-      'Structure your notes with clarity. Your ideas stay clean, searchable, and connected.',
-    icon: Brain,
-  },
-  {
-    title: 'Share with the Community',
-    content:
-      'Turn private notes into shared knowledge. Learn from others. Contribute when ready.',
-    icon: Globe,
-  },
-];
 
 function Card({ title, content, Icon }: Props) {
   return (
@@ -54,6 +34,25 @@ function Card({ title, content, Icon }: Props) {
 }
 
 export const WhyItMatters = () => {
+  const { t } = useTranslation();
+  const cardContents = [
+    {
+      title: t('section.whyItMatters.card1.title'),
+      content: t('section.whyItMatters.card1.description'),
+      icon: NotebookPen,
+    },
+    {
+      title: t('section.whyItMatters.card2.title'),
+      content: t('section.whyItMatters.card2.description'),
+      icon: Brain,
+    },
+    {
+      title: t('section.whyItMatters.card3.title'),
+      content: t('section.whyItMatters.card3.description'),
+      icon: Globe,
+    },
+  ];
+
   return (
     <section
       id="why-it-matters"
@@ -61,8 +60,8 @@ export const WhyItMatters = () => {
     >
       {/* heading 2 */}
       <SectionHeader
-        title="A space built for thinking, not just typing"
-        subtext="Write freely. Organize ideas. Share knowledge with purpose."
+        title={t('section.whyItMatters.title')}
+        subtext={t('section.whyItMatters.subtitle')}
       />
       {/* cards */}
       <div className="flex max-w-6xl mx-auto gap-4 mt-10 flex-col md:flex-row flex-wrap md:justify-center md:items-center w-full md:*:w-[calc(100%/3-1rem)]">

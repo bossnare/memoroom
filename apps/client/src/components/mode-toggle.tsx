@@ -11,6 +11,7 @@ export function ModeToggle({ className }: { className?: string }) {
   return (
     <div
       role="button"
+      title="toggle theme"
       onClick={() => {
         setTheme(set);
         setToggle((prev) => !prev);
