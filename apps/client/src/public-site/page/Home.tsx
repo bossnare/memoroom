@@ -5,9 +5,10 @@ import { Header } from '@/public-site/components/navigation/Header';
 import { MobileMenu } from '@/public-site/components/navigation/MobileMenu';
 import { WhyItMatters } from '@/public-site/components/WhyItMatters';
 import { Footer } from '@/shared/components/brand/Footer';
-import { LoginCard } from '../components/Card';
+import { LoadingCard, LoginCard } from '../components/Card';
 
 export const LandingPage = () => {
+  const { value: isPending, setTrue: setIsPending } = useToggle();
   const { value: openMenu, toggle: toggleOpenMenu } = useToggle();
   const {
     value: openLoginCard,
@@ -17,7 +18,12 @@ export const LandingPage = () => {
 
   return (
     <div className="relative h-screen">
-      <LoginCard open={openLoginCard} toggle={toggleOpenLoginCard} />
+      <LoadingCard open={isPending} />
+      <LoginCard
+        open={openLoginCard}
+        setIsPending={setIsPending}
+        toggle={toggleOpenLoginCard}
+      />
       {/* header */}
       <Header
         toggleOpenMenu={toggleOpenMenu}

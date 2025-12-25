@@ -1,0 +1,52 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About",
+        "pricing": "Pricing",
+        "contact": "Contact"
+    },
+    "button": {
+        "signup": "Sign up",
+        "signin": "Sign in"
+    },
+    "hero": {
+        "title": "Create Your Second Brain",
+        "subtitle": "Organize ideas, share knowledge, and grow together. Your ideas don't belong alone.",
+        "secondButton": "Explore community",
+        "primaryButton": "Get started"
+    },
+    "section": {
+        "whyItMatters": {
+            "title": "A space built for thinking, not just typing",
+            "subtitle": "Write freely. Organize ideas. Share knowledge with purpose.",
+            "card1": {
+                "title": "Capture Ideas Fast",
+                "description": "Write notes instantly, without friction. Focus on thoughts, not tools."
+            },
+            "card2": {
+                "title": "Organize Your Mind",
+                "description": "Structure your notes with clarity. Your ideas stay clean, searchable, and connected."
+            },
+            "card3": {
+                "title": "Share with the Community",
+                "description": "Turn private notes into shared knowledge. Learn from others. Contribute when ready."
+            }
+        },
+        "howItWorks": {
+            "title": "How It Works ?",
+            "subtitle": "From idea to clarity in seconds.",
+            "card1": {
+                "title": "Create",
+                "description": "Open a space for your ideas."
+            },
+            "card2": {
+                "title": "Think",
+                "description": "Write freely, organize naturally."
+            },
+            "card3": {
+                "title": "Publish",
+                "description": "Publish when you're ready."
+            }
+        }
+    }
+}

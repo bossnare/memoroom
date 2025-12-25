@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { SectionHeader } from './SectionHeader';
 import { motion } from 'motion/react';
 
@@ -6,21 +7,6 @@ type Props = {
   content?: string;
   number?: number;
 };
-
-const cardContents = [
-  {
-    title: 'Create',
-    content: 'Open a space for your ideas.',
-  },
-  {
-    title: 'Think',
-    content: 'Write freely, organize naturally.',
-  },
-  {
-    title: 'Share',
-    content: "Publish when you're ready.",
-  },
-];
 
 function Card({ title, content, number }: Props) {
   return (
@@ -51,11 +37,27 @@ function Card({ title, content, number }: Props) {
 }
 
 export function HowItWorks() {
+  const { t } = useTranslation();
+  const cardContents = [
+    {
+      title: t('section.howItWorks.card1.title'),
+      content: t('section.howItWorks.card1.description'),
+    },
+    {
+      title: t('section.howItWorks.card2.title'),
+      content: t('section.howItWorks.card2.description'),
+    },
+    {
+      title: t('section.howItWorks.card3.title'),
+      content: t('section.howItWorks.card3.description'),
+    },
+  ];
+
   return (
     <section className="px-2 py-10 pb-12 min-h-100 bg-muted/80 dark:bg-transparent">
       <SectionHeader
-        title="How It Works ?"
-        subtext="From idea to clarity in seconds"
+        title={t('section.howItWorks.title')}
+        subtext={t('section.howItWorks.subtitle')}
       />
 
       <div className="flex max-w-6xl mx-auto gap-2 md:gap-4 mt-10 lg:[&_.card]:not-last:hover:translate-x-2 [&_.divide]:last:hidden lg:[&_.divide]:last:block flex-col md:flex-row flex-wrap md:justify-center md:items-center lg:*:w-[calc(100%/3-1rem)]">

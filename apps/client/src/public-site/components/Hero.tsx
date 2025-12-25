@@ -5,9 +5,11 @@ import { Paragraphe } from '@/shared/components/Paragraphe';
 import { ArrowDownCircle, Merge } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Hero() {
   const [mounted, setMounted] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -58,22 +60,22 @@ function Hero() {
         >
           <span className="space-y-2">
             <h1 className="text-4xl font-extrabold tracking-tight text-center scroll-m-20 text-balance">
-              Create Your Second Brain
+              {t('hero.title')}
             </h1>
             <Paragraphe className="text-sm font-medium text-center text-foreground/80">
-              Organize ideas, share knowledge, and grow together. Your ideas
-              don&apos;t belong alone.
+              {t('hero.subtitle')}
             </Paragraphe>
           </span>
 
           <div className="flex gap-4">
             <Button variant="secondary" size="lg" className="font-semibold">
               <Merge />
-              Explore community
+              {t('hero.secondButton')}
             </Button>
             <a href="#why-it-matters">
               <Button size="lg" className="font-bold">
-                <ArrowDownCircle /> Get started
+                <ArrowDownCircle />
+                {t('hero.primaryButton')}
               </Button>
             </a>
           </div>
