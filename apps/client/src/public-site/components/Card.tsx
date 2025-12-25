@@ -16,7 +16,7 @@ const LoadingCard = ({ open }: { open?: boolean }) => {
     <>
       <Overlay className="z-97" open={open} />
       {open && (
-        <div className="fixed flex items-center justify-center w-full max-w-sm gap-3 p-6 rounded-lg bg-background fixed-center z-98">
+        <div className="fixed flex items-center justify-center w-5/6 lg:w-full max-w-sm gap-3 p-6 rounded-lg bg-background fixed-center z-98">
           <Spinner variant="half" />{' '}
           <span className="font-medium">wait just a second...</span>
         </div>
