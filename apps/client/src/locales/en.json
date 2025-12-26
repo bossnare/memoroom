@@ -11,9 +11,9 @@
     },
     "hero": {
         "title": "Create Your Second Brain",
-        "subtitle": "Organize ideas, share knowledge, and grow together. Your ideas don't belong alone.",
-        "secondButton": "Explore community",
-        "primaryButton": "Get started"
+        "subtitle": "Organize ideas, share knowledge, and grow together.",
+        "secondButton": "Learn how it works",
+        "primaryButton": "Start writing"
     },
     "section": {
         "whyItMatters": {
@@ -46,6 +46,26 @@
             "card3": {
                 "title": "Publish",
                 "description": "Publish when you're ready."
+            }
+        },
+        "useCase": {
+            "title": "Built for how people actually think",
+            "subtitle": "Whether you're learning, building, or sharing ideas. This is your space.",
+            "card1": {
+                "title": "Students",
+                "description": "Capture lessons, organize ideas, and collaborate with classmates, without the noise."
+            },
+            "card2": {
+                "title": "Writers & Thinkers",
+                "description": "Turn scattered thoughts into structured knowledge you can revist and share."
+            },
+            "card3": {
+                "title": "Communities",
+                "description": "Build shared knowledge, discussions, and collective notes in one place."
+            },
+            "card4": {
+                "title": "Creators & Builders",
+                "description": "Plan, document, and evolve ideas with clarity. From draft to execution."
             }
         }
     }

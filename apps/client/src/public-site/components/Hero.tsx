@@ -2,12 +2,12 @@ import boxWithLine from '@/assets/box_with_line.png';
 import { Button } from '@/components/ui/button';
 import { heroVariants } from '@/motions/motion.variant';
 import { Paragraphe } from '@/shared/components/Paragraphe';
-import { ArrowDownCircle, Merge } from 'lucide-react';
+import { Pen, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function Hero() {
+function Hero({ setOpenLoginCard }: { setOpenLoginCard?: () => void }) {
   const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
 
@@ -62,22 +62,22 @@ function Hero() {
             <h1 className="text-4xl font-extrabold tracking-tight text-center scroll-m-20 text-balance">
               {t('hero.title')}
             </h1>
-            <Paragraphe className="text-sm font-medium text-center text-foreground/80">
+            <Paragraphe className="text-sm font-medium text-center text-foreground/90">
               {t('hero.subtitle')}
             </Paragraphe>
           </span>
 
           <div className="flex gap-4">
-            <Button variant="secondary" size="lg" className="font-semibold">
-              <Merge />
-              {t('hero.secondButton')}
-            </Button>
-            <a href="#why-it-matters">
-              <Button size="lg" className="font-bold">
-                <ArrowDownCircle />
-                {t('hero.primaryButton')}
+            <a href="#how-it-works">
+              <Button variant="secondary" size="lg" className="font-semibold">
+                <BookOpen className="size-5" />
+                {t('hero.secondButton')}
               </Button>
             </a>
+            <Button onClick={setOpenLoginCard} size="lg" className="font-bold">
+              <Pen className="size-5" />
+              {t('hero.primaryButton')}
+            </Button>
           </div>
         </motion.div>
       </AnimatePresence>

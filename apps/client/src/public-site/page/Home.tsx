@@ -6,6 +6,7 @@ import { MobileMenu } from '@/public-site/components/navigation/MobileMenu';
 import { WhyItMatters } from '@/public-site/components/WhyItMatters';
 import { Footer } from '@/shared/components/brand/Footer';
 import { LoadingCard, LoginCard } from '../components/Card';
+import { UseCase } from '@/public-site/components/UseCase';
 
 export const LandingPage = () => {
   const { value: isPending, setTrue: setIsPending } = useToggle();
@@ -31,11 +32,14 @@ export const LandingPage = () => {
       />
       {/* main */}
       <main className="relative min-h-screen">
-        <Hero />
+        <Hero setOpenLoginCard={setOpenLoginCard} />
         <WhyItMatters />
         {/* divide */}
         <div className="w-full h-1 bg-background dark:bg-black"></div>
         <HowItWorks />
+        {/* divide */}
+        <div className="w-full h-1 bg-background dark:bg-black"></div>
+        <UseCase />
       </main>
 
       {/* Menu content - mobile */}
