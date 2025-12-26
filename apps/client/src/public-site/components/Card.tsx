@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { AuthService } from '@/services/supabase.service';
 import { handleWait } from '@/utils/handle-wait';
 import { Spinner } from '@/shared/components/Spinner';
+import { X } from 'lucide-react';
 
 const LoadingCard = ({ open }: { open?: boolean }) => {
   return (
@@ -50,6 +51,13 @@ const LoginCard = ({
             className="fixed fixed-center z-100 bg-card dark:bg-background overflow-y-auto scroll-touch w-[94%] lg:w-full min-h-1/2 md:min-h-[calc(100dvh-14rem)] p-6 rounded-xl max-w-md"
           >
             <div className="relative space-y-4">
+              {/* close button */}
+              <span className="absolute -right-4 -top-4">
+                <Button onClick={toggle} variant="ghost" size="icon">
+                  <X />
+                </Button>
+              </span>
+
               <header>
                 <h4 className="text-2xl font-semibold tracking-tight text-center">
                   Sign in
@@ -103,7 +111,11 @@ const LoginCard = ({
                 </Button>
               </div>
 
-              <div className="py-3 text-center">or</div>
+              <div className="py-3 flex items-center justify-center gap-3">
+                <span className="w-20 md:w-10 inline-flex border-t border-muted"></span>
+                <span>OR</span>
+                <span className="w-20 md:w-10 inline-flex border-t border-muted"></span>
+              </div>
 
               <form action="#" className="flex flex-col items-center gap-4">
                 <Input
@@ -120,6 +132,36 @@ const LoginCard = ({
                   Continue with email
                 </Button>
               </form>
+
+              {/* terms & privacy policy */}
+              <div className="pt-4 text-center text-xs text-muted-foreground text-balance">
+                <span className="leading-none">
+                  No account yet?{' '}
+                  <a href="#">
+                    {' '}
+                    <Button className="p-0" variant="link">
+                      Sign up
+                    </Button>
+                    {'. '}
+                  </a>
+                </span>
+                <span>
+                  By continuing, you agree to our{' '}
+                  <a href="#">
+                    {' '}
+                    <Button className="p-0 text-xs" variant="link">
+                      Terms of Services
+                    </Button>{' '}
+                  </a>{' '}
+                  and{' '}
+                  <a href="#">
+                    {' '}
+                    <Button className="p-0 text-xs" variant="link">
+                      Privacy Policy
+                    </Button>{' '}
+                  </a>
+                </span>
+              </div>
             </div>
           </motion.div>
         )}

@@ -54,7 +54,10 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="px-2 py-10 pb-12 min-h-100 bg-muted/80 dark:bg-transparent">
+    <section
+      id="how-it-works"
+      className="px-2 py-10 md:pb-5 pb-12 min-h-100 bg-muted/80 dark:bg-transparent"
+    >
       <SectionHeader
         title={t('section.howItWorks.title')}
         subtext={t('section.howItWorks.subtitle')}
