@@ -1,8 +1,9 @@
 import boxWithLine from '@/assets/box_with_line.png';
 import { Button } from '@/components/ui/button';
+import { useButtonSize } from '@/hooks/use-button-size';
 import { heroVariants } from '@/motions/motion.variant';
 import { Paragraphe } from '@/shared/components/Paragraphe';
-import { Pen, BookOpen } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 function Hero({ setOpenLoginCard }: { setOpenLoginCard?: () => void }) {
   const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
+  const heroButtonSize = useButtonSize({ mobile: 'xl', landscape: 'lg' });
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -67,17 +69,24 @@ function Hero({ setOpenLoginCard }: { setOpenLoginCard?: () => void }) {
             </Paragraphe>
           </span>
 
-          <div className="flex gap-4">
+          <div className="flex flex-col justify-center items-center md:flex-row gap-3 md:gap-4">
+            <Button
+              onClick={setOpenLoginCard}
+              size={heroButtonSize}
+              className="font-bold rounded-full md:ml-auto md:rounded-lg"
+            >
+              {t('hero.primaryButton')}
+            </Button>
             <a href="#how-it-works">
-              <Button variant="secondary" size="lg" className="font-semibold">
+              <Button
+                variant="secondary"
+                size={heroButtonSize}
+                className="font-semibold rounded-full md:rounded-lg"
+              >
                 <BookOpen className="size-5" />
                 {t('hero.secondButton')}
               </Button>
             </a>
-            <Button onClick={setOpenLoginCard} size="lg" className="font-bold">
-              <Pen className="size-5" />
-              {t('hero.primaryButton')}
-            </Button>
           </div>
         </motion.div>
       </AnimatePresence>

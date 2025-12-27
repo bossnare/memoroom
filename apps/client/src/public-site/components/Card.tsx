@@ -5,13 +5,13 @@ import { Paragraphe } from '@/shared/components/Paragraphe';
 import { Button } from '@/components/ui/button';
 import github from '@/assets/providers/github.svg';
 import google from '@/assets/providers/google.svg';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Input } from '@/components/ui/input';
 import { AuthService } from '@/services/supabase.service';
 import { handleWait } from '@/utils/handle-wait';
 import { Spinner } from '@/shared/components/Spinner';
 import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useButtonSize } from '@/hooks/use-button-size';
 
 const LoadingCard = ({ open }: { open?: boolean }) => {
   const { t } = useTranslation();
@@ -40,8 +40,10 @@ const LoginCard = ({
   toggle: () => void;
   setIsPending: () => void;
 }) => {
-  const isMobile = useIsMobile();
-  const providerButtonSize = !isMobile ? 'default' : 'lg';
+  const providerButtonSize = useButtonSize({
+    landscape: 'default',
+    mobile: 'lg',
+  });
   const { t } = useTranslation();
 
   return (
