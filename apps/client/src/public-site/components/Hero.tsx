@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { useButtonSize } from '@/hooks/use-button-size';
 import { heroVariants } from '@/motions/motion.variant';
 import { Paragraphe } from '@/shared/components/Paragraphe';
+import { handleWait } from '@/utils/handle-wait';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-function Hero({ setOpenLoginCard }: { setOpenLoginCard?: () => void }) {
+function Hero({ setOpenLoginCard }: { setOpenLoginCard: () => void }) {
   const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
   const heroButtonSize = useButtonSize({ mobile: 'xl', landscape: 'lg' });
@@ -70,7 +71,7 @@ function Hero({ setOpenLoginCard }: { setOpenLoginCard?: () => void }) {
 
           <div className="flex flex-col items-center gap-3 md:flex-row md:gap-4">
             <Button
-              onClick={setOpenLoginCard}
+              onClick={() => handleWait(setOpenLoginCard, 300)}
               size={heroButtonSize}
               className="w-auto font-bold rounded-full md:rounded-lg md:order-2"
             >

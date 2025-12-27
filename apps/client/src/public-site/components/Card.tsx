@@ -35,10 +35,12 @@ const LoginCard = ({
   open,
   toggle,
   setIsPending,
+  setIsPendingFalse,
 }: {
   open?: boolean;
   toggle: () => void;
   setIsPending: () => void;
+  setIsPendingFalse: () => void;
 }) => {
   const providerButtonSize = useButtonSize({
     landscape: 'default',
@@ -83,6 +85,7 @@ const LoginCard = ({
                       setIsPending();
                       toggle();
                       await AuthService.googleSign();
+                      setIsPendingFalse();
                     }, 250)
                   }
                   variant="provider"
@@ -103,6 +106,7 @@ const LoginCard = ({
                       setIsPending();
                       toggle();
                       await AuthService.githubSign();
+                      setIsPendingFalse();
                     }, 250)
                   }
                   className="rounded-full md:rounded-md"

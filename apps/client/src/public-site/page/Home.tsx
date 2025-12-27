@@ -10,7 +10,11 @@ import { UseCase } from '@/public-site/components/UseCase';
 import { FooterCTA } from '../components/FooterCTA';
 
 export const LandingPage = () => {
-  const { value: isPending, setTrue: setIsPending } = useToggle();
+  const {
+    value: isPending,
+    setTrue: setIsPending,
+    setFalse: setIsPendingFalse,
+  } = useToggle();
   const { value: openMenu, toggle: toggleOpenMenu } = useToggle();
   const {
     value: openLoginCard,
@@ -22,6 +26,7 @@ export const LandingPage = () => {
     <div className="relative h-screen">
       <LoadingCard open={isPending} />
       <LoginCard
+        setIsPendingFalse={setIsPendingFalse}
         open={openLoginCard}
         setIsPending={setIsPending}
         toggle={toggleOpenLoginCard}
