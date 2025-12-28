@@ -23,17 +23,17 @@ function Hero({ setOpenLoginCard }: { setOpenLoginCard: () => void }) {
       id="hero"
       className="relative flex items-center justify-center px-4 overflow-hidden h-dvh"
     >
-      <div className="absolute rounded-full brightness-140 -left-5 -top-2 lg:left-12 lg:top-6 bg-primary h-70 w-50 lg:h-90 lg:w-100 -z-1"></div>
+      <div className="absolute rounded-full dark:brightness-140 -left-5 -top-2 lg:left-12 lg:top-6 bg-primary h-70 w-50 lg:h-90 lg:w-100 -z-1"></div>
       <div className="absolute right-0 rounded-full bg-primary bottom-10 size-60 lg:size-80 -z-1"></div>
       {/* grainy noise */}
-      <span className="absolute z-11 opacity-50 mix-blend-overlay size-full bg-[url('./assets/noise.svg')]"></span>
+      <span className="absolute z-11 opacity-20 mix-blend-overlay size-full bg-[url('./assets/noise.svg')]"></span>
       {/* overlay blur */}
       <div className="absolute z-10 bg-background/20 backdrop-blur-3xl size-full"></div>
       {/* box with line */}
       <motion.div
         initial="hidden"
         whileInView={mounted ? 'visible' : ''}
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.4 }}
         variants={{
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0 },
@@ -48,6 +48,7 @@ function Hero({ setOpenLoginCard }: { setOpenLoginCard: () => void }) {
           className="dark:invert size-full invert-0"
         />
       </motion.div>
+
       <AnimatePresence>
         <motion.div
           variants={heroVariants}

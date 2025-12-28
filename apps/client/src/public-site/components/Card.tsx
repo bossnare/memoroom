@@ -80,14 +80,17 @@ const LoginCard = ({
               <div className="flex flex-col justify-center gap-3 py-3 md:gap-4 lg:flex-row">
                 <span className="sr-only">Sign in with OAuth provider</span>
                 <Button
-                  onClick={() =>
+                  onClick={() => {
                     handleWait(async () => {
                       setIsPending();
                       toggle();
-                      await AuthService.googleSign();
-                      setIsPendingFalse();
-                    }, 250)
-                  }
+                      try {
+                        await AuthService.googleSign();
+                      } catch (e) {
+                        if (e) setIsPendingFalse();
+                      }
+                    }, 250);
+                  }}
                   variant="provider"
                   className="rounded-full md:rounded-md"
                   size={providerButtonSize}
