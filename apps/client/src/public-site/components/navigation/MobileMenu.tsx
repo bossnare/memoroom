@@ -59,7 +59,7 @@ export const MobileMenu = ({
                               ? 'text-primary bg-primary/20 dark:bg-primary/16'
                               : 'active:text-muted-foreground',
                             'relative flex justify-center',
-                            'transition-colors duration-100 font-bold rounded-sm text-lg w-full ease px-2 flex items-center justify-start h-10'
+                            'transition-colors duration-100 font-semibold rounded-sm text-2xl ease px-2 flex items-center justify-start h-10'
                           )}
                         >
                           {l.label}
