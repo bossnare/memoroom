@@ -12,7 +12,7 @@ import { useIsDesktop } from '@/hooks/use-desktop';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { fabButtonVariants } from '@/motions/motion.variant';
 import { useLayoutStore } from '@/stores/layoutStore';
-import { PenLine } from 'lucide-react';
+import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
@@ -97,10 +97,10 @@ function DashboardLayout() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed bottom-24 md:bottom-12 right-4"
+              className="fixed bottom-24 md:bottom-12 right-5"
             >
-              <Button className="text-white rounded-full shadow-lg size-14">
-                <PenLine className="size-auto" />
+              <Button className="text-white rounded-full shadow-lg size-15 lg:size-14">
+                <SquarePen className="size-8 lg:size-6" />
               </Button>
             </motion.div>
           )}

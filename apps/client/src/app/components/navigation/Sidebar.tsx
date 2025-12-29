@@ -10,6 +10,7 @@ import { NavTab } from './NavTab';
 import { SideBarTabWrapper } from './sideBarTab';
 import { NavLink } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { handleWait } from '@/utils/handle-wait';
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
@@ -36,7 +37,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
         ref={ref}
         className={`${
           open ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-200 px-4 py-2 z-50 ease-in-out w-4/5 bg-background fixed inset-y-0 border-r border-sidebar-border overflow-hidden`}
+        } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-200 px-4 py-2 z-50 ease-in-out w-4/5 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
       >
         <aside className={`relative size-full rounded-xl`}>
           <MiniProfile
@@ -59,7 +60,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
                 <NavLink title={t.label} to={t.route} end={t.route === '/app'}>
                   {({ isActive }) => (
                     <button
-                      onClick={() => setOpen(false)}
+                      onClick={() => handleWait(() => setOpen(false), 200)}
                       className={cn(
                         isActive
                           ? 'font-bold text-sidebar-foreground'
@@ -86,7 +87,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
                     <NavLink to={s.route}>
                       {({ isActive }) => (
                         <button
-                          onClick={() => setOpen(false)}
+                          onClick={() => handleWait(() => setOpen(false), 200)}
                           className={cn(
                             isActive
                               ? 'font-bold text-sidebar-foreground'
