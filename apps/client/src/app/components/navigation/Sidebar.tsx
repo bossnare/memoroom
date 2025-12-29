@@ -35,7 +35,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
         ref={ref}
         className={`${
           open ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden transition-transform will-change-transform text-sidebar-foreground duration-200 px-4 py-2 z-50 ease-in-out w-6/7 bg-sidebar fixed inset-y-0 border-r border-sidebar-border overflow-hidden`}
+        } md:hidden transition-transform will-change-transform text-sidebar-foreground duration-200 px-4 py-2 z-50 ease-in-out w-6/7 bg-background fixed inset-y-0 border-r border-sidebar-border overflow-hidden`}
       >
         <aside className={`relative size-full rounded-xl overflow-y-auto`}>
           <MiniProfile

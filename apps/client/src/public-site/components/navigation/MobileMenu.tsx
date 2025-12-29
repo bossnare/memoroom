@@ -7,16 +7,17 @@ import { AnimatePresence, motion } from 'motion/react';
 import { NavLink } from 'react-router-dom';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useLabel } from '@/public-site/hooks/use-label';
+import { handleWait } from '@/utils/handle-wait';
 
 {
   /* mobile only menu content */
 }
 export const MobileMenu = ({
   open,
-  toggleOpen,
+  toggle,
 }: {
   open?: boolean;
-  toggleOpen?: () => void;
+  toggle: () => void;
 }) => {
   const menuLabel = useLabel();
 
@@ -40,7 +41,7 @@ export const MobileMenu = ({
             <nav className="flex items-center justify-between px-1 py-1 pl-4">
               <ModeToggle />
 
-              <Button size="icon-lg" variant="ghost" onClick={toggleOpen}>
+              <Button size="icon-lg" variant="ghost" onClick={toggle}>
                 <X />
               </Button>
             </nav>
@@ -52,6 +53,7 @@ export const MobileMenu = ({
                     <NavLink to={l.route}>
                       {({ isActive }) => (
                         <button
+                          onClick={() => handleWait(toggle, 200)}
                           className={cn(
                             isActive
                               ? 'text-primary bg-primary/20 dark:bg-primary/16 w-full'

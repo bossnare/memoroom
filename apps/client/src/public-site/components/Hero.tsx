@@ -7,11 +7,13 @@ import { handleWait } from '@/utils/handle-wait';
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLayoutStore } from '../store/layoutStore';
 
-function Hero({ setOpenLoginCard }: { setOpenLoginCard: () => void }) {
+function Hero() {
   const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
   const heroButtonSize = useButtonSize({ mobile: 'xl', landscape: 'lg' });
+  const setLoginOpen = useLayoutStore((s) => s.setLoginOpen);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -72,7 +74,7 @@ function Hero({ setOpenLoginCard }: { setOpenLoginCard: () => void }) {
 
           <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Button
-              onClick={() => handleWait(setOpenLoginCard, 300)}
+              onClick={() => handleWait(() => setLoginOpen(true), 300)}
               size={heroButtonSize}
               className="w-auto font-bold rounded-full md:rounded-lg md:order-2"
             >

@@ -9,18 +9,16 @@ import { NavLink } from 'react-router-dom';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useTranslation } from 'react-i18next';
 import { useLabel } from '@/public-site/hooks/use-label';
+import { useLayoutStore } from '@/public-site/store/layoutStore';
+import { handleWait } from '@/utils/handle-wait';
 
-export const Header = ({
-  toggleOpenMenu,
-  setOpenLoginCard,
-}: {
-  toggleOpenMenu?: () => void;
-  setOpenLoginCard: () => void;
-}) => {
+export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
   const [scroll, setScroll] = useState(0);
   const [isNeedBg, setIsNeedBg] = useState(false);
   const navbarLabel = useLabel();
   const { t } = useTranslation();
+
+  const setLoginOpen = useLayoutStore((s) => s.setLoginOpen);
 
   useEffect(() => {
     window.addEventListener('scroll', () => setScroll(window.scrollY));
@@ -92,7 +90,7 @@ export const Header = ({
               {t('auth.button.signup')}
             </Button>
             <Button
-              onClick={setOpenLoginCard}
+              onClick={() => handleWait(() => setLoginOpen(true), 200)}
               size="sm"
               variant="secondary"
               className="font-bold"

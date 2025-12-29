@@ -28,7 +28,7 @@ export const Tab = ({
       ) : (
         <Icon className="rounded-md shrink-0 md:size-5 size-7" />
       )}
-      <span className="hidden md:block">{label}</span>
+      <span>{label}</span>
       {/* underline */}
       {isActive && (
         <span className="absolute w-1/4 h-1.5 rounded-full md:hidden bottom-0 bg-sidebar-foreground"></span>

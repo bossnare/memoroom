@@ -5,10 +5,14 @@ import { useAuth } from '@/hooks/use-auth';
 import { useIsPublicRoute } from '@/hooks/useIsPublicRoute';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoutes } from './ProtectedRoutes';
-import { PublicLayout } from '../public-site/PublicLayout';
+import { PublicLayout } from '@/public-site/PublicLayout';
 import { NotFound } from '@/shared/components/not-found';
-import { LandingPage } from '@/public-site/page/Home';
 import { SignUp } from '@/public-site/page/Signup';
+import { PublicRoutes } from './PublicRoutes';
+import { Home } from '@/public-site/page/Home';
+import { About } from '@/public-site/page/About';
+import { Pricing } from '@/public-site/page/Pricing';
+import { Contact } from '@/public-site/page/Contact';
 
 export const AppRoutes = () => {
   const { pending, session } = useAuth();
@@ -22,20 +26,13 @@ export const AppRoutes = () => {
       ) : (
         <Routes>
           {/* public */}
-          <Route element={<PublicLayout session={session} />}>
-            <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/about"
-              element={<div className="py-4 text-center">No content yet.</div>}
-            />
-            <Route
-              path="/pricing"
-              element={<div className="py-4 text-center">No content yet.</div>}
-            />
-            <Route
-              path="/contact"
-              element={<div className="py-4 text-center">No content yet.</div>}
-            />
+          <Route element={<PublicRoutes session={session} />}>
+            <Route path="/" element={<PublicLayout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="pricing" element={<Pricing />} />
+              <Route path="contact" element={<Contact />} />
+            </Route>
             {/* auth - public */}
             <Route path="/auth">
               <Route path="register" element={<SignUp />} />

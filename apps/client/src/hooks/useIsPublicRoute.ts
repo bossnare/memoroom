@@ -1,6 +1,13 @@
 import { useLocation } from 'react-router-dom';
 
-const publicRoutePatterns = [/^\/$/, /^\/login/, /^\/register/];
+const publicRoutePatterns = [
+  /^\/$/,
+  /^\/about/,
+  /^\/pricing/,
+  /^\/contact/,
+  /^\/login/,
+  /^\/register/,
+];
 
 export const useIsPublicRoute = () => {
   const location = useLocation();
