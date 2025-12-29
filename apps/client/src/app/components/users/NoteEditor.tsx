@@ -34,11 +34,10 @@ export const NoteEditor = ({
           </nav>
 
           <main className="flex flex-col h-full px-2 py-2 space-y-4 lg:px-4">
-            <input
-              type="text"
-              className="text-2xl font-bold placeholder:text-xl focus:outline-0"
+            <textarea
+              className="text-2xl font-bold placeholder:text-xl w-full resize-none focus:outline-0"
               placeholder="Title"
-            />
+            ></textarea>
             <textarea
               ref={areaRef}
               name=""
