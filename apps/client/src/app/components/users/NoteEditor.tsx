@@ -33,9 +33,9 @@ export const NoteEditor = ({
             </Button>
           </nav>
 
-          <main className="flex flex-col h-full px-2 py-2 space-y-4 lg:px-4">
+          <main className="flex flex-col h-full px-2 py-2 space-y-3 lg:px-4">
             <textarea
-              className="text-2xl h-12 font-bold placeholder:text-xl w-full resize-none focus:outline-0"
+              className="text-2xl min-h-12 font-bold placeholder:text-xl w-full resize-none focus:outline-0"
               placeholder="Title"
             ></textarea>
             <textarea
