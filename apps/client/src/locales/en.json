@@ -1,4 +1,10 @@
 {
+    "routes": {
+        "home": "Home",
+        "about": "About",
+        "pricing": "Pricing",
+        "contact": "Contact"
+    },
     "header": {
         "home": "Home",
         "about": "About",

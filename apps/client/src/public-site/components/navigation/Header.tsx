@@ -5,20 +5,29 @@ import { Logo } from '@/shared/components/brand/Logo';
 import { TextAlignJustify } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useTranslation } from 'react-i18next';
 import { useLabel } from '@/public-site/hooks/use-label';
 import { useLayoutStore } from '@/public-site/store/layoutStore';
 import { handleWait } from '@/utils/handle-wait';
+import { LogoWithPagename } from '@/shared/components/brand/LogoWithPagename';
 
 export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
   const [scroll, setScroll] = useState(0);
   const [isNeedBg, setIsNeedBg] = useState(false);
+  const [isNeedLogo, setIsNeedLogo] = useState<boolean | undefined>();
+
   const navbarLabel = useLabel();
   const { t } = useTranslation();
-
   const setLoginOpen = useLayoutStore((s) => s.setLoginOpen);
+
+  // Logo optional rendering
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsNeedLogo(location.pathname === '/');
+  }, [location.pathname]);
 
   useEffect(() => {
     window.addEventListener('scroll', () => setScroll(window.scrollY));
@@ -39,7 +48,13 @@ export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
         )}
       >
         <div className="flex items-center shrink-0 lg:min-w-1/5">
-          <Logo />
+          {isNeedLogo ? (
+            <Logo />
+          ) : (
+            <div>
+              <LogoWithPagename />
+            </div>
+          )}
         </div>
 
         {/* nav */}

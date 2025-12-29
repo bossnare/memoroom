@@ -1,4 +1,10 @@
 {
+    "routes": {
+        "home": "Accueil",
+        "about": "À propos",
+        "pricing": "Tarifs",
+        "contact": "Contact"
+    },
     "header": {
         "home": "Accueil",
         "about": "À propos",

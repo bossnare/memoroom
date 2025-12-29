@@ -1,4 +1,10 @@
 {
+    "routes": {
+        "home": "Fandraisana",
+        "about": "Mombamomba",
+        "pricing": "Vidiny",
+        "contact": "Fifandraisana"
+    },
     "header": {
         "home": "Fandraisana",
         "about": "Mombamomba",
