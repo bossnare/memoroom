@@ -4,7 +4,7 @@ import { Logo } from '@/shared/components/brand/Logo';
 import { useLayoutStore } from '@/stores/layoutStore';
 import { waitVibrate } from '@/utils/vibration';
 import { PanelLeftClose, PanelLeftOpen, Plus, Settings } from 'lucide-react';
-import { Overlay } from '../../../shared/components/Overlay';
+import { Overlay } from '@/shared/components/Overlay';
 import { desctructiveLabel, sideBarLabel, tabLabel } from './label';
 import { NavTab } from './NavTab';
 import { SideBarTabWrapper } from './sideBarTab';
@@ -16,10 +16,12 @@ type SidebarProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
 
-export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
-  const setOpen = useLayoutStore((s) => s.setIsOpenMobileSidebar);
-  const open = useLayoutStore((s) => s.isOpenMobileSidebar);
-
+export const MobileSidebar = ({
+  open,
+  close,
+  ref,
+  ...props
+}: SidebarProps & { open?: boolean; close: () => void }) => {
   return (
     <>
       {/* overlay */}
@@ -27,7 +29,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
         className="z-40 md:hidden"
         onClick={() => {
           waitVibrate(200, 'low');
-          setOpen(false);
+          close();
         }}
         open={open}
       />
@@ -43,7 +45,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
           <MiniProfile
             btnAction={
               <Button
-                onClick={() => handleWait(() => setOpen(false), 200)}
+                onClick={() => handleWait(() => close(), 200)}
                 variant="ghost"
                 size="icon-lg"
               >
@@ -60,7 +62,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
                 <NavLink title={t.label} to={t.route} end={t.route === '/app'}>
                   {({ isActive }) => (
                     <button
-                      onClick={() => handleWait(() => setOpen(false), 100)}
+                      onClick={() => handleWait(() => close(), 100)}
                       className={cn(
                         isActive
                           ? 'font-bold text-sidebar-foreground'
@@ -87,7 +89,7 @@ export const MobileSidebar = ({ ref, ...props }: SidebarProps) => {
                     <NavLink to={s.route}>
                       {({ isActive }) => (
                         <button
-                          onClick={() => handleWait(() => setOpen(false), 100)}
+                          onClick={() => handleWait(() => close(), 100)}
                           className={cn(
                             isActive
                               ? 'font-bold text-sidebar-foreground'

@@ -15,7 +15,7 @@ import { useLayoutStore } from '@/stores/layoutStore';
 import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { AppLoader } from '../components/AppLoader';
 import { handleWait } from '@/utils/handle-wait';
 import {
@@ -25,14 +25,15 @@ import {
 
 function DashboardLayout() {
   // store state
-  const isOpenMobileSidebar = useLayoutStore((s) => s.isOpenMobileSidebar);
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const setIsOpenPanel = useLayoutStore((s) => s.setIsOpenPanel);
-  const setIsOpenMobileSidebar = useLayoutStore(
-    (s) => s.setIsOpenMobileSidebar
-  );
   const appLoading = useLayoutStore((s) => s.appLoading);
   const setAppLoading = useLayoutStore((s) => s.setAppLoading);
+
+  // query params state
+  const [params] = useSearchParams();
+  const sidebar = params.get('sidebar');
+  const openMobileSidebar = sidebar === 'mobile';
 
   const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ function DashboardLayout() {
         width: `calc(100% - ${SIDEBAR_WIDTH}px)`,
       }
     : {
-        transform: isOpenMobileSidebar
+        transform: openMobileSidebar
           ? `translateX(${mobileSidebarWidth}px)`
           : 'translateX(0)',
       };
@@ -68,8 +69,8 @@ function DashboardLayout() {
 
   // auto-collapsed sidebar
   useEffect(() => {
-    if (!isMobile) setIsOpenMobileSidebar(false);
-  }, [isMobile, setIsOpenMobileSidebar]);
+    if (!isMobile && openMobileSidebar) navigate(-1);
+  }, [isMobile, openMobileSidebar, navigate]);
 
   useEffect(() => {
     setIsOpenPanel(isDesktop);
@@ -83,7 +84,12 @@ function DashboardLayout() {
         {/* desktop sidebar */}
         <DesktopSidebar width={SIDEBAR_WIDTH} />
         {/* mobile sidebar  */}
-        <MobileSidebar ref={mobileSidebarRef} /> {/* main content */}
+        <MobileSidebar
+          open={openMobileSidebar}
+          close={() => navigate(-1)}
+          ref={mobileSidebarRef}
+        />{' '}
+        {/* main content */}
         <div
           style={MAIN_TRANSFORM}
           className="relative transition-transform duration-200 ease-in-out will-change-transform md:duration-100"
@@ -102,7 +108,7 @@ function DashboardLayout() {
         </div>
         {/* fab button (create note, long presse -> choice) - mobile only */}
         <AnimatePresence>
-          {!isOpenMobileSidebar && (
+          {!openMobileSidebar && (
             <motion.div
               variants={fabButtonVariants}
               initial="hidden"

@@ -52,10 +52,14 @@ export const NoteEditor = () => {
           ></textarea>
           <div className="text-sm space-x-2 text-muted-foreground">
             <span>
-              {new Date().toLocaleDateString('en-EN', {
+              {new Date().toLocaleDateString('en-US', {
+                weekday: 'short',
                 day: 'numeric',
                 year: 'numeric',
                 month: 'long',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
               })}
             </span>
             <span className="w-0.5 border-l border-muted"></span>{' '}
@@ -72,7 +76,7 @@ export const NoteEditor = () => {
             }}
             name=""
             id=""
-            className="w-full h-full scrollbar-none font-normal text-lg resize-none focus:outline-0"
+            className="w-full h-full scrollbar-none font-normal text-lg placeholder:text-base resize-none focus:outline-0"
             placeholder="Start typing freely..."
           ></textarea>
         </main>

@@ -1,21 +1,24 @@
 import { Button } from '@/components/ui/button';
-import { useToggle } from '@/hooks/use-toggle';
 import { kebabMenuVariants } from '@/motions/motion.variant';
-import { useLayoutStore } from '@/stores/layoutStore';
 import { handleWait } from '@/utils/handle-wait';
 import { Ellipsis } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { kebabMenuLabel } from './label';
 
-export const KebabMenu = () => {
-  const {
-    value: openKebabMenu,
-    toggle: toggleOpenKebabMenu,
-    setFalse: setOpenKebabToFalse,
-  } = useToggle();
-  const isOpenMobileSidebar = useLayoutStore((s) => s.isOpenMobileSidebar);
+type Props = {
+  open?: boolean;
+  close: () => void;
+  toggle: () => void;
+  openMobileSidebar?: boolean;
+};
 
+export const KebabMenu = ({
+  open,
+  close,
+  toggle,
+  openMobileSidebar,
+}: Props) => {
   const kebabMenuRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
@@ -27,12 +30,12 @@ export const KebabMenu = () => {
         kebabMenuRef?.current?.contains(target)
       )
         return;
-      setOpenKebabToFalse();
+      close();
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [setOpenKebabToFalse]);
+  }, [close]);
 
   return (
     <>
@@ -41,13 +44,13 @@ export const KebabMenu = () => {
         variant="ghost"
         size="icon-lg"
         ref={triggerRef}
-        onClick={toggleOpenKebabMenu}
+        onClick={toggle}
         className="md:hidden duration-300"
       >
         <Ellipsis />
       </Button>
       {/* Kebab menu */}
-      {!isOpenMobileSidebar && openKebabMenu && (
+      {!openMobileSidebar && open && (
         <motion.div
           variants={kebabMenuVariants}
           ref={kebabMenuRef}
@@ -60,7 +63,7 @@ export const KebabMenu = () => {
             {kebabMenuLabel.map((m) => (
               <li key={m.id}>
                 <button
-                  onClick={() => handleWait(setOpenKebabToFalse, 230)}
+                  onClick={() => handleWait(() => close(), 230)}
                   className="flex items-center w-full h-9.5 gap-3 px-2 rounded-md text-foreground/90 active:bg-muted active:opacity-70"
                 >
                   <m.icon className="size-5" /> {m.label}

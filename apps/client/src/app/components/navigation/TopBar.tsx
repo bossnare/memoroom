@@ -13,14 +13,28 @@ import {
 import { AnimatePresence } from 'motion/react';
 import { useId } from 'react';
 import { KebabMenu } from './KebabMenu';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const TopBar = () => {
   const inputId = useId();
   const { user } = useAuth();
-  const toggleIsOpenMobileSidebar = useLayoutStore(
-    (s) => s.toggleIsOpenMobileSidebar
-  );
   const toggleOpenSideOver = useLayoutStore((s) => s.toggleOpenSideOver);
+
+  const navigate = useNavigate();
+
+  const [params] = useSearchParams();
+  const menu = params.get('menu');
+  const sidebar = params.get('sidebar');
+
+  const openKebabMenu = menu === 'kebab';
+  const openMobileSidebar = sidebar === 'mobile';
+
+  const closeKebabMenu = () => navigate(-1);
+
+  const toggleOpenKebabMenu = () => {
+    if (openKebabMenu) closeKebabMenu();
+    else navigate('?menu=kebab');
+  };
 
   return (
     <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 shadow-lg h-13 z-99 md:h-14 md:px-2 bg-sidebar">
@@ -31,7 +45,7 @@ export const TopBar = () => {
           variant="ghost"
           onClick={() => {
             waitVibrate(200, 'low');
-            toggleIsOpenMobileSidebar();
+            navigate('?sidebar=mobile');
           }}
           className="md:hidden"
         >
@@ -77,7 +91,12 @@ export const TopBar = () => {
         </div>
         {/* mobile navigation tab */}
         <AnimatePresence>
-          <KebabMenu />
+          <KebabMenu
+            toggle={toggleOpenKebabMenu}
+            open={openKebabMenu}
+            close={closeKebabMenu}
+            openMobileSidebar={openMobileSidebar}
+          />
         </AnimatePresence>
       </div>
     </nav>
