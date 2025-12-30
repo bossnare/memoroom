@@ -13,11 +13,13 @@ export const PublicLayout = () => {
     setTrue: setIsPending,
     setFalse: setIsPendingFalse,
   } = useToggle();
-  const { value: openMenu, toggle: toggleOpenMenu } = useToggle();
 
   const [params] = useSearchParams();
   const auth = params.get('auth');
+  const menu = params.get('menu');
+
   const loginOpen = auth === 'login';
+  const mobileMenuOpen = menu === 'mobileMenu';
 
   return (
     <div className="relative h-screen">
@@ -29,9 +31,12 @@ export const PublicLayout = () => {
         close={() => navigate(-1) || navigate('/', { replace: true })}
       />
       {/* header */}
-      <Header toggleOpenMenu={toggleOpenMenu} />
+      <Header />
       {/* Menu content - mobile */}
-      <MobileMenu open={openMenu} toggle={toggleOpenMenu} />
+      <MobileMenu
+        open={mobileMenuOpen}
+        close={() => navigate(-1) || navigate('/', { replace: true })}
+      />
       {/* main */}
       <main className="relative min-h-screen">
         <Outlet />

@@ -14,10 +14,10 @@ import { handleWait } from '@/utils/handle-wait';
 }
 export const MobileMenu = ({
   open,
-  toggle,
+  close,
 }: {
   open?: boolean;
-  toggle: () => void;
+  close: () => void;
 }) => {
   const menuLabel = useLabel();
 
@@ -41,7 +41,7 @@ export const MobileMenu = ({
             <nav className="flex items-center justify-between px-1 py-1 pl-4">
               <ModeToggle />
 
-              <Button size="icon-lg" variant="ghost" onClick={toggle}>
+              <Button size="icon-lg" variant="ghost" onClick={close}>
                 <X />
               </Button>
             </nav>
@@ -53,7 +53,7 @@ export const MobileMenu = ({
                     <NavLink to={l.route}>
                       {({ isActive }) => (
                         <button
-                          onClick={() => handleWait(toggle, 200)}
+                          onClick={() => handleWait(close, 200)}
                           className={cn(
                             isActive
                               ? 'text-primary bg-primary/20 dark:bg-primary/16'
