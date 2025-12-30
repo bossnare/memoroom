@@ -1,4 +1,4 @@
-import DashboardLayout from '@/app/layout/AppLayout';
+import AppLayout from '@/app/layout/AppLayout';
 import Overview from '@/app/page/Overview';
 import { HomeScreenLoader } from '@/shared/components/HomeScreenLoader';
 import { useAuth } from '@/hooks/use-auth';
@@ -13,6 +13,8 @@ import { Home } from '@/public-site/page/Home';
 import { About } from '@/public-site/page/About';
 import { Pricing } from '@/public-site/page/Pricing';
 import { Contact } from '@/public-site/page/Contact';
+import { NoteEditor } from '@/app/components/users/NoteEditor';
+import MiniLayout from '@/app/layout/MiniLayout';
 
 export const AppRoutes = () => {
   const { pending, session } = useAuth();
@@ -40,7 +42,7 @@ export const AppRoutes = () => {
           </Route>
           {/* protected */}
           <Route element={<ProtectedRoutes session={session} />}>
-            <Route path="/app" element={<DashboardLayout />}>
+            <Route path="/app" element={<AppLayout />}>
               <Route index element={<Overview />} />
               <Route path="search" element={<div>Search Route</div>} />
               <Route
@@ -51,8 +53,13 @@ export const AppRoutes = () => {
               />
               <Route path="tags" element={<div>Tags Route</div>} />
             </Route>
+
+            {/* notes */}
+            <Route path="/note" element={<MiniLayout />}>
+              <Route path="new" element={<NoteEditor />} />
+            </Route>
           </Route>
-          {/* bad route */}
+          {/* not found route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       )}

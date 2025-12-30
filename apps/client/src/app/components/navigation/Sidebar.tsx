@@ -8,7 +8,7 @@ import { Overlay } from '../../../shared/components/Overlay';
 import { desctructiveLabel, sideBarLabel, tabLabel } from './label';
 import { NavTab } from './NavTab';
 import { SideBarTabWrapper } from './sideBarTab';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { handleWait } from '@/utils/handle-wait';
 
@@ -126,6 +126,8 @@ export const DesktopSidebar = ({
 }: SidebarProps & { width: number }) => {
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const toggleOpenPanel = useLayoutStore((s) => s.toggleOpenPanel);
+  const setAppLoading = useLayoutStore((s) => s.setAppLoading);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -161,6 +163,13 @@ export const DesktopSidebar = ({
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">
             <Button
+              onClick={() => {
+                setAppLoading(true);
+                handleWait(async () => {
+                  await navigate('/note/new');
+                  setAppLoading(false);
+                }, 600);
+              }}
               title="create new note"
               size="lg"
               variant="secondary"

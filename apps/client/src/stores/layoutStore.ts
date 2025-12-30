@@ -12,12 +12,17 @@ interface LayoutState {
   isOpenPanel: boolean;
   setIsOpenPanel: (isOpenPanel: boolean) => void;
   toggleOpenPanel: () => void;
+
+  // global loading state
+  appLoading: boolean;
+  setAppLoading: (appLoading: boolean) => void;
 }
 
 export const useLayoutStore = create<LayoutState>((set) => ({
   isOpenMobileSidebar: false,
   openSideOver: false,
   isOpenPanel: true,
+  appLoading: false,
   setOpenSideOver: (openSideOver: boolean) => set({ openSideOver }),
   setIsOpenMobileSidebar: (isOpenMobileSidebar: boolean) =>
     set({ isOpenMobileSidebar }),
@@ -27,4 +32,5 @@ export const useLayoutStore = create<LayoutState>((set) => ({
     set((state) => ({ openSideOver: !state.openSideOver })),
   toggleOpenPanel: () => set((state) => ({ isOpenPanel: !state.isOpenPanel })),
   setIsOpenPanel: (isOpenPanel: boolean) => set({ isOpenPanel }),
+  setAppLoading: (appLoading: boolean) => set({ appLoading }),
 }));

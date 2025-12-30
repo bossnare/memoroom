@@ -12,6 +12,7 @@ const spinnerVariants = cva('inline-flex rounded-full animate-spin', {
       half: 'border-secondary border-t-secondary/14 dark:border-t-secondary/12 border-r-secondary/14 dark:border-r-secondary/12',
       invert:
         'border-secondary/14 dark:border-secondary/12 border-t-secondary dark:border-t-secondary',
+      primary: 'border-primary border-t-primary/50',
     },
     size: {
       default: 'size-6 border-4',

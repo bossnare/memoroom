@@ -15,9 +15,13 @@ import { useLayoutStore } from '@/stores/layoutStore';
 import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import { NoteEditor } from '../components/users/NoteEditor';
-import { useToggle } from '@/hooks/use-toggle';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { AppLoader } from '../components/AppLoader';
+import { handleWait } from '@/utils/handle-wait';
+import {
+  MIN_PANEL_WIDTH,
+  MAX_PANEL_WIDTH,
+} from '@/app/constants/layout.constant';
 
 function DashboardLayout() {
   // store state
@@ -27,12 +31,10 @@ function DashboardLayout() {
   const setIsOpenMobileSidebar = useLayoutStore(
     (s) => s.setIsOpenMobileSidebar
   );
+  const appLoading = useLayoutStore((s) => s.appLoading);
+  const setAppLoading = useLayoutStore((s) => s.setAppLoading);
 
-  const {
-    value: openEditor,
-    setTrue: setOpenEditorTrue,
-    setFalse: setOpenEditorFalse,
-  } = useToggle();
+  const navigate = useNavigate();
 
   // local state
   const [mobileSidebarWidth, setMobileSidebarWidth] = useState(0);
@@ -41,8 +43,6 @@ function DashboardLayout() {
   const isDesktop = useIsDesktop(); // >= lg
 
   //  reactive main width
-  const MIN_PANEL_WIDTH = 60;
-  const MAX_PANEL_WIDTH = 256;
   const SIDEBAR_WIDTH = isOpenPanel ? MAX_PANEL_WIDTH : MIN_PANEL_WIDTH;
 
   // main transform style breakpoint
@@ -78,6 +78,8 @@ function DashboardLayout() {
   return (
     <>
       <div className="relative overflow-hidden">
+        {/* loading state on big route change */}
+        <AppLoader open={appLoading} />
         {/* desktop sidebar */}
         <DesktopSidebar width={SIDEBAR_WIDTH} />
         {/* mobile sidebar  */}
@@ -91,13 +93,14 @@ function DashboardLayout() {
           <PullToRefreshWrapper
             onRefresh={async () => window.location.reload()}
           >
-            <ScrollArea className="h-[calc(100dvh-116px)] md:h-[calc(100dvh-56px)] scroll-touch">
-              <main className="pb-[60px] min-h-full px-2 py-2 md:px-4 overscroll-contain">
+            <ScrollArea className="h-[calc(100dvh-116px)] md:h-[calc(100dvh-56px)] scroll-touch overscroll-contain">
+              <main className="pb-[60px] min-h-full px-2 py-2 md:px-4">
                 <Outlet />
               </main>
             </ScrollArea>
           </PullToRefreshWrapper>
         </div>
+        {/* fab button (create note, long presse -> choice) - mobile only */}
         <AnimatePresence>
           {!isOpenMobileSidebar && (
             <motion.div
@@ -105,10 +108,16 @@ function DashboardLayout() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed bottom-24 md:bottom-12 right-5"
+              className="fixed bottom-24 md:bottom-12 lg:hidden right-5"
             >
               <Button
-                onClick={setOpenEditorTrue}
+                onClick={() => {
+                  setAppLoading(true);
+                  handleWait(async () => {
+                    await navigate('/note/new');
+                    setAppLoading(false);
+                  }, 600);
+                }}
                 className="text-white rounded-full shadow-lg size-15 lg:size-14"
               >
                 <SquarePen className="size-7 lg:size-6" />
@@ -117,7 +126,6 @@ function DashboardLayout() {
           )}
         </AnimatePresence>
         {/* quick Editor */}
-        <NoteEditor open={openEditor} close={setOpenEditorFalse} />
         {/* mobile */}
         <BottomBar mobileSidebarWidth={mobileSidebarWidth} />
         {/* sideOver */}
