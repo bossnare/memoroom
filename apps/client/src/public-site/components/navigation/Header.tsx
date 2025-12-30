@@ -12,7 +12,7 @@ import { useLabel } from '@/public-site/hooks/use-label';
 import { handleWait } from '@/utils/handle-wait';
 import { Back } from '@/public-site/components/navigation/Back';
 
-export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
+export const Header = () => {
   const [scroll, setScroll] = useState(0);
   const [isNeedBg, setIsNeedBg] = useState(false);
   const navbarLabel = useLabel();
@@ -109,7 +109,7 @@ export const Header = ({ toggleOpenMenu }: { toggleOpenMenu?: () => void }) => {
           <Button
             size="icon-lg"
             variant="ghost"
-            onClick={toggleOpenMenu}
+            onClick={() => navigate('?menu=mobileMenu')}
             className="md:hidden"
           >
             <TextAlignJustify className="size-[26px]" />
