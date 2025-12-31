@@ -26,7 +26,7 @@ export const MobileSidebar = ({
     <>
       {/* overlay */}
       <Overlay
-        className="z-40 md:hidden"
+        className="z-40 dark:bg-white/40 md:hidden"
         onClick={() => {
           waitVibrate(200, 'low');
           close();
@@ -58,15 +58,14 @@ export const MobileSidebar = ({
           <ul className="flex flex-col gap-3 font-medium">
             {/* tab label map & interact */}
             {tabLabel.map((t) => (
-              <li key={t.id}>
+              <li key={t.route}>
                 <NavLink title={t.label} to={t.route} end={t.route === '/app'}>
                   {({ isActive }) => (
                     <button
-                      // onClick={() => handleWait(() => close(), 100)}
                       className={cn(
                         isActive
                           ? 'font-bold text-sidebar-foreground'
-                          : 'font-normal',
+                          : 'font-normal text-sidebar-foreground/90',
                         'text-xl flex gap-4 px-2 py-2 items-center w-full active:bg-muted'
                       )}
                     >
@@ -85,16 +84,15 @@ export const MobileSidebar = ({
             {sideBarLabel.map((s) => (
               <>
                 {s.hiddenOnMobile ? null : (
-                  <li key={s.id}>
+                  <li key={s.route}>
                     <NavLink to={s.route}>
                       {({ isActive }) => (
                         <button
-                          // onClick={() => handleWait(() => close(), 100)}
                           className={cn(
                             isActive
                               ? 'font-bold text-sidebar-foreground'
-                              : 'font-normal active:bg-muted',
-                            'text-xl flex gap-4 px-2 py-2 items-center w-full'
+                              : 'font-normal text-sidebar-foreground/90',
+                            'text-xl flex gap-4 px-2 py-2 items-center w-full active:bg-muted'
                           )}
                         >
                           <s.icon /> {s.label}
@@ -107,7 +105,7 @@ export const MobileSidebar = ({
             ))}
             <>
               {desctructiveLabel.map((s) => (
-                <li key={s.id}>
+                <li key={s.label}>
                   <SideBarTabWrapper isDanger={true}>
                     <s.icon className="size-5" /> {s.label}
                   </SideBarTabWrapper>

@@ -25,7 +25,7 @@ export const NoteEditor = () => {
       >
         <nav className="flex justify-between items-center w-full h-12 py-2">
           <button
-            onClick={() => navigate(-1) || navigate('/app')}
+            onClick={() => navigate(-1)}
             className="text-primary p-0 font-semibold active:opacity-80"
           >
             Cancel

@@ -23,13 +23,17 @@ export const TopBar = () => {
   const navigate = useNavigate();
 
   const [params] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const menu = params.get('menu');
   const sidebar = params.get('sidebar');
 
   const openKebabMenu = menu === 'kebab';
   const openMobileSidebar = sidebar === 'mobile';
 
-  const closeKebabMenu = () => navigate(-1);
+  const closeKebabMenu = () => {
+    searchParams.delete('menu');
+    setSearchParams(searchParams, { replace: true });
+  };
 
   const toggleOpenKebabMenu = () => {
     if (openKebabMenu) closeKebabMenu();
@@ -45,7 +49,7 @@ export const TopBar = () => {
           variant="ghost"
           onClick={() => {
             waitVibrate(200, 'low');
-            navigate('?sidebar=mobile');
+            navigate(`?sidebar=mobile`);
           }}
           className="md:hidden"
         >

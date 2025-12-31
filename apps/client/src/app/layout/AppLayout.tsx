@@ -23,7 +23,7 @@ import {
   MAX_PANEL_WIDTH,
 } from '@/app/constants/layout.constant';
 
-function DashboardLayout() {
+export function AppLayout() {
   // store state
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const setIsOpenPanel = useLayoutStore((s) => s.setIsOpenPanel);
@@ -86,7 +86,7 @@ function DashboardLayout() {
         {/* mobile sidebar  */}
         <MobileSidebar
           open={openMobileSidebar}
-          close={() => navigate(-1)}
+          close={() => navigate({ search: '' }, { replace: true })}
           ref={mobileSidebarRef}
         />{' '}
         {/* main content */}
@@ -120,7 +120,7 @@ function DashboardLayout() {
                 onClick={() => {
                   setAppLoading(true);
                   handleWait(async () => {
-                    await navigate('/app/note/new');
+                    await navigate('/note/new');
                     setAppLoading(false);
                   }, 600);
                 }}
@@ -133,12 +133,13 @@ function DashboardLayout() {
         </AnimatePresence>
         {/* quick Editor */}
         {/* mobile */}
-        <BottomBar mobileSidebarWidth={mobileSidebarWidth} />
+        <BottomBar
+          openMobileSidebar={openMobileSidebar}
+          mobileSidebarWidth={mobileSidebarWidth}
+        />
         {/* sideOver */}
         <SideOver />
       </div>
     </>
   );
 }
-
-export default DashboardLayout;

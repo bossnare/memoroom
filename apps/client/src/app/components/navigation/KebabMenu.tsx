@@ -5,6 +5,7 @@ import { Ellipsis } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { kebabMenuLabel } from './label';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type Props = {
   open?: boolean;
@@ -21,10 +22,12 @@ export const KebabMenu = ({
 }: Props) => {
   const kebabMenuRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
+      if (!isMobile) return; // stop click anywhere = close on desktop
       if (
         triggerRef?.current?.contains(target) ||
         kebabMenuRef?.current?.contains(target)
@@ -35,7 +38,7 @@ export const KebabMenu = ({
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [close]);
+  }, [close, isMobile]);
 
   return (
     <>

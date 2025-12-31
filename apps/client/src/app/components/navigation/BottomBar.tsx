@@ -1,14 +1,14 @@
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useLayoutStore } from '@/stores/layoutStore';
 import { NavTab } from './NavTab';
 
 export const BottomBar = ({
   mobileSidebarWidth,
+  openMobileSidebar,
 }: {
   mobileSidebarWidth: number;
+  openMobileSidebar?: boolean;
 }) => {
   const isMobile = useIsMobile;
-  const isOpenMobileSidebar = useLayoutStore((s) => s.isOpenMobileSidebar);
 
   return (
     <div
@@ -16,7 +16,7 @@ export const BottomBar = ({
         !isMobile
           ? {}
           : {
-              transform: isOpenMobileSidebar
+              transform: openMobileSidebar
                 ? `translateX(${mobileSidebarWidth}px)`
                 : 'translateX(0)',
             }

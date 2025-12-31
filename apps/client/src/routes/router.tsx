@@ -1,4 +1,4 @@
-import AppLayout from '@/app/layout/AppLayout';
+import { AppLayout } from '@/app/layout/AppLayout';
 import Overview from '@/app/page/Overview';
 import { HomeScreenLoader } from '@/shared/components/HomeScreenLoader';
 import { useAuth } from '@/hooks/use-auth';
@@ -55,7 +55,7 @@ export const AppRoutes = () => {
             </Route>
 
             {/* notes */}
-            <Route path="/app/note" element={<MiniLayout />}>
+            <Route path="/note" element={<MiniLayout />}>
               <Route path="new" element={<NoteEditor />} />
             </Route>
           </Route>

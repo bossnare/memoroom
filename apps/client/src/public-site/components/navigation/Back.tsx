@@ -19,8 +19,7 @@ export const Back = ({ className, fallbackRoute = '/', ...props }: Props) => {
       <Button
         onClick={() =>
           handleWait(
-            () => navigate(-1) || navigate(fallbackRoute, { replace: true }),
-            200
+            () => navigate(-1) || navigate(fallbackRoute, { replace: true })
           )
         }
         size="icon-xl"
