@@ -20,12 +20,13 @@ export const useToggleParams = (config: Config) => {
   const open = () => {
     const p = new URLSearchParams(searchParams);
     p.set(key, value);
-    setParams(p, { replace: true });
+    setParams(p);
   };
 
   const close = () => {
     const p = new URLSearchParams(searchParams);
     p.delete(key);
+    // replace with current history on back
     setParams(p, { replace: true });
   };
 
