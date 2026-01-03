@@ -5,8 +5,8 @@ export const pwaPlugin = VitePWA({
   registerType: 'autoUpdate',
   includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
   manifest: {
-    name: 'Memoroom',
-    short_name: 'Memoroom',
+    name: 'Diary',
+    short_name: 'Diary',
     description: 'A simple notes app to use everyday life.',
     theme_color: '#000000',
     start_url: '/',

@@ -9,7 +9,8 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 export const Logo = ({ mono, className, size = 'lg', ...props }: Props) => {
-  const dflt = 'flex font-extrabold leading-none tracking-tighter select-none';
+  const dflt =
+    'flex font-black font-inter leading-none tracking-tight select-none';
   const lg = 'text-[21px] lg:text-2xl';
   const sm = 'text-[18px] lg:text-[20px]';
   const iconSize = size === 'sm' ? 'size-5' : 'size-6';
