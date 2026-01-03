@@ -10,7 +10,6 @@ export const NoteEditor = () => {
   const [chars, setChars] = useState(0);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const body = {
     title,
@@ -112,13 +111,11 @@ export const NoteEditor = () => {
               }}
               onInput={(e) => {
                 autoGrow(e);
-                // scroll to carret - desktop only
-                if (!isMobileDevice) {
-                  e.currentTarget.scrollIntoView({
-                    block: 'end',
-                    behavior: 'smooth',
-                  });
-                }
+                // scroll to carret - smooth on desktop only
+                e.currentTarget.scrollIntoView({
+                  block: 'end',
+                  behavior: 'auto',
+                });
               }}
               name=""
               id=""
