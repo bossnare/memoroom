@@ -52,7 +52,7 @@ function MiniLayout() {
           className="relative lg:transition-transform lg:duration-200 ease-in-out will-change-transform"
         >
           <ScrollArea className="h-dvh scroll-touch overscroll-contain">
-            <main className="h-full px-4">
+            <main className="h-full">
               <Outlet />
             </main>
           </ScrollArea>

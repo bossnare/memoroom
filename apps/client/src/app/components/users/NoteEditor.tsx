@@ -16,6 +16,11 @@ export const NoteEditor = () => {
     content,
   };
 
+  const autoGrow = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    e.currentTarget.style.height = 'auto'; // initial reset height value
+    e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
+  };
+
   const navigate = useNavigate();
 
   const save = async () => {
@@ -37,62 +42,67 @@ export const NoteEditor = () => {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        className="px-2 raltive lg:px-4 h-dvh"
+        className="flex flex-col min-h-screen"
       >
-        <nav className="flex sticky bg-background top-0 left-0 items-center justify-between w-full h-12 py-2">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-0 font-semibold text-primary active:opacity-80"
-          >
-            Cancel
-          </button>
-          <span className="text-muted-foreground">New notes</span>
-          <Button
-            onClick={() => {
-              save();
-              handleWait(() => navigate(-1), 200);
-            }}
-            className="font-bold select-none"
-            variant="ghost"
-          >
-            Save
-          </Button>
-        </nav>
-
-        <main className="flex flex-col py-2 space-y-3">
-          <textarea
-            rows={1}
-            className="w-full py-1 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
-            placeholder="Title"
-            value={title}
-            onInput={(e) => {
-              setTitle(e.currentTarget.value);
-              e.currentTarget.style.height = 'auto'; // initial reset height value
-              e.currentTarget.style.height =
-                e.currentTarget.scrollHeight + 'px';
-            }}
-            onBlur={() => setTitle(title.trim())}
-          ></textarea>
-          <div className="space-x-2 bg-background sticky top-12 left-0 text-sm text-muted-foreground">
-            <span>
-              {new Date().toLocaleDateString('en-US', {
-                weekday: 'short',
-                day: 'numeric',
-                year: 'numeric',
-                month: 'long',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true,
-              })}
-            </span>
-            <span className="w-0.5 border-l dark:border-muted"></span>{' '}
-            <span>
-              {chars} {chars > 1 ? 'characters' : 'character'}
-            </span>
+        <header className="sticky top-0 left-0 bg-background">
+          <div className="flex items-center justify-between h-12 max-w-6xl px-4 mx-auto">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-0 font-semibold text-primary active:opacity-80"
+            >
+              Cancel
+            </button>
+            <span className="text-muted-foreground">New notes</span>
+            <Button
+              onClick={() => {
+                save();
+                handleWait(() => navigate(-1), 200);
+              }}
+              className="font-bold select-none"
+              variant="ghost"
+            >
+              Save
+            </Button>
           </div>
-          {/* content */}
-          <div className="pb-12 h-[calc(100vh-15rem)]">
+        </header>
+
+        {/*  */}
+        <main className="flex-1">
+          <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 lg:pb-32">
             <textarea
+              rows={1}
+              className="w-full py-1 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
+              placeholder="Title"
+              value={title}
+              onInput={(e) => {
+                setTitle(e.currentTarget.value);
+                autoGrow(e);
+              }}
+              onBlur={(e) => {
+                if (!e.currentTarget.value.trim())
+                  e.currentTarget.style.height = 'auto';
+                setTitle(title.trim());
+              }}
+            ></textarea>
+            <div className="sticky left-0 pb-1 space-x-2 text-sm bg-background top-12 text-muted-foreground">
+              <span>
+                {new Date().toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                  month: 'long',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true,
+                })}
+              </span>
+              <span className="w-0.5 border-l dark:border-muted"></span>{' '}
+              <span>
+                {chars} {chars > 1 ? 'characters' : 'character'}
+              </span>
+            </div>
+            <textarea
+              rows={6}
               ref={areaRef}
               value={content}
               onChange={(e) => {
@@ -100,21 +110,24 @@ export const NoteEditor = () => {
                 setContent(e.currentTarget.value);
               }}
               onInput={(e) => {
-                if (e.currentTarget.value.trim()) {
-                  e.currentTarget.style.height = '100%';
-                } else {
-                  e.currentTarget.style.height = 'auto';
-                }
+                autoGrow(e);
+                // scroll to carret
+                e.currentTarget.scrollIntoView({
+                  block: 'end',
+                  behavior: 'smooth',
+                });
               }}
               name=""
               id=""
-              className="w-full text-lg font-normal resize-none placeholder:text-base focus:outline-0"
+              className="w-full text-lg font-normal resize-none scroll-mb-24 placeholder:text-base focus:outline-0"
               placeholder="Start typing freely..."
             ></textarea>
           </div>
         </main>
 
-        <nav className="absolute bottom-0 left-0 w-full py-2 h-14 bg-sidebar/50"></nav>
+        <footer className="sticky bottom-0 bg-sidebar/50">
+          <div className="max-w-6xl px-4 mx-auto h-14 bg-muted"></div>
+        </footer>
       </motion.div>
     </>
   );
