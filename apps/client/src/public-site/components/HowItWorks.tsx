@@ -22,7 +22,7 @@ function Card({ title, content, number }: Props) {
       className="p-4 space-y-4 transition-transform duration-100 ease-in-out border rounded-md border-input dark:border-0 hover:shadow-sm lg:duration-300 will-change-transform active:translate-x-4 bg-card dark:bg-card/40"
     >
       <header className="flex flex-col gap-3 md:gap-2 md:flex-row md:items-center">
-        <div className="flex items-center justify-center rounded-full border border-primary bg-primary dark:bg-primary/60 size-8 md:size-7">
+        <div className="flex items-center justify-center rounded-full border border-primary bg-primary dark:bg-primary/80 size-8 md:size-7">
           <span className="font-black tracking-tight text-primary-foreground">
             0{number}
           </span>

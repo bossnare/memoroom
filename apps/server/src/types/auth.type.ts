@@ -3,4 +3,4 @@ export type LoginPayload = {
   password: string;
 };
 
-export type JWTPayload = { id: string; email: string; role: string };
+export type JWTPayload = { sub: string; email: string; role: string };
