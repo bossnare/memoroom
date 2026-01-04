@@ -6,7 +6,7 @@ import { Logo } from '@/shared/components/brand/Logo';
 import { Overlay } from '@/shared/components/Overlay';
 import { handleWait } from '@/shared/utils/handle-wait';
 import { waitVibrate } from '@/shared/utils/vibration';
-import { PanelLeftClose, PanelLeftOpen, Plus, Settings } from 'lucide-react';
+import { PanelLeftClose, PanelLeftOpen, Plus } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { desctructiveLabel, sideBarLabel, tabLabel } from './label';
 import { NavTab } from './NavTab';
@@ -42,17 +42,7 @@ export const MobileSidebar = ({
         } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-200 px-4 py-2 z-50 ease-in-out w-4/5 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
       >
         <aside className={`relative size-full rounded-xl`}>
-          <MiniProfile
-            btnAction={
-              <Button
-                onClick={() => handleWait(() => close(), 200)}
-                variant="ghost"
-                size="icon-lg"
-              >
-                <Settings />
-              </Button>
-            }
-          />
+          <MiniProfile />
 
           <div className="h-1 my-4 border-t border-sidebar-border"></div>
           <ul className="flex flex-col gap-3 font-medium">
@@ -83,7 +73,7 @@ export const MobileSidebar = ({
 
             {sideBarLabel.map((s) => (
               <>
-                {s.hiddenOnMobile ? null : (
+                {
                   <li key={s.route}>
                     <NavLink to={s.route}>
                       {({ isActive }) => (
@@ -100,7 +90,7 @@ export const MobileSidebar = ({
                       )}
                     </NavLink>
                   </li>
-                )}
+                }
               </>
             ))}
             <>

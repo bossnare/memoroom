@@ -9,6 +9,7 @@ import {
   BellIcon,
   Search,
   TextAlignJustify,
+  TextAlignStart,
   TriangleAlert,
 } from 'lucide-react';
 import { AnimatePresence } from 'motion/react';
@@ -55,7 +56,8 @@ export const TopBar = () => {
           }}
           className="md:hidden"
         >
-          <TextAlignJustify className="size-[26px]" />
+          <TextAlignJustify className="hidden dark:inline-flex size-[26px]" />
+          <TextAlignStart className="dark:hidden size-[26px]" />
         </Button>
         <Logo className="md:hidden" />
       </div>

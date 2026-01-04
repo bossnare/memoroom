@@ -40,10 +40,9 @@ const kebabMenuLabel = [
 const sideBarLabel = [
   {
     id: 1,
-    hiddenOnMobile: true,
-    label: 'Account Settings',
-    icon: UserCog,
-    route: '/app',
+    label: 'Settings',
+    icon: Settings,
+    route: '/app/settings',
   },
   {
     id: 2,
