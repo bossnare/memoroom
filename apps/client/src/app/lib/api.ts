@@ -49,6 +49,7 @@ api.interceptors.request.use(
 
     // base URL
     config.baseURL = import.meta.env.VITE_API_URL!;
+    config.timeout = 8000; // global timeout
 
     return config;
   },

@@ -74,7 +74,7 @@ export const MobileSidebar = ({
             {sideBarLabel.map((s) => (
               <>
                 {
-                  <li key={s.route}>
+                  <li key={s.id}>
                     <NavLink to={s.route}>
                       {({ isActive }) => (
                         <button
