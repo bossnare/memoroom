@@ -1,4 +1,4 @@
-import { IconFolderCode } from '@tabler/icons-react';
+import { IconNote } from '@tabler/icons-react';
 // import { ArrowUpRightIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -16,18 +16,18 @@ export function EmptyEmpty() {
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <IconFolderCode />
+          <IconNote />
         </EmptyMedia>
-        <EmptyTitle>No Projects Yet</EmptyTitle>
+        <EmptyTitle>No Notes Yet</EmptyTitle>
         <EmptyDescription>
-          You haven&apos;t created any projects yet. Get started by creating
-          your first project.
+          You haven&apos;t created any notes yet. Get started by creating your
+          first notes.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <div className="flex gap-2">
-          <Button>Create Project</Button>
-          <Button variant="outline">Import Project</Button>
+          <Button>Create Notes</Button>
+          <Button variant="outline">Create by Template</Button>
         </div>
       </EmptyContent>
       {/* <Button

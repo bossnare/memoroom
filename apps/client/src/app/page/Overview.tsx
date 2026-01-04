@@ -18,7 +18,7 @@ function Overview() {
 
   if (notes?.length < 1)
     return (
-      <div>
+      <div className="py-4">
         <EmptyNotes />
       </div>
     );

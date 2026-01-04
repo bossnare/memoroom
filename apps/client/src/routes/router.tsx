@@ -15,7 +15,6 @@ import { useAuth } from '@/shared/hooks/use-auth';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import { PublicRoutes } from './PublicRoutes';
-import { EmptyEmpty } from '@/app/components/users/Empty';
 
 export const AppRoutes = () => {
   const { pending, session } = useAuth();
@@ -48,11 +47,7 @@ export const AppRoutes = () => {
               <Route path="search" element={<div>Search Route</div>} />
               <Route
                 path="notification"
-                element={
-                  <div className=" py-4">
-                    <EmptyEmpty />
-                  </div>
-                }
+                element={<div className="text-center py-4">Notification</div>}
               />
               <Route path="tags" element={<div>Tags Route</div>} />
             </Route>
