@@ -1,17 +1,17 @@
-import { Button } from '@/components/ui/button';
-import { Paragraphe } from '@/shared/components/Paragraphe';
-import { useAuth } from '@/shared/hooks/use-auth';
-import { X } from 'lucide-react';
+// import { Button } from '@/components/ui/button';
+// import { Paragraphe } from '@/shared/components/Paragraphe';
+// import { useAuth } from '@/shared/hooks/use-auth';
+// import { X } from 'lucide-react';
+import { Spinner } from '@/shared/components/Spinner';
+import { useMe } from '../api/user.api';
 
 function Overview() {
-  const { user } = useAuth();
-  // const { data: me } = useMe();
-  // const notes: NoteInterface[] = me?.data?.notes;
+  const { data: me, isPending } = useMe();
 
   return (
     <>
       <div className="py-2 space-y-4">
-        <div className="relative flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs md:p-3 bg-muted dark:bg-muted/60">
+        {/* <div className="relative flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs md:p-3 bg-muted dark:bg-muted/60">
           <h4 className="font-bold">Complete your profile</h4>
           <div className="flex flex-col justify-center gap-3 md:items-center md:flex-row md:justify-between">
             <Paragraphe className="cursor-pointer text-muted-foreground md:text-sm">
@@ -25,23 +25,32 @@ function Overview() {
             </div>
           </div>
 
-          {/* skip */}
           <span className="right-1 top-0.5 absolute">
             <Button size="icon-sm" variant="ghost">
               <X className="" />
             </Button>
           </span>
-        </div>
+        </div> */}
 
         {/* content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 pt-4 gap-3 flex-wrap *:bg-muted dark:*:bg-muted/40  *:rounded-lg *:h-20">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+        {isPending ? (
+          <div className="flex justify-center py-10">
+            <Spinner variant="half" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-4 pt-4 gap-3 flex-wrap">
+            {me?.data?.notes.map((n) => (
+              <div className="bg-muted dark:bg-muted/40 flex flex-col gap-4 rounded-lg p-4">
+                <span className="text-lg md:text-base font-bold truncate line-clamp-2">
+                  {n.title || 'Untitled'}
+                </span>
+                <span className="opacity-80 truncate md:text-sm line-clamp-4">
+                  {n.content}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

@@ -20,14 +20,19 @@ export const usersRoute = new Elysia({
     const token = headers.authorization?.split(' ')[1] as string;
     if (!token) {
       set.status = 401;
-      return { message: 'Unauthorized user!, no pass without JWT token' };
+      return { message: 'Unauthorized user!, without JWT token' };
     }
-    const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
-      id: string;
-    };
+
+    const { id } = await UsersService.getUserFromToken(token);
 
     set.status = 200;
-    return await UsersService.findMeByToken(payload.id);
+    const me = await UsersService.getMeById(id);
+
+    return {
+      success: true,
+      timestamp: Date.now(),
+      data: me,
+    };
   })
   .get('/:id', async ({ params, set }) => {
     const userById = await UsersService.getById(params.id);
