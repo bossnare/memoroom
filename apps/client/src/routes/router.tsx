@@ -46,16 +46,13 @@ export const AppRoutes = () => {
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Overview />} />
               <Route path="search" element={<div>Search Route</div>} />
-
+              <Route path="notification" element={<Notification />} />
               <Route path="tags" element={<div>Tags Route</div>} />
             </Route>
 
             {/* notes */}
             <Route path="/note" element={<MiniLayout />}>
               <Route path="new" element={<NoteEditor />} />
-            </Route>
-            <Route path="/app">
-              <Route path="notification" element={<Notification />} />
             </Route>
           </Route>
           {/* not found route */}

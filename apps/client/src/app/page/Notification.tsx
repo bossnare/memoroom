@@ -47,7 +47,7 @@ function Notification() {
 
   return (
     <>
-      <div className="max-w-4xl min-h-screen px-1 mx-auto md:px-6 bg-muted dark:bg-background">
+      <div className="max-w-4xl min-h-screen px-1 mx-auto md:px-6 bg-primary/5">
         <>
           <header className="pt-2 lg:pt-8">
             <div className="flex justify-between">
@@ -73,16 +73,17 @@ function Notification() {
             </div>
           </header>
           <main className="md:px-6">
-            <div className="grid flex-wrap grid-cols-1 gap-3 pt-4">
+            <div className="grid flex-wrap grid-cols-1 gap-2 pt-4">
               {notifications?.map((notif) => (
                 <div
+                  role="button"
                   key={notif.id}
-                  className="flex flex-col gap-3 p-2 px-4 cursor-pointer rounded-2xl bg-background active:opacity-60 hover:opacity-80 dark:bg-muted/50 lg:rounded-xl"
+                  className="flex flex-col select-none gap-3 p-2 px-4 cursor-pointer rounded-2xl bg-background active:bg-muted! hover:opacity-80 dark:bg-muted/50 lg:rounded-xl"
                 >
-                  <span className="font-bold truncate md:text-base line-clamp-2">
+                  <span className="font-bold truncate md:text-base line-clamp-1">
                     {notif.title || 'Untitled'}
                   </span>
-                  <span className="truncate opacity-70 text-wrap md:text-sm line-clamp-1">
+                  <span className="truncate opacity-70 text-wrap md:text-sm line-clamp-2">
                     {notif.message}
                   </span>
                 </div>
