@@ -76,27 +76,29 @@ function Overview() {
                 All notes
               </h3>
               <div className="gap-4">
-                <Button variant="ghost" size="icon-lg">
+                <Button variant="ghost" size="icon-xl">
                   <ArrowDownNarrowWide />
                 </Button>
               </div>
             </div>
           </header>
-          <div className="grid grid-cols-2 lg:grid-cols-4 pt-4 gap-3 flex-wrap">
-            {notes?.map((note) => (
-              <div
-                key={note.id}
-                className="bg-background cursor-pointer dark:bg-muted/80 lg:shadow-sm min-h-30 flex flex-col gap-4 rounded-3xl lg:rounded-xl p-4"
-              >
-                <span className="text-lg md:text-base font-bold truncate line-clamp-2">
-                  {note.title || 'Untitled'}
-                </span>
-                <span className="opacity-70 truncate text-wrap md:text-sm line-clamp-3">
-                  {note.content}
-                </span>
-              </div>
-            ))}
-          </div>
+          <main>
+            <div className="grid grid-cols-2 lg:grid-cols-4 pt-4 gap-3 flex-wrap">
+              {notes?.map((note) => (
+                <div
+                  key={note.id}
+                  className="bg-background cursor-pointer dark:bg-muted/80 lg:shadow-sm min-h-30 flex flex-col gap-4 rounded-3xl lg:rounded-xl p-4"
+                >
+                  <span className="text-lg md:text-base font-bold truncate line-clamp-2">
+                    {note.title || 'Untitled'}
+                  </span>
+                  <span className="opacity-70 truncate text-wrap md:text-sm line-clamp-3">
+                    {note.content}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </main>
         </>
       </div>
     </>
