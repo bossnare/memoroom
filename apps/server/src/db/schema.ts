@@ -26,6 +26,7 @@ export const notifications = pgTable('notifications', {
   userId: uuid('user_id').references(() => profiles.id, {
     onDelete: 'cascade',
   }),
+  type: text('type').notNull(),
   title: text('title').notNull(),
   message: text('message').notNull(),
   isRead: boolean('is_read').default(false).notNull(),

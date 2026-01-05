@@ -8,6 +8,13 @@
       "when": 1767597415916,
       "tag": "0000_lethal_living_tribunal",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1767599574029,
+      "tag": "0001_chief_boom_boom",
+      "breakpoints": true
     }
   ]
 }
