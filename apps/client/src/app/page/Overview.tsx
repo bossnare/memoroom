@@ -94,7 +94,11 @@ function Overview() {
                 >
                   <ListRestart />
                 </Button>
-                <Button variant="ghost" size={buttonSize}>
+                <Button
+                  variant="ghost"
+                  className="transition-colors"
+                  size={buttonSize}
+                >
                   <ArrowDownNarrowWide />
                 </Button>
               </div>

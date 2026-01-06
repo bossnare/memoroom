@@ -28,8 +28,8 @@ export const MobileSidebar = ({
       <Overlay
         className="z-40 dark:bg-white/40 md:hidden"
         onClick={() => {
-          waitVibrate(320, 'low');
           close();
+          waitVibrate(300, 'low');
         }}
         open={open}
       />

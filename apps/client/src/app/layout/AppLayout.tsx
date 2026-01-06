@@ -92,7 +92,7 @@ export function AppLayout() {
         {/* main content */}
         <div
           style={MAIN_TRANSFORM}
-          className="relative transition-transform duration-300 ease-in-out will-change-transform md:duration-100"
+          className="relative transition-transform duration-280 ease-in-out will-change-transform md:duration-100"
         >
           <TopBar />
           {/* route content */}
