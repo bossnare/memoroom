@@ -10,6 +10,8 @@ import type { NoteInterface } from '@/app/types/note.interface';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
 import { useQueryClient } from '@tanstack/react-query';
+import { FilterDrawer } from '../components/users/Drawer';
+import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -20,11 +22,25 @@ function Overview() {
   const spinnerSize = !isMobile ? 'default' : 'lg';
 
   const queryClient = useQueryClient();
-  const handleRefreshNotes = () =>
+  const handleRefreshNotes = () => {
     queryClient.refetchQueries({
       queryKey: ['notes'],
     });
-  console.log('refetch');
+  };
+
+  const {
+    open: openNotesFilterDrawer,
+    isOpen: isOpenNotesFilterDrawer,
+    close: closeNotesFilterDrawer,
+  } = useQueryToggle({ key: 'drawer', value: 'notesFilter' })!;
+  const { open: openNotesFilterMenu } = useQueryToggle({
+    key: 'menu',
+    value: 'notesFilter',
+  })!;
+
+  const handleClickFilterButton = !isMobile
+    ? openNotesFilterMenu
+    : openNotesFilterDrawer;
 
   if (notes?.length < 1)
     return (
@@ -78,6 +94,10 @@ function Overview() {
           </span>
         </div> */}
 
+        <FilterDrawer
+          isOpen={isOpenNotesFilterDrawer}
+          setIsOpen={closeNotesFilterDrawer}
+        />
         {/* content */}
         <>
           <header className="px-1 pt-8">
@@ -95,6 +115,7 @@ function Overview() {
                   <ListRestart />
                 </Button>
                 <Button
+                  onClick={handleClickFilterButton}
                   variant="ghost"
                   className="transition-colors!"
                   size={buttonSize}
@@ -110,9 +131,9 @@ function Overview() {
                 <div
                   role="button"
                   key={note.id}
-                  className="flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm min-h-30 rounded-3xl lg:rounded-xl"
+                  className="flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm min-h-30 rounded-3xl lg:rounded-xl"
                 >
-                  <span className="text-lg font-bold truncate md:text-base line-clamp-2">
+                  <span className="text-lg font-bold truncate md:text-base line-clamp-2 text-wrap">
                     {note.title || 'Untitled'}
                   </span>
                   <span className="truncate transition-colors group-active:text-foreground text-muted-foreground text-wrap md:text-sm line-clamp-3">

@@ -45,9 +45,15 @@ export const AppRoutes = () => {
           <Route element={<ProtectedRoutes session={session} />}>
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Overview />} />
-              <Route path="search" element={<div>Search Route</div>} />
+              <Route
+                path="search"
+                element={<div className="px-3 pt-8 md:px-6">Search Route</div>}
+              />
               <Route path="notification" element={<Notification />} />
-              <Route path="tags" element={<div>Tags Route</div>} />
+              <Route
+                path="tags"
+                element={<div className="px-3 pt-8 md:px-6">Tags Route</div>}
+              />
             </Route>
 
             {/* notes */}

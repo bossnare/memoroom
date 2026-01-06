@@ -1,7 +1,8 @@
 import { db } from '@/db';
 import { notes } from '@/db/schema';
 import { NewNote } from '@/types/base.type';
-import { eq } from 'drizzle-orm';
+import { desc, eq, asc } from 'drizzle-orm';
+import type { NotesQueryType } from '@/types/query.type';
 
 export const NotesService = {
   async getAll() {
@@ -9,8 +10,15 @@ export const NotesService = {
     const count = data.length;
     return { data, count };
   },
-  async getMyAll(userId: string) {
-    const data = await db.select().from(notes).where(eq(notes.userId, userId));
+  async getMyAll(userId: string, query: NotesQueryType) {
+    const sort = query.sort ?? 'createdAt';
+    const order = query.order ?? 'desc';
+
+    const data = await db
+      .select()
+      .from(notes)
+      .where(eq(notes.userId, userId))
+      .orderBy(order === 'desc' ? desc(notes[sort]) : asc(notes[sort]));
     const count = data.length;
     return { data, count };
   },

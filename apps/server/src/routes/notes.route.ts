@@ -6,12 +6,12 @@ import { UsersService } from '@/services/users.service';
 export const notesRoute = new Elysia({
   prefix: '/notes',
 })
-  .get('/', async ({ set, headers }) => {
+  .get('/', async ({ set, headers, query }) => {
     const token = headers.authorization?.split(' ')[1] as string;
     if (!token) throw new Error('Unauthorized');
 
     const { id } = await UsersService.getUserFromToken(token);
-    const { data, count } = await NotesService.getMyAll(id);
+    const { data, count } = await NotesService.getMyAll(id, query);
     set.status = 200;
 
     return {
