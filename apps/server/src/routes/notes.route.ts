@@ -1,4 +1,3 @@
-import { JWTPayload } from '@/types/auth.type';
 import Elysia, { t } from 'elysia';
 import { NotesService } from '@/services/notes.service';
 import { UsersService } from '@/services/users.service';

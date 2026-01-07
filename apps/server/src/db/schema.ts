@@ -1,13 +1,21 @@
 import { relations } from 'drizzle-orm';
 import { authUsers } from 'drizzle-orm/supabase'; // supabase users tables
-import { pgTable, boolean, timestamp, text, uuid } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  boolean,
+  timestamp,
+  text,
+  uuid,
+  integer,
+} from 'drizzle-orm/pg-core';
 
 export const profiles = pgTable('profiles', {
   id: uuid('id')
     .primaryKey()
     .references(() => authUsers.id, { onDelete: 'cascade' }),
   avarata_url: text('avatar_url'),
-  name: text('name'),
+  displayName: text('display_name'),
+  themeMode: text('theme_mode').default('dark'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 });
@@ -20,6 +28,8 @@ export const notes = pgTable('notes', {
   title: text('title').notNull(),
   content: text('content').notNull(),
   color: text('color'),
+  numberOfEdits: integer('number_of_edits').default(0),
+  edited: boolean('edited').default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 });
