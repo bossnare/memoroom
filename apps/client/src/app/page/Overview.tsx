@@ -13,6 +13,8 @@ import { useNote } from '../api/notes.api';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { dateUltraFormat } from '../lib/dateUltraFormat';
+import { Ellipsis } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -34,6 +36,10 @@ function Overview() {
     isOpen: isOpenNotesSortDrawer,
     close: closeNotesSortDrawer,
   } = useQueryToggle({ key: 'drawer', value: 'notesSorting' })!;
+  const { open: openTooltip, isOpen: isOpenTooltip } = useQueryToggle({
+    key: 'tooltip',
+    value: 'selectNotes',
+  })!;
   const { open: openNotesFilterMenu } = useQueryToggle({
     key: 'menu',
     value: 'notesSorting',
@@ -42,6 +48,18 @@ function Overview() {
   const handleClickFilterButton = !isMobile
     ? openNotesFilterMenu
     : openNotesFilterDrawer;
+
+  let timer: NodeJS.Timeout;
+
+  const handleTouchStart = () => {
+    timer = setTimeout(() => {
+      openTooltip();
+    }, 500);
+  };
+
+  const handleTouchEnd = () => {
+    clearTimeout(timer);
+  };
 
   if (notes?.length < 1)
     return (
@@ -101,7 +119,7 @@ function Overview() {
         />
         {/* content */}
         <>
-          <header className="px-1 pt-8">
+          <header className="sticky top-0 z-20 px-1 pt-8 bg-background">
             <div className="flex justify-between">
               <h3 className="text-2xl font-medium tracking-tight scroll-m-20">
                 All notes
@@ -131,8 +149,10 @@ function Overview() {
               {notes?.map((note) => (
                 <div
                   role="button"
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
                   key={note.id}
-                  className="flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-3xl lg:rounded-xl"
+                  className="relative flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-3xl lg:rounded-xl"
                 >
                   <span className="text-lg font-bold truncate md:text-base line-clamp-2 text-wrap">
                     {note.title || 'Untitled'}
@@ -141,8 +161,25 @@ function Overview() {
                     {note.content}
                   </span>
                   <span className="text-xs text-muted-foreground">
-                    {dateUltraFormat(note.createdAt)}
+                    {dateUltraFormat(
+                      note.edited ? note.updatedAt : note.createdAt
+                    )}
                   </span>
+
+                  {/* options toggle */}
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="absolute hidden scale-0 top-2 right-2 group-hover:scale-100 lg:inline-flex"
+                  >
+                    <Ellipsis />
+                  </Button>
+                  <span
+                    className={cn(
+                      isOpenTooltip ? 'scale-100' : 'scale-0',
+                      'absolute lg:hidden top-2 right-2 size-6 bg-muted-foreground/40 rounded-full transition'
+                    )}
+                  ></span>
                 </div>
               ))}
             </div>

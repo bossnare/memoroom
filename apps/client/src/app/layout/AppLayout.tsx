@@ -24,6 +24,7 @@ import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { MobileNoteTooltip } from '../components/users/MobileNoteTooltip';
 
 export function AppLayout() {
   // store state
@@ -41,6 +42,11 @@ export function AppLayout() {
   // query params state
   const { isOpen: isOpenMobileSidebar, close: closeMobileSidebar } =
     useQueryToggle({ key: 'sidebar', value: 'mobile' })!;
+
+  const { isOpen: isOpenTooltip } = useQueryToggle({
+    key: 'tooltip',
+    value: 'selectNotes',
+  })!;
 
   const navigate = useNavigate();
 
@@ -138,10 +144,15 @@ export function AppLayout() {
         </AnimatePresence>
         {/* quick Editor */}
         {/* mobile */}
-        <BottomBar
-          openMobileSidebar={isOpenMobileSidebar}
-          mobileSidebarWidth={mobileSidebarWidth}
-        />
+        {isOpenTooltip ? (
+          // on select notes card by long press on mobile device
+          <MobileNoteTooltip />
+        ) : (
+          <BottomBar
+            openMobileSidebar={isOpenMobileSidebar}
+            mobileSidebarWidth={mobileSidebarWidth}
+          />
+        )}
         {/* sideOver */}
         <SideOver />
       </div>

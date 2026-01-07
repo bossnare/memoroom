@@ -17,7 +17,7 @@ import { ProtectedRoutes } from './ProtectedRoutes';
 import { PublicRoutes } from './PublicRoutes';
 import Notification from '@/app/page/Notification';
 import { useUserProfile } from '@/app/api/user-profiles.api';
-import { useTheme } from '@/components/theme-provider';
+import { useTheme, type Theme } from '@/components/theme-provider';
 import { useEffect } from 'react';
 
 export const AppRoutes = () => {
@@ -28,10 +28,7 @@ export const AppRoutes = () => {
   const { data: userProfiles } = useUserProfile();
   console.log(userProfiles);
 
-  const userTheme = (userProfiles?.themeMode || 'dark') as
-    | 'system'
-    | 'light'
-    | 'dark';
+  const userTheme = (userProfiles?.themeMode ?? 'dark') as Theme;
 
   // rosolve theme from user profiles
   useEffect(() => {
