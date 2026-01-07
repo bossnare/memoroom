@@ -8,24 +8,24 @@ import {
 import { IconCheck } from '@tabler/icons-react';
 import { useSearchParams } from 'react-router-dom';
 
-export function FilterDrawer({
+export function OrderDrawer({
   isOpen,
-  setIsOpen,
+  onClose,
 }: {
   isOpen?: boolean;
-  setIsOpen: () => void;
+  onClose: () => void;
 }) {
   const sortLabel = [
-    { id: 1, label: 'date', sort: 'createdAt', order: 'desc' },
+    { id: 1, label: 'new', sort: 'createdAt', order: 'desc' },
     { id: 2, label: 'title', sort: 'title', order: 'asc' },
-    { id: 3, label: 'update', sort: 'updatedAt', order: 'desc' },
+    { id: 3, label: 'recently edited', sort: 'updatedAt', order: 'desc' },
   ];
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeSort = searchParams.get('sort') ?? 'createdAt';
 
-  const setFilter = (next: Record<string, string>) => {
+  const setOrder = (next: Record<string, string>) => {
     setSearchParams(
       (prev) => ({
         ...Object.fromEntries(prev),
@@ -38,7 +38,7 @@ export function FilterDrawer({
   };
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="dark:bg-muted rounded-t-3xl">
         <div className="w-full max-w-md mx-auto">
           <DrawerHeader>
@@ -51,7 +51,7 @@ export function FilterDrawer({
                 <li key={s.id}>
                   <button
                     onClick={() =>
-                      setFilter({
+                      setOrder({
                         sort: `${s.sort}`,
                         order: `${s.order}`,
                         drawer: 'undefined',
@@ -59,7 +59,7 @@ export function FilterDrawer({
                     }
                     className={cn(
                       activeSort === s.sort ? 'text-chart-2' : '',
-                      'flex items-center justify-between w-full p-4 cursor-pointer active:bg-muted-foreground/30'
+                      'flex items-center justify-between w-full p-4 px-6 cursor-pointer active:bg-muted-foreground/30'
                     )}
                   >
                     <span className="text-lg font-medium">By {s.label}</span>
