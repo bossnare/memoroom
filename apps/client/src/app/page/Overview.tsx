@@ -2,16 +2,16 @@ import { Button } from '@/components/ui/button';
 // import { Paragraphe } from '@/shared/components/Paragraphe';
 // import { useAuth } from '@/shared/hooks/use-auth';
 // import { X } from 'lucide-react';
-import { Spinner } from '@/shared/components/Spinner';
-import { useNote } from '../api/notes.api';
-import { ArrowDownNarrowWide, ListRestart } from 'lucide-react';
-import { useIsMobile } from '@/shared/hooks/use-mobile';
 import type { NoteInterface } from '@/app/types/note.interface';
-import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
+import { Spinner } from '@/shared/components/Spinner';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
-import { useQueryClient } from '@tanstack/react-query';
-import { FilterDrawer } from '../components/users/Drawer';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
+import { useQueryClient } from '@tanstack/react-query';
+import { ArrowDownNarrowWide, ListRestart } from 'lucide-react';
+import { useNote } from '../api/notes.api';
+import { OrderDrawer } from '../components/users/Drawer';
+import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -30,12 +30,12 @@ function Overview() {
 
   const {
     open: openNotesFilterDrawer,
-    isOpen: isOpenNotesFilterDrawer,
-    close: closeNotesFilterDrawer,
-  } = useQueryToggle({ key: 'drawer', value: 'notesFilter' })!;
+    isOpen: isOpenNotesSortDrawer,
+    close: closeNotesSortDrawer,
+  } = useQueryToggle({ key: 'drawer', value: 'notesSorting' })!;
   const { open: openNotesFilterMenu } = useQueryToggle({
     key: 'menu',
-    value: 'notesFilter',
+    value: 'notesSorting',
   })!;
 
   const handleClickFilterButton = !isMobile
@@ -94,9 +94,9 @@ function Overview() {
           </span>
         </div> */}
 
-        <FilterDrawer
-          isOpen={isOpenNotesFilterDrawer}
-          setIsOpen={closeNotesFilterDrawer}
+        <OrderDrawer
+          isOpen={isOpenNotesSortDrawer}
+          onClose={closeNotesSortDrawer}
         />
         {/* content */}
         <>
