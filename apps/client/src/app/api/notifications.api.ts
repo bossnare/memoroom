@@ -9,9 +9,6 @@ export function useNotification() {
       const res = await fetcher('/notifications');
       return res.data; // return {.., data}
     },
-    staleTime: 3_000, // 3 sec
-    gcTime: 5 * 60 * 100, // 5 min
-    refetchOnWindowFocus: true,
   });
 }
 

@@ -18,9 +18,6 @@ export function useNote() {
       const res = await fetcher(`/notes?${params}`);
       return res.data; // return {.., data}
     },
-    staleTime: 0,
-    gcTime: 2 * 60 * 100, // 2 min
-    refetchOnWindowFocus: true,
   });
 }
 

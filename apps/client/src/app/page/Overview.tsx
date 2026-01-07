@@ -12,6 +12,7 @@ import { ArrowDownNarrowWide, ListRestart } from 'lucide-react';
 import { useNote } from '../api/notes.api';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
+import { dateUltraFormat } from '../lib/dateUltraFormat';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -138,6 +139,9 @@ function Overview() {
                   </span>
                   <span className="truncate transition-colors group-active:text-foreground text-muted-foreground text-wrap md:text-sm line-clamp-3">
                     {note.content}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {dateUltraFormat(note.createdAt)}
                   </span>
                 </div>
               ))}
