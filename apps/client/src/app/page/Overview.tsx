@@ -9,7 +9,7 @@ import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { useQueryClient } from '@tanstack/react-query';
 import { ArrowDownNarrowWide, Ellipsis, ListRestart } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { IconCheck } from '@tabler/icons-react';
 import { useNote } from '../api/notes.api';
 import { OrderDrawer } from '../components/users/Drawer';
@@ -90,6 +90,13 @@ function Overview() {
       return next;
     });
   };
+
+  // auto reset selected value on selectionMode close
+  useEffect(() => {
+  if (!isOpenTooltip) {
+    setSelected(new Set())
+  }
+}, [isOpenTooltip])
 
   if (notes?.length < 1)
     return (
