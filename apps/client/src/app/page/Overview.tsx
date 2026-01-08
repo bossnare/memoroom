@@ -9,7 +9,8 @@ import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { useQueryClient } from '@tanstack/react-query';
 import { ArrowDownNarrowWide, Ellipsis, ListRestart } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { IconCheck } from '@tabler/icons-react';
 import { useNote } from '../api/notes.api';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
@@ -20,6 +21,7 @@ function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
   const notes = data as NoteInterface[];
   const buttonSize = useButtonSize({ mobile: 'icon-lg', landscape: 'icon' });
+  const [selected, setSelected] = useState<Set<string>>(new Set());
 
   const isMobile = useIsMobile();
   const spinnerSize = !isMobile ? 'default' : 'lg';
@@ -50,13 +52,16 @@ function Overview() {
     : openNotesFilterDrawer;
 
   // for select a notes card on mobile
+  const isSelected = (notesId: string) => selected.has(notesId);
+
   const timerRef = useRef<number | null>(null);
   const longPressRef = useRef(false);
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (id: string) => {
     longPressRef.current = false;
     timerRef.current = window.setTimeout(() => {
       openTooltip();
+      toggleSelect(id);
     }, 500);
   };
 
@@ -74,6 +79,16 @@ function Overview() {
   const handleTouchEnd = () => {
     clear();
     // if (!longPressRef.current) ;
+  };
+
+  const toggleSelect = (notesId: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      next.has(notesId) ? next.delete(notesId) : next.add(notesId);
+      return next;
+    });
   };
 
   if (notes?.length < 1)
@@ -127,7 +142,6 @@ function Overview() {
             </Button>
           </span>
         </div> */}
-
         <div className="lg:hidden!">
           <OrderDrawer
             isOpen={isOpenNotesSortDrawer}
@@ -166,11 +180,14 @@ function Overview() {
               {notes?.map((note) => (
                 <div
                   role="button"
-                  onTouchStart={handleTouchStart}
+                  onTouchStart={() => handleTouchStart(note.id)}
+                  onClick={() => {
+                    if (isOpenTooltip) toggleSelect(note.id);
+                  }}
                   onTouchEnd={handleTouchEnd}
                   onTouchMove={handleTouchMove}
                   key={note.id}
-                  className="relative transition flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-3xl lg:rounded-xl"
+                  className="relative transition flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl"
                 >
                   <span className="text-lg font-bold truncate md:text-base line-clamp-2 text-wrap">
                     {note.title || 'Untitled'}
@@ -193,12 +210,23 @@ function Overview() {
                     </Button>
                   )}
                   {/* mobile only */}
-                  <span
+                  <div
                     className={cn(
                       isOpenTooltip ? 'scale-100' : 'scale-0',
                       'absolute z-2 lg: bottom-3 right-3 lg:hover:bg-muted-foreground/60 size-6 lg:size-5 bg-muted-foreground/40 rounded-full transition'
                     )}
-                  ></span>
+                  >
+                    <div
+                      className={cn(
+                        isSelected(note.id)
+                          ? 'scale-100 opacity-100'
+                          : 'scale-0 opacity-0',
+                        'size-full flex items-center justify-center rounded-full transition bg-primary'
+                      )}
+                    >
+                      <IconCheck className="size-4 stroke-4" />
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
