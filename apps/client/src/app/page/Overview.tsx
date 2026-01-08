@@ -180,7 +180,7 @@ function Overview() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="absolute hidden scale-0 top-2 right-2 group-hover:scale-100 lg:inline-flex"
+                    className="absolute hidden scale-0 z-2 top-2 right-2 group-hover:scale-100 lg:inline-flex"
                   >
                     <Ellipsis />
                   </Button>
@@ -188,7 +188,7 @@ function Overview() {
                   <span
                     className={cn(
                       isOpenTooltip ? 'scale-100' : 'scale-0',
-                      'absolute lg:hidden top-2 right-2 size-6 bg-muted-foreground/40 rounded-full transition'
+                      'absolute z-2 lg:hidden top-2 right-2 size-6 bg-muted-foreground/40 rounded-full transition'
                     )}
                   ></span>
                 </div>

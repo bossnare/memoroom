@@ -119,7 +119,7 @@ export function AppLayout() {
         </div>
         {/* fab button (create note, long presse -> choice) - mobile only */}
         <AnimatePresence>
-          {!isOpenMobileSidebar && (
+          {!isOpenTooltip && !isOpenMobileSidebar && (
             <motion.div
               variants={fabButtonVariants}
               initial="hidden"

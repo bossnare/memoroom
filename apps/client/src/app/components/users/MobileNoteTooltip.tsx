@@ -14,7 +14,7 @@ export function MobileNoteTooltip() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 16 }}
-      className="fixed inset-x-0 bottom-0 flex items-center justify-between h-16 px-4 z-22 bg-sidebar"
+      className="fixed inset-x-0 lg:hidden bottom-0 flex items-center justify-between h-16 px-4 z-22 bg-sidebar"
     >
       <Button onClick={closeTooltip} size="icon-xl" variant="ghost">
         <X />

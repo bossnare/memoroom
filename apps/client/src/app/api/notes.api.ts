@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export function useNote() {
   const [searchParams] = useSearchParams();
-  const sort = searchParams.get('sort') ?? 'createdAt';
+  const sort = searchParams.get('sort') ?? 'updatedAt';
   const order = searchParams.get('order') ?? 'desc';
   const params = new URLSearchParams();
   params.set('sort', sort);
