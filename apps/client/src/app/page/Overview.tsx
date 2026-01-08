@@ -8,14 +8,13 @@ import { useButtonSize } from '@/shared/hooks/use-button-size';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowDownNarrowWide, ListRestart } from 'lucide-react';
+import { ArrowDownNarrowWide, Ellipsis, ListRestart } from 'lucide-react';
+import { useRef } from 'react';
 import { useNote } from '../api/notes.api';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { dateUltraFormat } from '../lib/dateUltraFormat';
-import { Ellipsis } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { useRef } from 'react';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -38,7 +37,7 @@ function Overview() {
     close: closeNotesSortDrawer,
   } = useQueryToggle({ key: 'drawer', value: 'notesSorting' })!;
   const { open: openTooltip, isOpen: isOpenTooltip } = useQueryToggle({
-    key: 'tooltip',
+    key: 'select',
     value: 'selectNotes',
   })!;
   const { open: openNotesFilterMenu } = useQueryToggle({
@@ -129,10 +128,12 @@ function Overview() {
           </span>
         </div> */}
 
-        <OrderDrawer
-          isOpen={isOpenNotesSortDrawer}
-          onClose={closeNotesSortDrawer}
-        />
+        <div className="lg:hidden!">
+          <OrderDrawer
+            isOpen={isOpenNotesSortDrawer}
+            onClose={closeNotesSortDrawer}
+          />
+        </div>
         {/* content */}
         <>
           <header className="sticky top-0 z-20 px-1 pt-8 bg-background">
@@ -161,7 +162,7 @@ function Overview() {
             </div>
           </header>
           <main>
-            <div className="grid grid-cols-2 gap-3 pt-4 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-4">
               {notes?.map((note) => (
                 <div
                   role="button"
@@ -169,31 +170,33 @@ function Overview() {
                   onTouchEnd={handleTouchEnd}
                   onTouchMove={handleTouchMove}
                   key={note.id}
-                  className="relative flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-3xl lg:rounded-xl"
+                  className="relative transition flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-3xl lg:rounded-xl"
                 >
                   <span className="text-lg font-bold truncate md:text-base line-clamp-2 text-wrap">
                     {note.title || 'Untitled'}
                   </span>
-                  <span className="truncate transition-colors group-active:text-foreground text-muted-foreground text-wrap md:text-sm line-clamp-3">
+                  <span className="truncate transition-colors group-active:text-foreground text-muted-foreground text-wrap md:text-sm line-clamp-4 lg:line-clamp-2">
                     {note.content}
                   </span>
                   <span className="text-xs text-muted-foreground">
                     {dateUltraFormat(note.updatedAt)}
                   </span>
 
-                  {/* options toggle */}
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="absolute hidden scale-0 z-2 top-2 right-2 group-hover:scale-100 lg:inline-flex"
-                  >
-                    <Ellipsis />
-                  </Button>
+                  {/* options toggle - desktop */}
+                  {!isOpenTooltip && (
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="absolute hidden scale-0 z-2 top-2 right-2 group-hover:scale-100 lg:inline-flex"
+                    >
+                      <Ellipsis />
+                    </Button>
+                  )}
                   {/* mobile only */}
                   <span
                     className={cn(
                       isOpenTooltip ? 'scale-100' : 'scale-0',
-                      'absolute z-2 lg:hidden top-2 right-2 size-6 bg-muted-foreground/40 rounded-full transition'
+                      'absolute z-2 lg: bottom-3 right-3 lg:hover:bg-muted-foreground/60 size-6 lg:size-5 bg-muted-foreground/40 rounded-full transition'
                     )}
                   ></span>
                 </div>

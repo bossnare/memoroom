@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
-import { X, Trash } from 'lucide-react';
+import { Trash, X } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export function MobileNoteTooltip() {
   const { close: closeTooltip } = useQueryToggle({
-    key: 'tooltip',
+    key: 'select',
     value: 'selectNotes',
   })!;
 
