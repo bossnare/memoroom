@@ -66,7 +66,7 @@ export function OrderDrawer({
 
                     {activeSort === s.sort && (
                       <span>
-                        <IconCheck className="stroke-3" />
+                        <IconCheck className="stroke-4" />
                       </span>
                     )}
                   </button>

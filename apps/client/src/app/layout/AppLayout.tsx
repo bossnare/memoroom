@@ -44,7 +44,7 @@ export function AppLayout() {
     useQueryToggle({ key: 'sidebar', value: 'mobile' })!;
 
   const { isOpen: isOpenTooltip } = useQueryToggle({
-    key: 'tooltip',
+    key: 'select',
     value: 'selectNotes',
   })!;
 
