@@ -15,6 +15,7 @@ import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { dateUltraFormat } from '../lib/dateUltraFormat';
 import { Ellipsis } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { useRef } from 'react';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -50,26 +51,30 @@ function Overview() {
     : openNotesFilterDrawer;
 
   // for select a notes card on mobile
-  let timer: NodeJS.Timeout | null;
+  const timerRef = useRef<number | null>(null);
+  const longPressRef = useRef(false);
 
   const handleTouchStart = () => {
-    timer = setTimeout(() => {
+    longPressRef.current = false;
+    timerRef.current = window.setTimeout(() => {
       openTooltip();
     }, 500);
   };
 
-  const handleTouchMove = () => {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
+  const clear = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
   };
 
+  const handleTouchMove = () => {
+    clear();
+  };
+
   const handleTouchEnd = () => {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
+    clear();
+    // if (!longPressRef.current) ;
   };
 
   if (notes?.length < 1)
