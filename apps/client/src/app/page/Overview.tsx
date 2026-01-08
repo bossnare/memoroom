@@ -49,7 +49,8 @@ function Overview() {
     ? openNotesFilterMenu
     : openNotesFilterDrawer;
 
-  let timer: NodeJS.Timeout;
+  // for select a notes card on mobile
+  let timer: NodeJS.Timeout | null;
 
   const handleTouchStart = () => {
     timer = setTimeout(() => {
@@ -57,8 +58,18 @@ function Overview() {
     }, 500);
   };
 
+  const handleTouchMove = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  };
+
   const handleTouchEnd = () => {
-    clearTimeout(timer);
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
   };
 
   if (notes?.length < 1)
@@ -151,6 +162,7 @@ function Overview() {
                   role="button"
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
+                  onTouchMove={handleTouchMove}
                   key={note.id}
                   className="relative flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-3xl lg:rounded-xl"
                 >
@@ -174,6 +186,7 @@ function Overview() {
                   >
                     <Ellipsis />
                   </Button>
+                  {/* mobile only */}
                   <span
                     className={cn(
                       isOpenTooltip ? 'scale-100' : 'scale-0',
