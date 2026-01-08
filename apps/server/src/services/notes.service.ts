@@ -11,7 +11,7 @@ export const NotesService = {
     return { data, count };
   },
   async getMyAll(userId: string, query: NotesQueryType) {
-    const sort = query.sort ?? 'createdAt';
+    const sort = query.sort ?? 'updatedAt';
     const order = query.order ?? 'desc';
 
     const data = await db
