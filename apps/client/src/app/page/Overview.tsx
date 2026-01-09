@@ -24,6 +24,8 @@ import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { dateUltraFormat } from '../lib/dateUltraFormat';
 import { cn } from '../lib/utils';
 import { motion } from 'motion/react';
+import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
+import { Portal } from '@radix-ui/react-portal';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -35,6 +37,10 @@ function Overview() {
   const spinnerSize = !isMobile ? 'default' : 'lg';
 
   const buttonXSize = useButtonSize({ mobile: 'icon-xl', landscape: 'icon' });
+  const buttonToggleSelectAllSize = useButtonSize({
+    mobile: 'icon-lg',
+    landscape: 'icon',
+  });
 
   const queryClient = useQueryClient();
   const handleRefreshNotes = () => {
@@ -61,12 +67,14 @@ function Overview() {
     value: 'notesSorting',
   })!;
 
-  const handleClickFilterButton = !isMobile
+  const handleClickSortingButton = !isMobile
     ? openNotesFilterMenu
     : openNotesFilterDrawer;
 
   // for select a notes card on mobile
   const isSelected = (notesId: string) => selected.has(notesId);
+  const isHasSellected = selected.size > 0;
+  const isAllSelected = selected.size === notes?.map((n) => n.id).length;
 
   const timerRef = useRef<number | null>(null);
   const longPressRef = useRef(false);
@@ -105,7 +113,17 @@ function Overview() {
     });
   };
 
-  // auto reset selected value on selectionMode close
+  const toggleSelectAll = (allNotesId: string[]) => {
+    setSelected((prev) => {
+      const isAllSelected = prev.size === allNotesId.length;
+      if (isAllSelected) {
+        return new Set(); // clear all
+      }
+      return new Set(allNotesId); // set all
+    });
+  };
+
+  // auto clear selected value on selectionMode close
   useEffect(() => {
     if (!isSelectionMode) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -175,24 +193,50 @@ function Overview() {
           <header className="sticky top-0 z-20 px-1 pt-8 bg-background">
             {isSelectionMode ? (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                className=" flex items-center pb-2 justify-between"
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="flex items-center justify-between pb-2 lg:gap-10"
               >
-                <Button
-                  onClick={closeSelectionMode}
-                  size={buttonXSize}
-                  variant="ghost"
-                >
-                  <X />
-                </Button>
-                <span className="text-xl lg:text-base font-medium">
+                {/* skip and info on select notes */}
+                <div className="flex items-center gap-1">
+                  <Button
+                    onClick={closeSelectionMode}
+                    size={buttonXSize}
+                    variant="ghost"
+                  >
+                    <X />
+                  </Button>
+                  {/* desktop only */}
+                  <span className="hidden font-medium lg:inline-flex">
+                    {selected.size} selected
+                  </span>
+                </div>
+                {/* mobile only */}
+                <span className="text-xl font-medium lg:hidden">
                   {selected.size} selected
                 </span>
-                <Button size="icon-lg" variant="ghost">
-                  <ListChecks />
-                </Button>
+
+                {/* tooltip */}
+                <div className="justify-end hidden lg:flex grow">
+                  <SelectModeNoteTooltip disabled={!isHasSellected} />
+                </div>
+
+                {/* toggle select all button */}
+                <div className="flex items-center gap-2">
+                  <span className="hidden text-sm lg:inline-flex">
+                    {isAllSelected ? 'Unselect all' : 'Select all'}
+                  </span>
+                  <Button
+                    onClick={() => toggleSelectAll(notes?.map((n) => n.id))}
+                    size={buttonToggleSelectAllSize}
+                    variant="ghost"
+                  >
+                    <ListChecks
+                      className={cn(isAllSelected ? 'text-chart-2' : '')}
+                    />
+                  </Button>
+                </div>
               </motion.div>
             ) : (
               <div className="flex items-center justify-between">
@@ -209,7 +253,7 @@ function Overview() {
                     <ListRestart />
                   </Button>
                   <Button
-                    onClick={handleClickFilterButton}
+                    onClick={handleClickSortingButton}
                     variant="ghost"
                     className="transition-colors!"
                     size={buttonSize}
@@ -232,9 +276,9 @@ function Overview() {
                   onTouchEnd={handleTouchEnd}
                   onTouchMove={handleTouchMove}
                   key={note.id}
-                  className="relative transition flex flex-col gap-4 p-4 cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl"
+                  className="relative flex flex-col gap-4 p-4 transition cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl"
                 >
-                  <span className="text-lg font-bold truncate md:text-base line-clamp-2 text-wrap">
+                  <span className="text-lg font-bold leading-none truncate md:text-base line-clamp-2 text-wrap">
                     {note.title || 'Untitled'}
                   </span>
                   <span className="truncate transition-colors group-active:text-foreground text-muted-foreground text-wrap md:text-sm line-clamp-4 lg:line-clamp-2">
@@ -269,7 +313,7 @@ function Overview() {
                         'size-full flex items-center justify-center rounded-full transition bg-primary'
                       )}
                     >
-                      <IconCheck className="size-5 lg:size-4 stroke-4" />
+                      <IconCheck className="size-5 lg:size-4 stroke-3" />
                     </div>
                   </div>
                 </div>
@@ -278,6 +322,26 @@ function Overview() {
           </main>
         </>
       </div>
+
+      {/* mobile select toollip */}
+
+      <Portal>
+        {
+          isSelectionMode && (
+            <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 lg:hidden bg-sidebar z-22"
+        >
+          <SelectModeNoteTooltip
+            disabled={!isHasSellected}
+            className="flex justify-between w-full"
+          />
+        </motion.div>
+          )
+        }
+      </Portal>
     </>
   );
 }

@@ -24,7 +24,6 @@ import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
 
 export function AppLayout() {
   // store state
@@ -91,7 +90,7 @@ export function AppLayout() {
 
   return (
     <>
-      <div className="relative overflow-hidden">
+      <div className="relative">
         {/* loading state on big route change */}
         <AppLoader open={appLoading} />
         {/* desktop sidebar */}
@@ -144,10 +143,7 @@ export function AppLayout() {
         </AnimatePresence>
         {/* quick Editor */}
         {/* mobile */}
-        {isSelectionMode ? (
-          // on select notes card by long press on mobile device (by long press)
-          <SelectModeNoteTooltip />
-        ) : (
+        {!isSelectionMode && (
           <BottomBar
             openMobileSidebar={isOpenMobileSidebar}
             mobileSidebarWidth={mobileSidebarWidth}
