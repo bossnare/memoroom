@@ -24,7 +24,7 @@ import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { MobileNoteTooltip } from '../components/users/MobileNoteTooltip';
+import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
 
 export function AppLayout() {
   // store state
@@ -111,7 +111,7 @@ export function AppLayout() {
           {/* route content */}
           <PullToRefreshWrapper onRefresh={async () => handleRefreshNotes()}>
             <ScrollArea className="h-[calc(100dvh-116px)] md:h-[calc(100dvh-56px)] scroll-touch overscroll-contain">
-              <main className="pb-[60px] lg:pb-0 min-h-full">
+              <main className="pb-[60px] lg:pb-10 min-h-full">
                 <Outlet />
               </main>
             </ScrollArea>
@@ -146,7 +146,7 @@ export function AppLayout() {
         {/* mobile */}
         {isSelectionMode ? (
           // on select notes card by long press on mobile device (by long press)
-          <MobileNoteTooltip />
+          <SelectModeNoteTooltip />
         ) : (
           <BottomBar
             openMobileSidebar={isOpenMobileSidebar}

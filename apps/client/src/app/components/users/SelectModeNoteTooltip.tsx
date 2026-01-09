@@ -1,10 +1,8 @@
-import { Button } from '@/components/ui/button';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
-import { Trash, X } from 'lucide-react';
 import { motion } from 'motion/react';
 
-export function MobileNoteTooltip() {
-  const { close: closeTooltip } = useQueryToggle({
+export function SelectModeNoteTooltip() {
+  const { close: closeSelectionMode } = useQueryToggle({
     key: 'select',
     value: 'selectNotes',
   })!;
@@ -16,12 +14,12 @@ export function MobileNoteTooltip() {
       exit={{ opacity: 0, y: 16 }}
       className="fixed inset-x-0 lg:hidden bottom-0 flex items-center justify-between h-16 px-4 z-22 bg-sidebar"
     >
-      <Button onClick={closeTooltip} size="icon-xl" variant="ghost">
+      {/* <Button onClick={closeSelectionMode} size="icon-xl" variant="ghost">
         <X />
       </Button>
       <Button size="icon-lg" variant="ghost">
         <Trash />
-      </Button>
+      </Button> */}
     </motion.div>
   );
 }

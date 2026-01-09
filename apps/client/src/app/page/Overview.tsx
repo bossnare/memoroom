@@ -7,15 +7,23 @@ import { Spinner } from '@/shared/components/Spinner';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
-import { useQueryClient } from '@tanstack/react-query';
-import { ArrowDownNarrowWide, Ellipsis, ListRestart } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
 import { IconCheck } from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  ArrowDownNarrowWide,
+  Ellipsis,
+  ListRestart,
+  ListChecks,
+  // Trash,
+  X,
+} from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { useNote } from '../api/notes.api';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { dateUltraFormat } from '../lib/dateUltraFormat';
 import { cn } from '../lib/utils';
+import { motion } from 'motion/react';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -25,6 +33,8 @@ function Overview() {
 
   const isMobile = useIsMobile();
   const spinnerSize = !isMobile ? 'default' : 'lg';
+
+  const buttonXSize = useButtonSize({ mobile: 'icon-xl', landscape: 'icon' });
 
   const queryClient = useQueryClient();
   const handleRefreshNotes = () => {
@@ -38,7 +48,11 @@ function Overview() {
     isOpen: isOpenNotesSortDrawer,
     close: closeNotesSortDrawer,
   } = useQueryToggle({ key: 'drawer', value: 'notesSorting' })!;
-  const { open: openSelectionMode, isOpen: isSelectionMode } = useQueryToggle({
+  const {
+    open: openSelectionMode,
+    isOpen: isSelectionMode,
+    close: closeSelectionMode,
+  } = useQueryToggle({
     key: 'select',
     value: 'selectNotes',
   })!;
@@ -159,29 +173,52 @@ function Overview() {
         {/* content */}
         <>
           <header className="sticky top-0 z-20 px-1 pt-8 bg-background">
-            <div className="flex justify-between">
-              <h3 className="text-2xl font-medium tracking-tight scroll-m-20">
-                All notes
-              </h3>
-              <div className="flex gap-4">
+            {isSelectionMode ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className=" flex items-center pb-2 justify-between"
+              >
                 <Button
-                  onClick={handleRefreshNotes}
+                  onClick={closeSelectionMode}
+                  size={buttonXSize}
                   variant="ghost"
-                  className="hidden md:inline-flex"
-                  size="icon"
                 >
-                  <ListRestart />
+                  <X />
                 </Button>
-                <Button
-                  onClick={handleClickFilterButton}
-                  variant="ghost"
-                  className="transition-colors!"
-                  size={buttonSize}
-                >
-                  <ArrowDownNarrowWide />
+                <span className="text-xl lg:text-base font-medium">
+                  {selected.size} selected
+                </span>
+                <Button size="icon-lg" variant="ghost">
+                  <ListChecks />
                 </Button>
+              </motion.div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-medium tracking-tight scroll-m-20">
+                  All notes
+                </h3>
+                <div className="flex gap-4">
+                  <Button
+                    onClick={handleRefreshNotes}
+                    variant="ghost"
+                    className="hidden md:inline-flex"
+                    size="icon"
+                  >
+                    <ListRestart />
+                  </Button>
+                  <Button
+                    onClick={handleClickFilterButton}
+                    variant="ghost"
+                    className="transition-colors!"
+                    size={buttonSize}
+                  >
+                    <ArrowDownNarrowWide />
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </header>
           <main>
             <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-4">
