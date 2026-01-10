@@ -1,7 +1,7 @@
 import { NoteEditor } from '@/app/components/users/NoteEditor';
 import { useIsPublicRoute } from '@/shared/hooks/useIsPublicRoute';
 import { AppLayout } from '@/app/layout/AppLayout';
-import MiniLayout from '@/app/layout/MiniLayout';
+import MiniAppLayout from '@/app/layout/MiniAppLayout';
 import Overview from '@/app/page/Overview';
 import { PublicLayout } from '@/public-site/layout/PublicLayout';
 import { About } from '@/public-site/page/About';
@@ -70,7 +70,7 @@ export const AppRoutes = () => {
             </Route>
 
             {/* notes */}
-            <Route path="/note" element={<MiniLayout />}>
+            <Route path="/note" element={<MiniAppLayout />}>
               <Route path="new" element={<NoteEditor />} />
             </Route>
           </Route>

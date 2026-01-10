@@ -13,7 +13,7 @@ import { Outlet } from 'react-router-dom';
 import { AppLoader } from '../components/AppLoader';
 import { DesktopSidebar } from '../components/navigation/Sidebar';
 
-function MiniLayout() {
+function MiniAppLayout() {
   // store state
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const setIsOpenPanel = useLayoutStore((s) => s.setIsOpenPanel);
@@ -62,4 +62,4 @@ function MiniLayout() {
   );
 }
 
-export default MiniLayout;
+export default MiniAppLayout;

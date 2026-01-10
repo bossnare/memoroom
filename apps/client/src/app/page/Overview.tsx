@@ -219,7 +219,10 @@ function Overview() {
 
                 {/* tooltip */}
                 <div className="justify-end hidden lg:flex grow">
-                  <SelectModeNoteTooltip disabled={!isHasSellected} />
+                  <SelectModeNoteTooltip
+                    className="space-x-2"
+                    disabled={!isHasSellected}
+                  />
                 </div>
 
                 {/* toggle select all button */}
@@ -276,7 +279,7 @@ function Overview() {
                   onTouchEnd={handleTouchEnd}
                   onTouchMove={handleTouchMove}
                   key={note.id}
-                  className="relative flex flex-col gap-4 p-4 transition cursor-pointer select-none bg-background group active:scale-99 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl"
+                  className="relative flex flex-col gap-4 p-4 transition cursor-pointer select-none bg-background group active:scale-99 lg:active:scale-100 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl"
                 >
                   <span className="text-lg font-bold leading-none truncate md:text-base line-clamp-2 text-wrap">
                     {note.title || 'Untitled'}
@@ -326,21 +329,19 @@ function Overview() {
       {/* mobile select toollip */}
 
       <Portal>
-        {
-          isSelectionMode && (
-            <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
-          className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 lg:hidden bg-sidebar z-22"
-        >
-          <SelectModeNoteTooltip
-            disabled={!isHasSellected}
-            className="flex justify-between w-full"
-          />
-        </motion.div>
-          )
-        }
+        {isSelectionMode && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 lg:hidden bg-sidebar z-22"
+          >
+            <SelectModeNoteTooltip
+              disabled={!isHasSellected}
+              className="flex justify-between w-full"
+            />
+          </motion.div>
+        )}
       </Portal>
     </>
   );

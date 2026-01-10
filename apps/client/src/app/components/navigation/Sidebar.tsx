@@ -153,13 +153,15 @@ export const DesktopSidebar = ({
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">
             <Button
-              onClick={() => {
-                setAppLoading(true);
-                handleWait(async () => {
-                  await navigate('/note/new');
-                  setAppLoading(false);
-                }, 600);
-              }}
+              onClick={() =>
+                handleWait(() => {
+                  setAppLoading(true);
+                  handleWait(async () => {
+                    await navigate('/note/new');
+                    setAppLoading(false);
+                  }, 600);
+                }, 200)
+              }
               title="create new note"
               size="lg"
               variant="secondary"
