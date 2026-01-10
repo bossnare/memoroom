@@ -12,7 +12,7 @@ export const MiniProfile = ({ btnAction }: { btnAction?: React.ReactNode }) => {
           {user?.user_metadata.name.split(' (')[0] || 'User Diary'}
         </span>
         <span className="text-sm text-muted-foreground">
-          {user?.user_metadata.email_verified && 'Account verified'}
+          {user?.user_metadata.email_verified && 'View profile'}
         </span>
       </div>
       <div className="ml-auto shrink-0">{btnAction}</div>

@@ -3,12 +3,14 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
 import { useLabel } from '@/public-site/hooks/use-label';
 import { Footer } from '@/shared/components/brand/Footer';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
 import {
   landingMenuVariants,
   lineVariants,
 } from '@/shared/motions/motion.variant';
 import { X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 {
@@ -22,6 +24,18 @@ export const MobileMenu = ({
   close: () => void;
 }) => {
   const menuLabel = useLabel();
+  const isMobile = useIsMobile();
+
+  // manual scroll-lock for body if is open and on mobile viewport
+  // use .add and .remove because body has a default className
+  useEffect(() => {
+    if (!isMobile) return;
+    if (open) {
+      document.body.classList.add('hidden');
+    } else {
+      document.body.classList.remove('hidden');
+    }
+  }, [isMobile, open]);
 
   return (
     <>

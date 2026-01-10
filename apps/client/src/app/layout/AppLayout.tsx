@@ -127,13 +127,15 @@ export function AppLayout() {
               className="fixed bottom-24 md:bottom-12 lg:hidden right-5"
             >
               <Button
-                onClick={() => {
-                  setAppLoading(true);
-                  handleWait(async () => {
-                    await navigate('/note/new');
-                    setAppLoading(false);
-                  }, 600);
-                }}
+                onClick={() =>
+                  handleWait(() => {
+                    setAppLoading(true);
+                    handleWait(async () => {
+                      await navigate('/note/new');
+                      setAppLoading(false);
+                    }, 600);
+                  }, 200)
+                }
                 className="text-white rounded-full shadow-lg size-15 lg:size-14"
               >
                 <SquarePen className="size-7 lg:size-6" />
