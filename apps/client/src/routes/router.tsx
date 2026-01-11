@@ -27,7 +27,7 @@ export const AppRoutes = () => {
   const { setTheme } = useTheme();
   const { data: userProfiles } = useUserProfile();
 
-  localStorage.setItem('user-theme', userProfiles?.themeMode ?? '');
+  localStorage.setItem('user-theme', userProfiles?.themeMode as Theme);
   const userCacheTheme = localStorage.getItem('user-theme');
 
   const userTheme = (userProfiles?.themeMode ??

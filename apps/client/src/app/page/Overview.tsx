@@ -320,7 +320,7 @@ function Overview() {
                         'size-full flex items-center justify-center rounded-full transition bg-primary'
                       )}
                     >
-                      <IconCheck className="size-5 lg:size-4 text-foreground stroke-3" />
+                      <IconCheck className="size-5 lg:size-4 text-secondary-foreground dark:text-foreground stroke-3" />
                     </div>
                   </div>
                 </div>
