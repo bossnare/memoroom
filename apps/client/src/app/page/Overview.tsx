@@ -139,7 +139,7 @@ function Overview() {
 
   const handleClickNote = (noteId: string) => {
     if (isSelectionMode) toggleSelect(noteId);
-    else handleWait(() => navigate(`/note/${noteId}/edit`), 200);
+    else handleWait(() => navigate(`/note/${noteId}/edit`), 300);
   };
 
   if (isPending)
