@@ -10,6 +10,5 @@ export function useNoteId(id?: string) {
       return res.data; // return {.., data}
     },
     enabled: !!id,
-    staleTime: 5_000_000,
   });
 }

@@ -65,6 +65,10 @@ export const NoteEditor = ({
     e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
   };
 
+  const autoGrowOnFocus = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
+  };
+
   const navigate = useNavigate();
 
   const handleCreateNote = async () => {
@@ -144,6 +148,7 @@ export const NoteEditor = ({
                 className="w-full mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
                 placeholder="Title"
                 value={title}
+                onFocus={autoGrowOnFocus}
                 onInput={(e) => {
                   setTitle(e.currentTarget.value);
                   autoGrow(e);
@@ -175,11 +180,11 @@ export const NoteEditor = ({
                 }}
                 onInput={(e) => {
                   autoGrow(e);
-                  // scroll to carret - smooth on desktop only
-                  // e.currentTarget.scrollIntoView({
-                  //   block: 'end',
-                  //   behavior: 'auto',
-                  // });
+                  // scroll to carret
+                  e.currentTarget.scrollIntoView({
+                    block: 'end',
+                    behavior: 'auto',
+                  });
                 }}
                 name=""
                 id=""
