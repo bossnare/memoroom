@@ -59,7 +59,7 @@ const LoginCard = ({
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="bg-card fixed fixed-center pointer-events-auto dark:bg-background overflow-y-auto scroll-touch w-full lg:w-full min-h-1/2 md:min-h-[calc(100dvh-14rem)] p-6 rounded-xl max-w-md"
+              className="bg-card fixed fixed-center pointer-events-auto dark:bg-background overflow-y-auto scroll-touch w-[96%] lg:w-full min-h-1/2 md:min-h-[calc(100dvh-14rem)] p-6 rounded-xl max-w-md"
             >
               <div className="relative space-y-4">
                 {/* close button */}
