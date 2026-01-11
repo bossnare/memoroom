@@ -15,13 +15,12 @@ function Notification() {
   const notifications = data ?? [];
 
   const isMobile = useIsMobile();
-  const spinnerSize = !isMobile ? 'default' : 'lg';
   const navigate = useNavigate();
 
   if (isPending)
     return (
       <div className="flex items-center justify-center py-10 h-100">
-        <Spinner variant="invert" size={spinnerSize} />
+        <Spinner variant="half" />
       </div>
     );
 
