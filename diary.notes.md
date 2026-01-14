@@ -1,6 +1,6 @@
-# NOTI
+# DIARY
 
-Small app to create notes online
+Small app to create notes online, share ideas
 
 ## Stack
 
@@ -20,3 +20,8 @@ Small app to create notes online
 
 - use authUsers id reference --> profiles table id
 - create a **function** and **trigger** to create auth.users.id & profiles.id on Supabase dashboard **(supabase docs recomandation)**
+
+## MIGRATE BACKEND TO PRISMA/PG+NestJS
+
+- before: Drizzle/Pg+ElysiaJS
+- after: Prisma/Pg+NestJS
