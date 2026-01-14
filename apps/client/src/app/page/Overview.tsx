@@ -6,27 +6,29 @@ import { Spinner } from '@/shared/components/Spinner';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
+import { handleWait } from '@/shared/utils/handle-wait';
+import { Portal } from '@radix-ui/react-portal';
 import { IconCheck } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   ArrowDownNarrowWide,
   Ellipsis,
-  ListRestart,
   ListChecks,
+  ListRestart,
   // Trash,
   X,
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useNote } from '../api/notes.api';
+import { ConfirmDrawer } from '../components/users/ConfirmDrawer';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
+import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
 import { dateUltraFormat } from '../lib/date-format';
 import { cn } from '../lib/utils';
-import { motion } from 'motion/react';
-import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
-import { Portal } from '@radix-ui/react-portal';
-import { useNavigate } from 'react-router-dom';
-import { handleWait } from '@/shared/utils/handle-wait';
+import api from '../lib/api';
 
 function Overview() {
   const navigate = useNavigate();
@@ -71,6 +73,14 @@ function Overview() {
   const { isOpen: isOpenMobileSidebar } = useQueryToggle({
     key: 'sidebar',
     value: 'mobile',
+  })!;
+  const {
+    isOpen: isOpenDeleteConfirm,
+    open: openDeleteConfirm,
+    close: closeDeleteConfirm,
+  } = useQueryToggle({
+    key: 'drawer',
+    value: 'deleteNote',
   })!;
 
   const handleClickSortingButton = !isMobile
@@ -142,6 +152,39 @@ function Overview() {
     else handleWait(() => navigate(`/note/${noteId}/edit`), 250);
   };
 
+  // refactor later
+  type ActionKey = 'move' | 'delete';
+  const deleteConfirmTitle =
+    selected.size > 1 ? `Delete notes?` : 'Delete this note?';
+  const deleteConfirmDescription =
+    selected.size > 1
+      ? `These notes will no longer appear in your notes. You can undo this action`
+      : `This notes will no longer appear in your notes. You can undo this action`;
+  const deleteConfirmLabel =
+    selected.size > 1 ? `Delete (${selected.size})` : 'Delete';
+
+  const handleDelete = async () => {
+    try {
+      const res = await api.patch('/notes', {
+        idsToRemove: Array.from(selected),
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const mobileTooltipAction = (actionKey: ActionKey) => {
+    switch (actionKey) {
+      case 'move':
+        console.log('move');
+        break;
+      case 'delete':
+        openDeleteConfirm();
+        break;
+    }
+  };
+
   if (isPending)
     return (
       <div className="flex items-center justify-center py-10 h-100">
@@ -173,32 +216,22 @@ function Overview() {
   return (
     <>
       <div className="min-h-screen pb-2 bg-muted dark:bg-background">
-        {/* <div className="relative flex flex-col w-full gap-2 p-4 rounded-lg shadow-xs md:p-3 bg-muted dark:bg-muted/60">
-          <h4 className="font-bold">Complete your profile</h4>
-          <div className="flex flex-col justify-center gap-3 md:items-center md:flex-row md:justify-between">
-            <Paragraphe className="cursor-pointer text-muted-foreground md:text-sm">
-              {user?.user_metadata.name.split(' (')[0]} If you know, you know.
-              As a social media fan, you maybe know it.
-            </Paragraphe>
-            <div className="flex justify-end gap-4">
-              <Button size="sm" variant="secondary">
-                Configure
-              </Button>
-            </div>
-          </div>
-
-          <span className="right-1 top-0.5 absolute">
-            <Button size="icon-sm" variant="ghost">
-              <X className="" />
-            </Button>
-          </span>
-        </div> */}
-        <div className="lg:hidden!">
-          <OrderDrawer
-            isOpen={isOpenNotesSortDrawer}
-            onClose={closeNotesSortDrawer}
-          />
-        </div>
+        {/* drawer - mobile only */}
+        <ConfirmDrawer
+          title={deleteConfirmTitle}
+          description={deleteConfirmDescription}
+          actionText={deleteConfirmLabel}
+          isOpen={isOpenDeleteConfirm}
+          onClose={closeDeleteConfirm}
+          action={() => {
+            handleDelete();
+            closeDeleteConfirm();
+          }}
+        />
+        <OrderDrawer
+          isOpen={isOpenNotesSortDrawer}
+          onClose={closeNotesSortDrawer}
+        />
         {/* content */}
         <>
           <header className="sticky top-0 z-20 px-4 pt-8 md:px-7 bg-background">
@@ -346,6 +379,7 @@ function Overview() {
             className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 lg:hidden bg-sidebar z-22"
           >
             <SelectModeNoteTooltip
+              onAction={mobileTooltipAction}
               disabled={!isHasSellected}
               className="flex justify-between w-full"
             />

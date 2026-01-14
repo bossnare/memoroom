@@ -168,7 +168,7 @@ export const NoteEditor = ({
                   handleSave();
                   handleWait(() => navigate(-1), 200);
                 }}
-                className="font-bold select-none"
+                className="font-bold rounded-full select-none"
                 variant="ghost"
               >
                 {isSaving ? 'saving...' : saveButtonText}
