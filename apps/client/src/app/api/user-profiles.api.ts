@@ -6,7 +6,7 @@ export function useUserProfile() {
   return useQuery<UserInterface>({
     queryKey: ['user-profiles'],
     queryFn: async () => {
-      const res = await fetcher('/users/me');
+      const res = await fetcher('/profiles/me');
       return res.data; // return {.., data}
     },
   });
