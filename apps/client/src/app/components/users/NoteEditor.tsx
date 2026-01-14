@@ -109,7 +109,7 @@ export const NoteEditor = ({
   const handleUpdateNote = async () => {
     setIsSaving(true);
     try {
-      const res = await api.put(`/notes/update/${note?.id}`, body);
+      const res = await api.put(`/notes/${note?.id}`, body);
       console.log(res.data);
     } catch (e) {
       console.log(e);
