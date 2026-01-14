@@ -97,7 +97,7 @@ export const NoteEditor = ({
   const handleCreateNote = async () => {
     setIsSaving(true);
     try {
-      const res = await api.post('/notes/create', body);
+      const res = await api.post('/notes', body);
       console.log(res.data);
     } catch (e) {
       console.log(e);
