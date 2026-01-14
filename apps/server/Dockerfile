@@ -12,6 +12,8 @@ RUN bun install
 # -------- Build ---------
 FROM deps AS build
 COPY . .
+ENV DATABASE_URL=$DATABASE_URL 
+
 RUN bunx prisma generate
 RUN bun run build
 
