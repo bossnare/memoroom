@@ -1,33 +1,34 @@
-FROM oven/bun AS build
-
+# -------- Base ---------
+FROM node:20-alpine AS base
 WORKDIR /app
 
-# Cache packages installation
-COPY package.json bun.lock tsconfig.json ./
+# -------- Dependencies ---------
+FROM base AS deps
+RUN npm install -g bun
 
-ENV DATABASE_URL=$DATABASE_URL
-
+COPY package.json bun.lock ./
 RUN bun install --production
 
-COPY ./src ./src
+# -------- Build ---------
+FROM deps AS build
+COPY . .
+RUN bun run build
+RUN bunx prisma generate
 
-ENV NODE_ENV=production
-
-RUN bun build \
-	--compile \
-	--minify-whitespace \
-	--minify-syntax \
-	--outfile server \
-	src/index.ts
-
-FROM gcr.io/distroless/base
-
+# -------- Production ---------
+FROM node:20-alpine AS runner
 WORKDIR /app
 
-COPY --from=build /app/server server
-
 ENV NODE_ENV=production
 
-CMD ["./server"]
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/tsconfig.json ./tsconfig.json
+COPY --from=build /app/tsconfig.build.json ./tsconfig.build.json
+COPY --from=build /app/prisma ./prisma
 
 EXPOSE 3000
+CMD [ "node", "dist/main.js" ]
+
+
