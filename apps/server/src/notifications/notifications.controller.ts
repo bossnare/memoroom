@@ -10,6 +10,8 @@ import {
 import { NotificationsService } from './notifications.service.js';
 import { CreateNotificationDto } from './dto/create-notification.dto.js';
 import { UpdateNotificationDto } from './dto/update-notification.dto.js';
+import { User } from '../auth/decorators/user.decorator.js';
+import { Profile as UserEntity } from '../../generated/prisma/client.js';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -21,8 +23,8 @@ export class NotificationsController {
   }
 
   @Get()
-  findAll() {
-    return this.notificationsService.findAll();
+  findAll(@User() user: UserEntity) {
+    return this.notificationsService.findAll(user.id);
   }
 
   @Get(':id')

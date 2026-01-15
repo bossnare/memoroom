@@ -87,11 +87,12 @@ export class NotesService {
   async softRemoveMany(idsToRemove: string[]) {
     if (!idsToRemove.length) {
       return {
-        idsToRemove,
+        message: 'No id to remove!',
+        idsToRemove: idsToRemove.length,
       };
     }
     const result = await this.prisma.note.updateMany({
-      where: { id: { in: idsToRemove }, deletedAt: null },
+      where: { id: { in: idsToRemove } },
       data: { deleted: true, deletedAt: new Date() },
     });
 
@@ -106,7 +107,7 @@ export class NotesService {
   async restoreOne(id: string) {
     await this.prisma.note.update({
       where: { id },
-      data: { deleted: false, deletedAt: null },
+      data: { deleted: false },
     });
 
     return {
@@ -118,8 +119,8 @@ export class NotesService {
 
   async restoreMany(idsToRestore: string[]) {
     const result = await this.prisma.note.updateMany({
-      where: { id: { in: idsToRestore }, deletedAt: { not: null } },
-      data: { deleted: false, deletedAt: null },
+      where: { id: { in: idsToRestore } },
+      data: { deleted: false },
     });
 
     return {
