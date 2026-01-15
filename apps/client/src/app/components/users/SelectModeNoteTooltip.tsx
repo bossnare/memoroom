@@ -38,8 +38,7 @@ export function SelectModeNoteTooltip({
           key={t.id}
           disabled={disabled}
           onClick={() => {
-            if (!onAction) return;
-            onAction(t.key as ActionKey);
+            onAction?.(t.key as ActionKey);
           }}
           className="inline-flex gap-1 hover:bg-transparent! active:opacity-50 dark:lg:active:bg-accent/40! lg:active:bg-muted-foreground/40! hover:not-focus:opacity-70 lg:gap-1.5 flex-col lg:flex-row"
           size={buttonSize}

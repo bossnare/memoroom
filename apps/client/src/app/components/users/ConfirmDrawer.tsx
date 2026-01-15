@@ -12,21 +12,24 @@ type Props = {
   title?: string;
   description?: string;
   cancelText?: string;
-  actionText?: string;
+  confirmText?: string;
   isOpen?: boolean;
   onClose?: () => void;
-  action?: () => void;
+  onConfirm?: () => Promise<void> | void;
 };
 
 export function ConfirmDrawer(props: Props) {
+  const handleConfirm = async () => {
+    await props.onConfirm?.();
+    props.onClose?.();
+  };
+
   return (
     <Drawer open={props.isOpen} onOpenChange={props.onClose}>
       <DrawerContent className="dark:bg-sidebar rounded-t-3xl">
         <div className="w-full max-w-md mx-auto">
-          <DrawerHeader>
-            <DrawerTitle className="text-[20px]">
-              {props.title || 'Context'}
-            </DrawerTitle>
+          <DrawerHeader className="space-y-3">
+            <DrawerTitle>{props.title || 'Context'}</DrawerTitle>
             <DrawerDescription>{props.description}</DrawerDescription>
           </DrawerHeader>
           <div className="pb-8 px-2 flex gap-4 justify-center [&_button]:min-w-38">
@@ -40,12 +43,12 @@ export function ConfirmDrawer(props: Props) {
               </Button>
             </DrawerClose>
             <Button
-              onClick={props.action}
+              onClick={handleConfirm}
               size="xl"
               variant="secondary"
               className="rounded-full font-bold text-[16px]"
             >
-              {props.actionText || 'Action'}
+              {props.confirmText || 'confirm'}
             </Button>
           </div>
         </div>

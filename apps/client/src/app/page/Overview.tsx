@@ -1,42 +1,29 @@
 import { Button } from '@/components/ui/button';
-// import { Paragraphe } from '@/shared/components/Paragraphe';
-// import { useAuth } from '@/shared/hooks/use-auth';
-// import { X } from 'lucide-react';
 import { Spinner } from '@/shared/components/Spinner';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
-import { handleWait } from '@/shared/utils/handle-wait';
 import { Portal } from '@radix-ui/react-portal';
-import { IconCheck } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  ArrowDownNarrowWide,
-  Ellipsis,
-  ListChecks,
-  ListRestart,
-  // Trash,
-  X,
-} from 'lucide-react';
+import { ArrowDownNarrowWide, ListChecks, ListRestart, X } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useNote } from '../api/notes.api';
 import { ConfirmDrawer } from '../components/users/ConfirmDrawer';
 import { OrderDrawer } from '../components/users/Drawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
+import { NoteList } from '../components/users/NoteList';
 import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
-import { dateUltraFormat } from '../lib/date-format';
-import { cn } from '../lib/utils';
 import api from '../lib/api';
+import { cn } from '../lib/utils';
 
 function Overview() {
-  const navigate = useNavigate();
-
   const { data, isPending, isError, error, refetch } = useNote();
   const notes = data ?? [];
   const buttonSize = useButtonSize({ mobile: 'icon-lg', landscape: 'icon' });
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const isAllSelected = selected.size === notes.map((n) => n.id).length;
+  const isHasSellected = selected.size > 0;
 
   const isMobile = useIsMobile();
 
@@ -53,11 +40,13 @@ function Overview() {
     });
   };
 
+  // sorting query drawer params state - mobile only
   const {
-    open: openNotesFilterDrawer,
-    isOpen: isOpenNotesSortDrawer,
-    close: closeNotesSortDrawer,
+    open: openNoteSortingDrawer,
+    isOpen: isOpenNoteSortingDrawer,
+    close: closeNoteSortingDrawer,
   } = useQueryToggle({ key: 'drawer', value: 'notesSorting' })!;
+  // selection query params state
   const {
     open: openSelectionMode,
     isOpen: isSelectionMode,
@@ -66,14 +55,17 @@ function Overview() {
     key: 'select',
     value: 'selectNotes',
   })!;
-  const { open: openNotesFilterMenu } = useQueryToggle({
+  // sorting query params state - desktop only
+  const { open: openNoteSortingMenu } = useQueryToggle({
     key: 'menu',
     value: 'notesSorting',
   })!;
+
   const { isOpen: isOpenMobileSidebar } = useQueryToggle({
     key: 'sidebar',
     value: 'mobile',
   })!;
+  // delete confirm drawer query params state - mobile only
   const {
     isOpen: isOpenDeleteConfirm,
     open: openDeleteConfirm,
@@ -84,40 +76,16 @@ function Overview() {
   })!;
 
   const handleClickSortingButton = !isMobile
-    ? openNotesFilterMenu
-    : openNotesFilterDrawer;
+    ? openNoteSortingMenu
+    : openNoteSortingDrawer;
 
-  // for select a notes card on mobile
-  const isSelected = (notesId: string) => selected.has(notesId);
-  const isHasSellected = selected.size > 0;
-  const isAllSelected = selected.size === notes?.map((n) => n.id).length;
-
-  const timerRef = useRef<number | null>(null);
-  const longPressRef = useRef(false);
-
-  const handleTouchStart = (id: string) => {
-    longPressRef.current = false;
-    timerRef.current = window.setTimeout(() => {
-      openSelectionMode();
-      toggleSelect(id);
-    }, 500);
-  };
-
-  const clear = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
+  // auto clear selected value on selectionMode close
+  useEffect(() => {
+    if (!isSelectionMode) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelected(new Set());
     }
-  };
-
-  const handleTouchMove = () => {
-    clear();
-  };
-
-  const handleTouchEnd = () => {
-    clear();
-    // if (!longPressRef.current) ;
-  };
+  }, [isSelectionMode]);
 
   const toggleSelect = (notesId: string) => {
     setSelected((prev) => {
@@ -137,19 +105,6 @@ function Overview() {
       }
       return new Set(allNotesId); // set all
     });
-  };
-
-  // auto clear selected value on selectionMode close
-  useEffect(() => {
-    if (!isSelectionMode) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setSelected(new Set());
-    }
-  }, [isSelectionMode]);
-
-  const handleClickNote = (noteId: string) => {
-    if (isSelectionMode) toggleSelect(noteId);
-    else handleWait(() => navigate(`/note/${noteId}/edit`), 250);
   };
 
   // refactor later
@@ -220,18 +175,17 @@ function Overview() {
         <ConfirmDrawer
           title={deleteConfirmTitle}
           description={deleteConfirmDescription}
-          actionText={deleteConfirmLabel}
+          confirmText={deleteConfirmLabel}
           isOpen={isOpenDeleteConfirm}
           onClose={closeDeleteConfirm}
-          action={() => {
+          onConfirm={() => {
             handleDelete();
             closeSelectionMode();
-            closeDeleteConfirm();
           }}
         />
         <OrderDrawer
-          isOpen={isOpenNotesSortDrawer}
-          onClose={closeNotesSortDrawer}
+          isOpen={isOpenNoteSortingDrawer}
+          onClose={closeNoteSortingDrawer}
         />
         {/* content */}
         <>
@@ -313,58 +267,13 @@ function Overview() {
             )}
           </header>
           <main className="px-3 md:px-6">
-            <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-4">
-              {notes?.map((note) => (
-                <div
-                  role="button"
-                  onTouchStart={() => handleTouchStart(note.id)}
-                  onClick={() => handleClickNote(note.id)}
-                  onTouchEnd={handleTouchEnd}
-                  onTouchMove={handleTouchMove}
-                  key={note.id}
-                  className="relative flex flex-col gap-4 p-4 transition cursor-pointer select-none bg-card group active:scale-99 lg:active:scale-100 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl"
-                >
-                  <span className="text-lg font-bold leading-none truncate md:text-base line-clamp-2 lg:line-clamp-1 text-wrap">
-                    {note.title || 'Untitled'}
-                  </span>
-                  <span className="truncate transition-colors group-active:text-foreground text-muted-foreground text-wrap md:text-sm line-clamp-4 lg:line-clamp-1">
-                    {note.content}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {dateUltraFormat(note.updatedAt)}
-                  </span>
-
-                  {/* options toggle - desktop */}
-                  {!isSelectionMode && (
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="absolute hidden scale-0 z-2 top-2 right-2 group-hover:scale-100 lg:inline-flex"
-                    >
-                      <Ellipsis />
-                    </Button>
-                  )}
-                  {/* mobile only */}
-                  <div
-                    className={cn(
-                      isSelectionMode ? 'scale-100' : 'scale-0',
-                      'absolute z-2 bottom-3 right-3 lg:hover:bg-muted-foreground/60 size-7 lg:size-5 bg-muted-foreground/40 rounded-full transition'
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        isSelected(note.id)
-                          ? 'scale-100 opacity-100'
-                          : 'scale-0 opacity-0',
-                        'size-full flex items-center justify-center rounded-full transition bg-primary'
-                      )}
-                    >
-                      <IconCheck className="size-5 lg:size-4 text-secondary-foreground dark:text-foreground stroke-3" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <NoteList
+              selected={selected}
+              isSelectionMode={isSelectionMode}
+              notes={notes}
+              toggleSelect={toggleSelect}
+              openSelectionMode={openSelectionMode}
+            />
           </main>
         </>
       </div>

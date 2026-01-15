@@ -22,7 +22,6 @@ export function OrderDrawer({
   ];
 
   const [searchParams, setSearchParams] = useSearchParams();
-
   const activeSort = searchParams.get('sort') ?? 'updatedAt';
 
   const setOrder = (next: Record<string, string>) => {

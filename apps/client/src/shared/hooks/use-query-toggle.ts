@@ -19,13 +19,15 @@ export const useQueryToggle = (config: Config) => {
 
   const open = () => {
     if (isOpen) return; // avoid second params navigation & push history
-    const p = new URLSearchParams(searchParams);
+    // read the latest params from the URL to avoid races when multiple toggles run
+    const p = new URLSearchParams(window.location.search);
     p.set(key, value);
     setParams(p);
   };
 
   const close = () => {
-    const p = new URLSearchParams(searchParams);
+    // read the latest params from the URL to avoid races when multiple toggles run
+    const p = new URLSearchParams(window.location.search);
     p.delete(key);
     // replace with current history on back
     setParams(p, { replace: true });
