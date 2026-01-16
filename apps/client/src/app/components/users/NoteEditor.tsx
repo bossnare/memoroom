@@ -5,7 +5,7 @@ import { handleWait } from '@/shared/utils/handle-wait';
 import { Portal } from '@radix-ui/react-portal';
 import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   MAX_TOOLTIP_WIDTH,
   MIN_TOOLTIP_WIDTH,
@@ -40,8 +40,12 @@ export const NoteEditor = ({
 
   const isMobile = useIsMobile();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
 
   const isEdit = mode === 'edit';
+  const isNew = mode === 'new';
+  const fromClipboard = params.get('source') === 'clipboard';
+
   const editorMode = {
     new: 'New',
     edit: 'Edit',
@@ -54,6 +58,19 @@ export const NoteEditor = ({
   };
   const editorState = editorMode[mode];
   const saveButtonText = saveMode[mode];
+
+  // if paste from clipboard action
+  useEffect(() => {
+    if (isNew && fromClipboard) {
+      const draft = sessionStorage.getItem('draft:clipboard');
+      if (draft) {
+        setTitle(draft.split('\n')[0].slice(0, 50).trim());
+        setContent(draft);
+        // remove draft after getting it
+        sessionStorage.removeItem('draft:clipboard');
+      }
+    }
+  }, [fromClipboard, isNew]);
 
   // initial fill
   useEffect(() => {

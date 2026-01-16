@@ -25,6 +25,7 @@ import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip
 import api from '../lib/api';
 import { cn } from '../lib/utils';
 import { toast } from 'sonner';
+import { useNoteServices } from '../hooks/use-note-services';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
@@ -80,7 +81,7 @@ function Overview() {
     open: openDeleteConfirm,
     close: closeDeleteConfirm,
   } = useQueryToggle({
-    key: 'drawer',
+    key: 'uiState',
     value: 'deleteNote',
   })!;
 
@@ -116,6 +117,8 @@ function Overview() {
     });
   };
 
+  const { openNewNote, pasteFromClipboard } = useNoteServices();
+
   // refactor later
   type ActionKey = 'move' | 'delete';
   const deleteConfirmTitle =
@@ -139,7 +142,7 @@ function Overview() {
     }
   };
 
-  const mobileTooltipAction = (actionKey: ActionKey) => {
+  const handleTooltipAction = (actionKey: ActionKey) => {
     switch (actionKey) {
       case 'move':
         console.log('move');
@@ -180,6 +183,8 @@ function Overview() {
           description="You haven't created any notes yet. Get started by creating your first notes."
           primaryLabel="Create Notes"
           secondaryLabel="Paste from Clipboard"
+          onPrimaryAction={openNewNote}
+          onSecondaryAction={pasteFromClipboard}
         />
       </div>
     );
@@ -214,6 +219,7 @@ function Overview() {
           }}
         />
         <OrderDrawer
+          showOn="mobile"
           isOpen={isOpenNoteSortingDrawer}
           onClose={closeNoteSortingDrawer}
         />
@@ -249,6 +255,7 @@ function Overview() {
                 {/* tooltip */}
                 <div className="justify-end hidden lg:flex grow">
                   <SelectModeNoteTooltip
+                    onAction={handleTooltipAction}
                     className="space-x-2"
                     disabled={!isHasSellected}
                   />
@@ -326,7 +333,7 @@ function Overview() {
             className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 lg:hidden bg-sidebar z-22"
           >
             <SelectModeNoteTooltip
-              onAction={mobileTooltipAction}
+              onAction={handleTooltipAction}
               disabled={!isHasSellected}
               className="flex justify-between w-full"
             />

@@ -5,21 +5,26 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { IconCheck } from '@tabler/icons-react';
 import { useSearchParams } from 'react-router-dom';
 
 export function OrderDrawer({
   isOpen,
   onClose,
+  showOn,
 }: {
   isOpen?: boolean;
-  onClose: () => void;
+  onClose?: () => void;
+  showOn?: 'mobile' | 'desktop';
 }) {
   const sortLabel = [
     { id: 1, label: 'recently edited', sort: 'updatedAt', order: 'desc' },
     { id: 3, label: 'date created', sort: 'createdAt', order: 'desc' },
     { id: 2, label: 'title', sort: 'title', order: 'asc' },
   ];
+
+  const isMobile = useIsMobile();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSort = searchParams.get('sort') ?? 'updatedAt';
@@ -35,6 +40,9 @@ export function OrderDrawer({
       }
     );
   };
+
+  if (showOn === 'mobile' && !isMobile) return null;
+  if (showOn === 'desktop' && isMobile) return null;
 
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>

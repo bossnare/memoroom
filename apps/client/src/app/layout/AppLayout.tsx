@@ -18,20 +18,21 @@ import { useIsDesktop } from '@/shared/hooks/use-desktop';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { fabButtonVariants } from '@/shared/motions/motion.variant';
-import { handleWait } from '@/shared/utils/handle-wait';
 import { useQueryClient } from '@tanstack/react-query';
 import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { usePannel } from '../hooks/use-pannel';
+import { useNoteServices } from '../hooks/use-note-services';
 
 export function AppLayout() {
   // store state
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const setIsOpenPanel = useLayoutStore((s) => s.setIsOpenPanel);
   const appLoading = useLayoutStore((s) => s.appLoading);
-  const setAppLoading = useLayoutStore((s) => s.setAppLoading);
+
+  const { openNewNote } = useNoteServices();
 
   const queryClient = useQueryClient();
   const handleRefreshNotes = () =>
@@ -47,8 +48,6 @@ export function AppLayout() {
     key: 'select',
     value: 'selectNotes',
   })!;
-
-  const navigate = useNavigate();
 
   // local state
   const [mobileSidebarWidth, setMobileSidebarWidth] = useState(0);
@@ -126,15 +125,7 @@ export function AppLayout() {
               className="fixed bottom-24 md:bottom-12 lg:hidden right-5"
             >
               <Button
-                onClick={() =>
-                  handleWait(() => {
-                    setAppLoading(true);
-                    handleWait(async () => {
-                      await navigate('/note/new');
-                      setAppLoading(false);
-                    }, 600);
-                  }, 200)
-                }
+                onClick={openNewNote}
                 className="text-white rounded-full shadow-lg size-15 lg:size-14"
               >
                 <SquarePen className="size-7 lg:size-6" />
