@@ -67,6 +67,8 @@ export const NoteEditor = ({
   useEffect(() => {
     if (isNew && fromClipboard) {
       const draft = sessionStorage.getItem('draft:clipboard');
+      if (!draft?.trim()) toast('No text found in clipboard.');
+
       if (draft) {
         setTitle(draft.split('\n')[0].slice(0, 50).trim());
         setContent(draft);

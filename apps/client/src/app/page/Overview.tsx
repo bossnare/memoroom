@@ -246,17 +246,17 @@ function Overview() {
                     <X />
                   </Button>
                   {/* desktop only */}
-                  <span className="hidden font-medium lg:inline-flex">
+                  <span className="hidden font-medium md:inline-flex">
                     {selected.size} selected
                   </span>
                 </div>
                 {/* mobile only */}
-                <span className="text-xl font-medium lg:hidden">
+                <span className="text-xl font-medium md:hidden">
                   {selected.size} selected
                 </span>
 
                 {/* tooltip */}
-                <div className="justify-end hidden lg:flex grow">
+                <div className="justify-end hidden md:flex grow">
                   <SelectModeNoteTooltip
                     onAction={handleTooltipAction}
                     className="space-x-2"
@@ -326,14 +326,13 @@ function Overview() {
       </div>
 
       {/* mobile select toollip */}
-
       <Portal>
         {!isOpenMobileSidebar && isSelectionMode && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
-            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 lg:hidden bg-sidebar z-22"
+            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden bg-sidebar z-22"
           >
             <SelectModeNoteTooltip
               onAction={handleTooltipAction}

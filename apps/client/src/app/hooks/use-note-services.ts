@@ -20,7 +20,6 @@ export const useNoteServices = () => {
 
   const pasteFromClipboard = async () => {
     const text = await navigator.clipboard.readText();
-    if (!text.trim()) return;
 
     sessionStorage.setItem('draft:clipboard', text);
     handleWait(() => navigate('/note/new?source=clipboard'), 200);

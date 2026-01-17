@@ -4,13 +4,13 @@ import { useLayoutStore } from '@/app/stores/layoutStore';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/shared/components/brand/Logo';
 import { Overlay } from '@/shared/components/Overlay';
-import { handleWait } from '@/shared/utils/handle-wait';
 import { waitVibrate } from '@/shared/utils/vibration';
 import { PanelLeftClose, PanelLeftOpen, Plus } from 'lucide-react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { desctructiveLabel, sideBarLabel, tabLabel } from './label';
 import { NavTab } from './NavTab';
 import { SideBarTabWrapper } from './sideBarTab';
+import { useNoteServices } from '@/app/hooks/use-note-services';
 
 type SidebarProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
@@ -116,11 +116,10 @@ export const DesktopSidebar = ({
 }: SidebarProps & { width: number }) => {
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const toggleOpenPanel = useLayoutStore((s) => s.toggleOpenPanel);
-  const setAppLoading = useLayoutStore((s) => s.setAppLoading);
-  const navigate = useNavigate();
+  const { openNewNote } = useNoteServices();
 
   return (
-    <div
+    <aside
       style={{ width: `${width}px` }}
       {...props}
       ref={ref}
@@ -139,7 +138,7 @@ export const DesktopSidebar = ({
         </Button>
       </div>
 
-      <aside className="relative space-y-4 px-3 w-full md:h-full lg:h-[calc(100%-8%)] overflow-y-auto scrollbar-none">
+      <div className="relative space-y-4 px-3 w-full md:h-full lg:h-[calc(100%-8%)] overflow-y-auto scrollbar-none">
         <nav className="mt-1 rounded-md">
           <ul className="flex flex-col gap-2">
             <NavTab />
@@ -148,31 +147,40 @@ export const DesktopSidebar = ({
 
         <div className="h-1 my-2 border-t border-sidebar-border"></div>
 
-        {/* <ToggleTheme /> */}
+        {/* drag and drop file */}
+        <div className="mt-4 rounded-md bg-background">
+          <div
+            role="button"
+            className="flex flex-col active:opacity-60 lg:hover:bg-primary/5 items-center justify-center gap-3 p-2 border-[1.9px] border-dashed rounded-md h-60 border-muted-foreground bg-primary/3"
+          >
+            {isOpenPanel ? (
+              <>
+                <span className="flex items-center justify-center p-2 rounded-full text-muted-foreground size-10 bg-sidebar">
+                  <Plus className="size-6" />
+                </span>
+                <span className="text-sm text-center select-none text-muted-foreground text-balance">
+                  Drag and drop your file (.txt, .json) to create a new note.
+                </span>
+              </>
+            ) : null}
+          </div>
+        </div>
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">
             <Button
-              onClick={() =>
-                handleWait(() => {
-                  setAppLoading(true);
-                  handleWait(async () => {
-                    await navigate('/note/new');
-                    setAppLoading(false);
-                  }, 600);
-                }, 200)
-              }
-              title="create new note"
+              onClick={openNewNote}
+              title={isOpenPanel ? 'create new note' : ''}
               size="lg"
               variant="secondary"
-              className="w-full font-semibold hidden lg:inline-flex"
+              className="hidden w-full font-semibold lg:inline-flex"
             >
               <Plus className="size-5" />
               {isOpenPanel ? 'Create new note' : null}
             </Button>
           </div>
         </div>
-      </aside>
-    </div>
+      </div>
+    </aside>
   );
 };

@@ -55,7 +55,7 @@ export function NoteList(props: Props) {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 pt-2 lg:grid-cols-3 xl:grid-cols-4">
       <AnimatePresence mode="wait">
         {props.notes?.map((note) => (
           <motion.div
