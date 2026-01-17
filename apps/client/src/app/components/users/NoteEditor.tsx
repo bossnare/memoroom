@@ -49,6 +49,7 @@ export const NoteEditor = ({
   const isEdit = mode === 'edit';
   const isNew = mode === 'new';
   const fromClipboard = params.get('source') === 'clipboard';
+  const fromFile = params.get('source') === 'file';
 
   const editorMode = {
     new: 'New',
@@ -77,6 +78,22 @@ export const NoteEditor = ({
       }
     }
   }, [fromClipboard, isNew]);
+
+  // from file
+  useEffect(() => {
+    if (isNew && fromFile) {
+      const raw = sessionStorage.getItem('draft:fileInfo');
+      const draft = raw ? JSON.parse(raw) : null;
+      if (!draft) return;
+
+      if (draft) {
+        setTitle(draft.title);
+        setContent(draft.content);
+        // remove draft after getting it
+        sessionStorage.removeItem('draft:fileInfo');
+      }
+    }
+  }, [fromFile, isNew]);
 
   // initial fill
   useEffect(() => {
@@ -188,7 +205,7 @@ export const NoteEditor = ({
               >
                 Cancel
               </button>
-              <div className="text-muted-foreground flex items-center gap-1">
+              <div className="flex items-center gap-1 text-muted-foreground">
                 <span>{editorState} notes</span>{' '}
                 <Button size="icon" variant="ghost">
                   <Ellipsis />

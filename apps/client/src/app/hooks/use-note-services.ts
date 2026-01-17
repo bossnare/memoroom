@@ -25,5 +25,9 @@ export const useNoteServices = () => {
     handleWait(() => navigate('/note/new?source=clipboard'), 200);
   };
 
-  return { openNewNote, pasteFromClipboard, openEditNote };
+  const openCreateFromFile = () => {
+    handleWait(() => navigate('/note/new?source=file'), 200);
+  };
+
+  return { openNewNote, pasteFromClipboard, openEditNote, openCreateFromFile };
 };
