@@ -37,7 +37,7 @@ export function ConfirmDrawer(props: Props) {
     <Drawer open={props.isOpen} onOpenChange={props.onClose}>
       <DrawerContent className="dark:bg-sidebar rounded-t-3xl">
         <div className="w-full max-w-md mx-auto">
-          <DrawerHeader>
+          <DrawerHeader className="space-y-2">
             <DrawerTitle>{props.title || 'Context'}</DrawerTitle>
             <DrawerDescription>{props.description}</DrawerDescription>
           </DrawerHeader>

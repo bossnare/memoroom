@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/shared/components/Spinner';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
-import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { Portal } from '@radix-ui/react-portal';
 import { IconNote } from '@tabler/icons-react';
@@ -35,8 +34,6 @@ function Overview() {
   const isAllSelected = selected.size === notes.map((n) => n.id).length;
   const isHasSellected = selected.size > 0;
 
-  const isMobile = useIsMobile();
-
   const buttonXSize = useButtonSize({ mobile: 'icon-xl', landscape: 'icon' });
   const buttonToggleSelectAllSize = useButtonSize({
     mobile: 'icon-lg',
@@ -52,10 +49,10 @@ function Overview() {
 
   // sorting query drawer params state - mobile only
   const {
-    open: openNoteSortingDrawer,
-    isOpen: isOpenNoteSortingDrawer,
-    close: closeNoteSortingDrawer,
-  } = useQueryToggle({ key: 'drawer', value: 'notesSorting' })!;
+    open: openNoteSorting,
+    isOpen: isOpenNoteSorting,
+    close: closeNoteSorting,
+  } = useQueryToggle({ key: 'ui', value: 'noteSorting' })!;
   // selection query params state
   const {
     open: openSelectionMode,
@@ -63,12 +60,7 @@ function Overview() {
     close: closeSelectionMode,
   } = useQueryToggle({
     key: 'select',
-    value: 'selectNotes',
-  })!;
-  // sorting query params state - desktop only
-  const { open: openNoteSortingMenu } = useQueryToggle({
-    key: 'menu',
-    value: 'notesSorting',
+    value: 'notes',
   })!;
 
   const { isOpen: isOpenMobileSidebar } = useQueryToggle({
@@ -81,13 +73,9 @@ function Overview() {
     open: openDeleteConfirm,
     close: closeDeleteConfirm,
   } = useQueryToggle({
-    key: 'uiState',
+    key: 'ui',
     value: 'deleteNote',
   })!;
-
-  const handleClickSortingButton = !isMobile
-    ? openNoteSortingMenu
-    : openNoteSortingDrawer;
 
   // auto clear selected value on selectionMode close
   useEffect(() => {
@@ -223,17 +211,17 @@ function Overview() {
         />
         <OrderDrawer
           showOn="mobile"
-          isOpen={isOpenNoteSortingDrawer}
-          onClose={closeNoteSortingDrawer}
+          isOpen={isOpenNoteSorting}
+          onClose={closeNoteSorting}
         />
         {/* content */}
         <>
-          <header className="sticky top-0 z-20 px-4 pt-8 md:px-7 bg-background">
+          <header className="sticky top-0 z-20 mx-2 px-2 md:px-2 pt-8 md:mx-5 bg-muted dark:bg-background">
             {isSelectionMode ? (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 className="flex items-center justify-between pb-2 lg:gap-10"
               >
                 {/* skip and info on select notes */}
@@ -302,7 +290,7 @@ function Overview() {
                     <ListRestart />
                   </Button>
                   <Button
-                    onClick={handleClickSortingButton}
+                    onClick={openNoteSorting}
                     variant="ghost"
                     className="transition-colors!"
                     size={buttonSize}

@@ -1,16 +1,14 @@
-import { useNoteServices } from '@/app/hooks/use-note-services';
 import { cn } from '@/app/lib/utils';
 import { Button } from '@/components/ui/button';
 import { File, Plus } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-type Props = React.HTMLAttributes<HTMLDivElement>;
+type Props = React.HTMLAttributes<HTMLDivElement> & { onContinue?: () => void };
 
-export const FileDropZone = ({ className }: Props) => {
+export const FileDropZone = ({ className, onContinue }: Props) => {
   const [fileInfo, setFileInfo] = useState<Record<string, string> | null>(null);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
-  const { openCreateFromFile } = useNoteServices();
 
   const [isDrag, setIsDrag] = useState(false);
 
@@ -54,7 +52,7 @@ export const FileDropZone = ({ className }: Props) => {
             {fileInfo.name}
           </span>
           <span className="flex flex-wrap items-center justify-center gap-2">
-            <Button className="rounded-full" onClick={openCreateFromFile}>
+            <Button className="rounded-full" onClick={onContinue}>
               Continue
             </Button>
             <Button

@@ -117,7 +117,7 @@ export const DesktopSidebar = ({
 }: SidebarProps & { width: number }) => {
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const toggleOpenPanel = useLayoutStore((s) => s.toggleOpenPanel);
-  const { openNewNote } = useNoteServices();
+  const { openNewNote, openCreateFromFile } = useNoteServices();
 
   return (
     <aside
@@ -149,11 +149,13 @@ export const DesktopSidebar = ({
         <div className="h-1 my-2 border-t border-sidebar-border"></div>
 
         {/* drag and drop file */}
-        <div className="mt-4 rounded-md bg-background/20">
-          {isOpenPanel ? <FileDropZone className="h-60" /> : null}
-        </div>
+        {isOpenPanel ? (
+          <div className="mt-4 rounded-md bg-background/20">
+            <FileDropZone className="h-60" onContinue={openCreateFromFile} />
+          </div>
+        ) : null}
 
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
+        <div className="absolute inset-x-0 bottom-2 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">
             <Button
               onClick={openNewNote}

@@ -43,7 +43,7 @@ export function AppLayout() {
 
   const { isOpen: isSelectionMode } = useQueryToggle({
     key: 'select',
-    value: 'selectNotes',
+    value: 'notes',
   })!;
 
   const {
@@ -51,8 +51,8 @@ export function AppLayout() {
     close: closeChoose,
     open: openChoose,
   } = useQueryToggle({
-    key: 'uiState',
-    value: 'chooseOptions',
+    key: 'ui',
+    value: 'create',
   })!;
 
   // local state
