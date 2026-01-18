@@ -1,3 +1,4 @@
+import { useLongPress } from '@/app/hooks/use-long-press';
 import { dateUltraFormat } from '@/app/lib/date-format';
 import { cn } from '@/app/lib/utils';
 import type { NoteInterface } from '@/app/types/note.interface';
@@ -6,7 +7,6 @@ import { handleWait } from '@/shared/utils/handle-wait';
 import { IconCheck } from '@tabler/icons-react';
 import { Ellipsis } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
@@ -19,35 +19,15 @@ type Props = {
 
 export function NoteList(props: Props) {
   const navigate = useNavigate();
+  const longPress = useLongPress({
+    onLongPress: (id: string) => {
+      props?.openSelectionMode?.();
+      props?.toggleSelect?.(id);
+    },
+  });
 
   // for select a notes card on mobile
   const isSelected = (notesId: string) => props?.selected?.has(notesId);
-
-  const timerRef = useRef<number | null>(null);
-  const longPressRef = useRef(false);
-
-  const handleTouchStart = (id: string) => {
-    longPressRef.current = false;
-    timerRef.current = window.setTimeout(() => {
-      props?.openSelectionMode?.();
-      props?.toggleSelect?.(id);
-    }, 500);
-  };
-
-  const clear = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  };
-
-  const handleTouchMove = () => {
-    clear();
-  };
-
-  const handleTouchEnd = () => {
-    clear();
-  };
 
   const handleClickNote = (noteId: string) => {
     if (props.isSelectionMode) props?.toggleSelect?.(noteId);
@@ -62,10 +42,11 @@ export function NoteList(props: Props) {
             exit={{ opacity: 0, scale: 0 }}
             key={note.id}
             role="button"
-            onTouchStart={() => handleTouchStart(note.id)}
+            onTouchStart={() => longPress.handleTouchStart(note.id)}
             onClick={() => handleClickNote(note.id)}
-            onTouchEnd={handleTouchEnd}
-            onTouchMove={handleTouchMove}
+            onTouchEnd={longPress.handleTouchEnd}
+            onTouchMove={longPress.handleTouchMove}
+            onTouchCancel={longPress.handleTouchCancel}
             className={cn(
               isSelected(note.id) && 'bg-background/80! dark:bg-muted!',
               'relative flex flex-col gap-4 p-4 transition cursor-pointer select-none bg-card group active:scale-99 lg:active:scale-100 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl'

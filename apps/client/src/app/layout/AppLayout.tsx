@@ -12,27 +12,23 @@ import {
   MIN_PANEL_WIDTH,
 } from '@/app/constants/layout.constant';
 import { useLayoutStore } from '@/app/stores/layoutStore';
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useIsDesktop } from '@/shared/hooks/use-desktop';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { fabButtonVariants } from '@/shared/motions/motion.variant';
 import { useQueryClient } from '@tanstack/react-query';
-import { SquarePen } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { usePannel } from '../hooks/use-pannel';
-import { useNoteServices } from '../hooks/use-note-services';
+import { ButtonFab } from '../components/notes/ButtonFab';
 
 export function AppLayout() {
   // store state
   const isOpenPanel = useLayoutStore((s) => s.isOpenPanel);
   const setIsOpenPanel = useLayoutStore((s) => s.setIsOpenPanel);
   const appLoading = useLayoutStore((s) => s.appLoading);
-
-  const { openNewNote } = useNoteServices();
 
   const queryClient = useQueryClient();
   const handleRefreshNotes = () =>
@@ -124,12 +120,7 @@ export function AppLayout() {
               exit="exit"
               className="fixed bottom-24 md:bottom-12 lg:hidden right-5"
             >
-              <Button
-                onClick={openNewNote}
-                className="text-white rounded-full shadow-lg size-15 lg:size-14"
-              >
-                <SquarePen className="size-7 lg:size-6" />
-              </Button>
+              <ButtonFab />
             </motion.div>
           )}
         </AnimatePresence>

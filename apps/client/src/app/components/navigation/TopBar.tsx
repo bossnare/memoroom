@@ -33,16 +33,6 @@ export const TopBar = () => {
     close: closeKebabMenu,
   } = useQueryToggle({ key: 'menu', value: 'kebab' })!;
 
-  // const closeKebabMenu = () => {
-  //   searchParams.delete('menu');
-  //   setSearchParams(searchParams, { replace: true });
-  // };
-
-  // const toggleOpenKebabMenu = () => {
-  //   if (openKebabMenu) closeKebabMenu();
-  //   else navigate('?menu=kebab');
-  // };
-
   return (
     <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 shadow-lg h-13 z-99 md:h-14 md:px-2 bg-sidebar">
       <div className="flex items-center gap-2 shrink-0">
