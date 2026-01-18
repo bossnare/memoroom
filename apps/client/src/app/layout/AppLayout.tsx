@@ -23,6 +23,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { usePannel } from '../hooks/use-pannel';
 import { ButtonFab } from '../components/notes/ButtonFab';
+import { OptionDrawer } from '../components/users/OptionDrawer';
 
 export function AppLayout() {
   // store state
@@ -124,6 +125,8 @@ export function AppLayout() {
             </motion.div>
           )}
         </AnimatePresence>
+        {/* Create More Options */}
+        <OptionDrawer showOn="mobile" isOpen={true} />
         {/* quick Editor */}
         {/* mobile */}
         {!isSelectionMode && (

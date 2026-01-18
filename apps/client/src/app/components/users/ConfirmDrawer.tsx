@@ -6,6 +6,7 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
+  DrawerFooter,
 } from '@/components/ui/drawer';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 
@@ -41,23 +42,25 @@ export function ConfirmDrawer(props: Props) {
             <DrawerDescription>{props.description}</DrawerDescription>
           </DrawerHeader>
           <div className="pb-8 px-2 flex gap-4 justify-center [&_button]:min-w-38">
-            <DrawerClose asChild>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button
+                  size="xl"
+                  variant="ghost"
+                  className="bg-input rounded-full text-[16px]"
+                >
+                  {props.cancelLabel || 'Cancel'}
+                </Button>
+              </DrawerClose>
               <Button
+                onClick={handleConfirm}
                 size="xl"
-                variant="ghost"
-                className="bg-input rounded-full text-[16px]"
+                variant={props.buttonVariant}
+                className="rounded-full font-semibold text-[16px]"
               >
-                {props.cancelLabel || 'Cancel'}
+                {props.confirmLabel || 'confirm'}
               </Button>
-            </DrawerClose>
-            <Button
-              onClick={handleConfirm}
-              size="xl"
-              variant={props.buttonVariant}
-              className="rounded-full font-semibold text-[16px]"
-            >
-              {props.confirmLabel || 'confirm'}
-            </Button>
+            </DrawerFooter>
           </div>
         </div>
       </DrawerContent>
