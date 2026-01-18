@@ -52,7 +52,7 @@ function Overview() {
     open: openNoteSorting,
     isOpen: isOpenNoteSorting,
     close: closeNoteSorting,
-  } = useQueryToggle({ key: 'ui', value: 'noteSorting' })!;
+  } = useQueryToggle({ key: 'sorting', value: 'noteSorting' })!;
   // selection query params state
   const {
     open: openSelectionMode,

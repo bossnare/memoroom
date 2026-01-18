@@ -61,7 +61,7 @@ export function OrderDrawer({
                       setOrder({
                         sort: `${s.sort}`,
                         order: `${s.order}`,
-                        drawer: 'undefined',
+                        sorting: 'undefined',
                       })
                     }
                     className={cn(
