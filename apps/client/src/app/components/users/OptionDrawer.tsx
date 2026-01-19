@@ -6,7 +6,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
-import { NotebookPen, FileText, Clipboard } from 'lucide-react';
+import { SquarePen, FolderOpen, ClipboardPaste } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { FileDropZone } from '../notes/FileDropZone';
 import { handleWait } from '@/shared/utils/handle-wait';
@@ -55,19 +55,19 @@ export function OptionDrawer(props: Props) {
       label: 'Create empty',
       action: 'empty',
       subtitle: 'Start with a blank note.',
-      icon: NotebookPen,
+      icon: SquarePen,
     },
     {
       label: 'Create from file',
       action: 'fromFile',
       subtitle: 'Import content from a file.',
-      icon: FileText,
+      icon: FolderOpen,
     },
     {
       label: 'Paste from clipboard',
       action: 'fromClipboard',
       subtitle: 'Use text from your clipboard.',
-      icon: Clipboard,
+      icon: ClipboardPaste,
     },
   ];
 
