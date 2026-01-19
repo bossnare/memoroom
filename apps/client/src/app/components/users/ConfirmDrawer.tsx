@@ -42,7 +42,9 @@ export function ConfirmDrawer(props: Props) {
       <DrawerContent className="dark:bg-sidebar [&>div.h-2]:hidden border-t-0! overflow-hidden rounded-4xl! w-[96%] mx-auto data-[vaul-drawer-direction=bottom]:bottom-3">
         <div className="w-full max-w-md px-4 py-4 mx-auto">
           <DrawerHeader className="space-y-4">
-            <DrawerTitle>{props.title || 'Context'}</DrawerTitle>
+            <DrawerTitle className="text-lg">
+              {props.title || 'Context'}
+            </DrawerTitle>
             <DrawerDescription>{props.description}</DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>

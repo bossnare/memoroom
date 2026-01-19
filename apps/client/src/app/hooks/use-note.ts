@@ -1,12 +1,7 @@
 import { fetcher } from '@/app/lib/fetcher';
 import type { NoteInterface, CreateNote } from '@/app/types/note.interface';
 
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import * as noteApi from '@/app/api/note.api';
 
@@ -29,7 +24,7 @@ export function useNote() {
 }
 
 export function useCreateNote() {
-  const qc = new QueryClient();
+  const qc = useQueryClient();
 
   const create = useMutation({
     mutationFn: (data: CreateNote) => noteApi.createNote(data),
@@ -42,7 +37,7 @@ export function useCreateNote() {
 }
 
 export function useUpdateNote() {
-  const qc = new QueryClient();
+  const qc = useQueryClient();
 
   useMutation({
     mutationFn: ({ id, data }: { id: string; data: NoteInterface }) =>
@@ -54,7 +49,7 @@ export function useUpdateNote() {
 }
 
 export function useSoftDeleteMany() {
-  const qc = new QueryClient();
+  const qc = useQueryClient();
 
   return useMutation({
     mutationFn: (data: Record<string, string[]>) =>
