@@ -43,9 +43,9 @@ export const MobileSidebar = ({
         } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-300 px-4 py-2 z-50 ease-in-out w-5/6 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
       >
         <aside className={`relative size-full rounded-xl`}>
-          <MiniProfile className="active:bg-muted active:opacity-80" />
+          <MiniProfile className="pb-4 active:bg-muted active:opacity-80" />
 
-          <div className="my-4 border-t border-sidebar-border"></div>
+          <div className="mb-4 border-t border-sidebar-border"></div>
 
           <ul className="flex flex-col gap-3 font-medium">
             {/* tab label map & interact */}
@@ -157,7 +157,7 @@ export const DesktopSidebar = ({
           </div>
         ) : null}
 
-        <div className="absolute inset-x-0 bottom-2 flex flex-col items-center gap-2 px-3 pb-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
+        <div className="absolute inset-x-0 flex flex-col items-center gap-2 px-3 pb-2 bottom-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">
             <Button
               onClick={openNewNote}
