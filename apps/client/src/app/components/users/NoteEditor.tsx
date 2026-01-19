@@ -207,9 +207,7 @@ export const NoteEditor = ({
         isOpen={isOpenDirtyConfirm}
         onClose={closeDirtyConfirm}
         buttonVariant={'destructive'}
-        onConfirm={async () => {
-          await navigate(-2);
-        }}
+        onConfirm={() => navigate('/app')}
       />
       {/* confirm dialog - desktop only */}
       <ConfirmDialog
@@ -221,9 +219,7 @@ export const NoteEditor = ({
         isOpen={isOpenDirtyConfirm}
         onClose={closeDirtyConfirm}
         buttonVariant={'destructive'}
-        onConfirm={async () => {
-          await navigate(-2);
-        }}
+        onConfirm={() => navigate('/app')}
       />
 
       <motion.div

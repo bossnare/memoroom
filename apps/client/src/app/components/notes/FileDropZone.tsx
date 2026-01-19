@@ -84,7 +84,7 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
         >
           <Plus className="size-8 md:size-6" />
           <span className="px-10 text-sm text-center select-none text-muted-foreground text-balance">
-            Drag or click your file file to create a new note.
+            Drag or click your text file to create a new note.
           </span>
 
           <input

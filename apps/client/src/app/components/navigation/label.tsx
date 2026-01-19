@@ -22,7 +22,7 @@ const kebabMenuLabel = [
   },
   {
     id: 2,
-    label: 'Account health',
+    label: 'Account settings',
     icon: UserCog,
   },
   {

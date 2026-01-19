@@ -23,9 +23,9 @@ type Props = {
 };
 
 export function ConfirmDrawer(props: Props) {
-  const handleConfirm = async () => {
-    await props.onConfirm?.();
+  const handleConfirm = () => {
     props.onClose?.();
+    props.onConfirm?.();
   };
 
   const isMobile = useIsMobile();
@@ -34,10 +34,14 @@ export function ConfirmDrawer(props: Props) {
   if (props.showOn === 'desktop' && isMobile) return null;
 
   return (
-    <Drawer open={props.isOpen} onOpenChange={props.onClose}>
-      <DrawerContent className="dark:bg-sidebar rounded-t-3xl">
+    <Drawer
+      dismissible={false}
+      open={props.isOpen}
+      onOpenChange={props.onClose}
+    >
+      <DrawerContent className="dark:bg-sidebar [&>div.h-2]:hidden border-t-0! overflow-hidden rounded-4xl! w-[96%] mx-auto data-[vaul-drawer-direction=bottom]:bottom-3">
         <div className="w-full max-w-md mx-auto">
-          <DrawerHeader className="space-y-2">
+          <DrawerHeader className="space-y-4">
             <DrawerTitle>{props.title || 'Context'}</DrawerTitle>
             <DrawerDescription>{props.description}</DrawerDescription>
           </DrawerHeader>
