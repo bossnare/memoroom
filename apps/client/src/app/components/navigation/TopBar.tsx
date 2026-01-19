@@ -6,7 +6,6 @@ import { Logo } from '@/shared/components/brand/Logo';
 import { useAuth } from '@/shared/hooks/use-auth';
 import { waitVibrate } from '@/shared/utils/vibration';
 import {
-  BellIcon,
   Search,
   TextAlignJustify,
   TextAlignStart,
@@ -34,7 +33,7 @@ export const TopBar = () => {
   } = useQueryToggle({ key: 'menu', value: 'kebab' })!;
 
   return (
-    <nav className="sticky inset-x-0 top-0 flex items-center gap-2 px-2 py-1 pl-1 shadow-lg h-13 z-99 md:h-14 md:px-2 bg-sidebar">
+    <nav className="sticky inset-x-0 top-0 flex items-center justify-between gap-2 px-2 py-1 pl-1 shadow-lg h-14 z-99 md:h-14 md:px-2 bg-sidebar">
       <div className="flex items-center gap-2 shrink-0">
         {/* mobile menu button */}
         <Button
@@ -49,8 +48,10 @@ export const TopBar = () => {
           <TextAlignJustify className="hidden dark:inline-flex size-[26px]" />
           <TextAlignStart className="dark:hidden size-[26px]" />
         </Button>
-        <Logo mono={true} className="md:hidden" />
       </div>
+
+      <Logo mono={true} className="md:hidden" />
+
       {/* desktop navigation */}
       <div className="hidden h-10 py-1 px-2 rounded-md bg-input gap-2 md:inline-flex md:w-[50%] lg:w-[36%] items-center shrink-0">
         <label htmlFor={inputId}>
@@ -64,12 +65,12 @@ export const TopBar = () => {
           placeholder="Search your notes, workspaces, ..."
         />
       </div>
-      <div className="flex items-center justify-end gap-3 md:gap-4 grow">
-        <Button size="icon-lg" variant="ghost" className="relative">
+
+      <div className="flex items-center justify-end gap-3 md:gap-4 md:grow">
+        {/* <Button size="icon-lg" variant="ghost" className="relative">
           <BellIcon />
-          {/* badge */}
           <span className="absolute p-1 rounded-full top-1 size-2 right-0.5 bg-destructive"></span>
-        </Button>
+        </Button> */}
         <div
           role="button"
           onClick={toggleOpenSideOver}
