@@ -66,6 +66,9 @@ export function NoteList(props: Props) {
             {/* options toggle - desktop */}
             {!props.isSelectionMode && (
               <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
                 size="icon"
                 variant="ghost"
                 className="absolute hidden scale-0 z-2 top-2 right-2 group-hover:scale-100 lg:inline-flex"

@@ -46,7 +46,7 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
   return (
     <div className={cn(className)}>
       {fileInfo ? (
-        <div className="flex flex-col items-center justify-center h-full gap-3 p-4 border-2 border-dashed rounded-md md:border border-primary/50 bg-primary/4">
+        <div className="flex flex-col items-center justify-center h-full gap-3 p-4 border-2 border-dashed rounded-xl md:rounded-md md:border border-primary/50 bg-primary/4">
           <File />
           <span className="text-sm text-center truncate select-none text-muted-foreground text-balance line-clamp-4">
             {fileInfo.name}
@@ -79,7 +79,7 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
           }}
           className={cn(
             isDrag ? 'border-primary' : 'border-muted-foreground',
-            'flex cursor-pointer flex-col active:opacity-60 lg:hover:bg-primary/5 items-center justify-center gap-3 p-2 border-2 md:border border-dashed rounded-md h-full bg-primary/3'
+            'flex cursor-pointer flex-col active:opacity-60 lg:hover:bg-primary/5 items-center justify-center gap-3 p-2 border-2 md:border border-dashed rounded-xl md:rounded-md h-full bg-primary/3'
           )}
         >
           <Plus className="size-8 md:size-6" />
