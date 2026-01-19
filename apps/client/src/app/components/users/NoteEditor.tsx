@@ -21,6 +21,7 @@ import { toast } from 'sonner';
 import { ConfirmDrawer } from './ConfirmDrawer';
 import { ConfirmDialog } from './ConfirmDialog';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
+import { AxiosError } from 'axios';
 
 type NoteEditorProps = React.HTMLAttributes<HTMLDivElement> & {
   mode?: 'new' | 'edit' | 'view';
@@ -152,8 +153,9 @@ export const NoteEditor = ({
       const noteCreated = await createNote.mutateAsync(body);
       console.log(noteCreated.message);
       toast(noteCreated.message);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      if (err instanceof AxiosError) toast.error(err.message);
+      console.log('backend error:', err);
     } finally {
       setIsSaving(false);
     }
