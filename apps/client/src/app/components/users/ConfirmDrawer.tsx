@@ -47,7 +47,7 @@ export function ConfirmDrawer(props: Props) {
           </DrawerHeader>
           <DrawerFooter>
             <div className="pb-8 px-2 flex gap-4 justify-center [&_button]:min-w-38">
-              <DrawerClose asChild>
+              <DrawerClose onClick={props.onClose} asChild>
                 <Button
                   size="xl"
                   variant="ghost"

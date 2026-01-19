@@ -78,7 +78,7 @@ export function OptionDrawer(props: Props) {
 
   return (
     <Drawer open={props.isOpen} onOpenChange={props.onClose}>
-      <DrawerContent className="dark:bg-sidebar rounded-t-3xl">
+      <DrawerContent className="dark:bg-sidebar rounded-4xl! w-[96%] mx-auto data-[vaul-drawer-direction=bottom]:bottom-3 overflow-hidden border-t-0!">
         <div className="w-full max-w-md mx-auto">
           <DrawerHeader className="space-y-3">
             <DrawerTitle>{props.title}</DrawerTitle>
@@ -106,7 +106,7 @@ export function OptionDrawer(props: Props) {
                 <motion.ul
                   exit={{ opacity: 0, x: -20 }}
                   key="option-lists"
-                  className="flex flex-col gap-3 justify-center"
+                  className="flex flex-col justify-center gap-3"
                 >
                   {options.map((o) => (
                     <li>
@@ -118,9 +118,9 @@ export function OptionDrawer(props: Props) {
                             250
                           )
                         }
-                        className="w-full select-none px-4 h-16 flex items-center gap-2 rounded-md active:bg-muted dark:active:bg-background"
+                        className="flex items-center w-full h-16 gap-2 px-4 rounded-md select-none active:bg-muted dark:active:bg-background"
                       >
-                        <span className="size-12 rounded-full bg-muted flex items-center justify-center">
+                        <span className="flex items-center justify-center rounded-full size-12 bg-muted">
                           <o.icon />
                         </span>
                         <div className="flex flex-col">
