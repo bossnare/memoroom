@@ -45,7 +45,7 @@ export const MobileSidebar = ({
         <aside className={`relative size-full rounded-xl`}>
           <MiniProfile className="px-4 py-2 active:bg-muted dark:active:bg-card active:opacity-80" />
 
-          <div className="mx-4 mb-4 border-t border-sidebar-border"></div>
+          <div className="mx-4 mb-4 border-t border-sidebar"></div>
 
           <ul className="flex flex-col font-medium">
             {/* tab label map & interact */}
@@ -151,11 +151,16 @@ export const DesktopSidebar = ({
         <div className="my-6 border-t border-sidebar-border"></div>
 
         {/* drag and drop file */}
-        {isOpenPanel ? (
-          <div className="mt-4 overflow-hidden rounded-3xl bg-background/20">
-            <FileDropZone className="h-60" onContinue={openCreateFromFile} />
-          </div>
-        ) : null}
+        <div
+          className={cn(
+            isOpenPanel
+              ? 'pointer-events-auto opacity-100'
+              : 'pointer-events-none opacity-0',
+            'mt-4 transition overflow-hidden rounded-3xl bg-background/20'
+          )}
+        >
+          <FileDropZone className="h-60" onContinue={openCreateFromFile} />
+        </div>
 
         <div className="absolute inset-x-0 flex flex-col items-center gap-2 px-3 pb-2 bottom-2 bg-linear-to-b from-transparent via-zinc-950/20 to-zinc-950/10 dark:to-zinc-950/80 min-h-15">
           <div className="w-full active:bg-muted">

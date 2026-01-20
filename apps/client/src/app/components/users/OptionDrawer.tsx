@@ -100,7 +100,7 @@ export function OptionDrawer(props: Props) {
                       p.delete('action');
                       handleWait(NoteServices.openCreateFromFile, 200);
                     }}
-                    className="h-58 w-[94%] mx-auto"
+                    className="h-58 w-[92%] mx-auto"
                   />
                 </motion.div>
               ) : (
