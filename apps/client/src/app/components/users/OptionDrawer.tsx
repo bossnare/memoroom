@@ -90,6 +90,7 @@ export function OptionDrawer(props: Props) {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.1, ease: 'easeInOut' }}
                   key={'file-dropzone'}
                   className="px-3"
                 >
@@ -97,14 +98,15 @@ export function OptionDrawer(props: Props) {
                     onContinue={() => {
                       props.onClose?.(); // close drawer
                       p.delete('action');
-                      handleWait(NoteServices.openCreateFromFile, 250);
+                      handleWait(NoteServices.openCreateFromFile, 200);
                     }}
-                    className="h-60"
+                    className="h-58 w-[94%] mx-auto"
                   />
                 </motion.div>
               ) : (
                 <motion.ul
                   exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.1 }}
                   key="option-lists"
                   className="flex flex-col justify-center gap-3"
                 >

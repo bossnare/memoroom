@@ -40,7 +40,7 @@ export function NoteList(props: Props) {
         {props.notes?.map((note) => (
           <motion.div
             exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.05 }}
             key={note.id}
             role="button"
             onTouchStart={() => longPress.handleTouchStart(note.id)}
