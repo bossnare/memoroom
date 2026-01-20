@@ -1,6 +1,6 @@
 import { cn } from '@/app/lib/utils';
 import { Button } from '@/components/ui/button';
-import { File, Plus } from 'lucide-react';
+import { FileText, FolderOpen } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -46,12 +46,12 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
   return (
     <div className={cn(className)}>
       {fileInfo ? (
-        <div className="flex flex-col items-center justify-center h-full gap-3 p-4 border-2 border-dashed rounded-xl md:rounded-md md:border border-primary/50 bg-primary/4">
-          <File />
+        <div className="flex flex-col items-center justify-center h-full gap-3 p-2 cursor-pointer rounded-3xl bg-input/70">
+          <FileText />
           <span className="text-sm text-center truncate select-none text-muted-foreground text-balance line-clamp-4">
             {fileInfo.name}
           </span>
-          <span className="flex flex-wrap items-center justify-center gap-2">
+          <span className="flex flex-col items-center justify-center gap-2">
             <Button className="rounded-full" onClick={onContinue}>
               Continue
             </Button>
@@ -78,11 +78,11 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
             if (file) handleFiles(file);
           }}
           className={cn(
-            isDrag ? 'border-primary' : 'border-muted-foreground',
-            'flex cursor-pointer flex-col active:opacity-60 lg:hover:bg-primary/5 items-center justify-center gap-3 p-2 border-2 md:border border-dashed rounded-xl md:rounded-md h-full bg-primary/3'
+            isDrag ? 'border-2 border-primary' : 'border-muted-foreground',
+            'flex cursor-pointer flex-col hover:bg-input/40 active:opacity-60 items-center justify-center gap-3 p-2 rounded-3xl h-full bg-input/60'
           )}
         >
-          <Plus className="size-8 md:size-6" />
+          <FolderOpen className="size-8 md:size-5" />
           <span className="px-10 text-sm text-center select-none text-muted-foreground text-balance">
             Drag or click your text file to create a new note.
           </span>

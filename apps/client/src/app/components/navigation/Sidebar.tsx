@@ -40,14 +40,14 @@ export const MobileSidebar = ({
         ref={ref}
         className={`${
           open ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-300 px-4 py-2 z-50 ease-in-out w-5/6 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
+        } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-300 py-2 z-50 ease-in-out w-5/6 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
       >
         <aside className={`relative size-full rounded-xl`}>
-          <MiniProfile className="pb-4 active:bg-muted active:opacity-80" />
+          <MiniProfile className="px-4 py-2 active:bg-muted dark:active:bg-card active:opacity-80" />
 
-          <div className="mb-4 border-t border-sidebar-border"></div>
+          <div className="mx-4 mb-4 border-t border-sidebar-border"></div>
 
-          <ul className="flex flex-col gap-3 font-medium">
+          <ul className="flex flex-col font-medium">
             {/* tab label map & interact */}
             {tabLabel.map((t) => (
               <li key={t.route}>
@@ -56,7 +56,7 @@ export const MobileSidebar = ({
                     <button
                       className={cn(
                         isActive ? 'font-bold' : 'font-normal',
-                        'text-xl flex gap-4 px-2 py-2 items-center w-full active:bg-muted text-sidebar-foreground'
+                        'text-xl flex gap-5 px-6 py-3 items-center w-full active:bg-muted dark:active:bg-card text-sidebar-foreground'
                       )}
                     >
                       {t.label === 'Search' ? (
@@ -85,7 +85,7 @@ export const MobileSidebar = ({
                             isActive
                               ? 'font-bold text-sidebar-foreground'
                               : 'font-normal text-sidebar-foreground/90',
-                            'text-xl flex gap-4 px-2 py-2 items-center w-full active:bg-muted'
+                            'text-xl flex gap-5 px-6 py-3 dark:active:bg-card  items-center w-full active:bg-muted'
                           )}
                         >
                           <s.icon /> {s.label}
@@ -148,11 +148,11 @@ export const DesktopSidebar = ({
           </ul>
         </nav>
 
-        <div className="my-3 border-t border-sidebar-border"></div>
+        <div className="my-6 border-t border-sidebar-border"></div>
 
         {/* drag and drop file */}
         {isOpenPanel ? (
-          <div className="mt-4 rounded-md bg-background/20">
+          <div className="mt-4 overflow-hidden rounded-3xl bg-background/20">
             <FileDropZone className="h-60" onContinue={openCreateFromFile} />
           </div>
         ) : null}

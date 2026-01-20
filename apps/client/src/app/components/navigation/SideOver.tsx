@@ -24,11 +24,11 @@ export const SideOver = () => {
         <nav
           className={cn(
             open ? 'translate-x-0' : 'translate-x-full',
-            'fixed inset-y-0 right-0 md:w-1/3 lg:w-1/4 hidden md:flex flex-col transition-transform ease-in-out duration-200 px-3 pr-1 py-2 border-l z-200 bg-sidebar text-sidebar-foreground border-input'
+            'fixed inset-y-0 right-0 md:w-1/3 lg:w-1/4 hidden md:flex flex-col transition-transform ease-in-out duration-200 px-3 pr-1 py-2 border-l z-200 bg-sidebar dark:bg-background text-sidebar-foreground border-border'
           )}
         >
           <div className="flex items-start">
-            <MiniProfile className="grow hover:bg-muted active:opacity-60 cursor-pointer" />
+            <MiniProfile className="cursor-pointer grow hover:bg-muted active:opacity-60" />
             <span className="ml-auto shrink-0">
               <Button size="icon" variant="ghost" onClick={toggleOpen}>
                 <X />
