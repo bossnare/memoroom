@@ -1,18 +1,20 @@
 import {
   Archive,
-  Bell,
   KeyRound,
-  Home,
   Palette,
   PowerOff,
   Settings,
-  Tags,
   Trash2,
   UserCog,
   UserRoundX,
 } from 'lucide-react';
 
-import { MagnifyingGlassIcon } from '@phosphor-icons/react';
+import {
+  MagnifyingGlassIcon,
+  BellIcon,
+  HashIcon,
+  HouseIcon,
+} from '@phosphor-icons/react';
 
 const kebabMenuLabel = [
   {
@@ -84,7 +86,7 @@ const tabLabel = [
   {
     id: 1,
     label: 'Overview',
-    icon: Home,
+    icon: HouseIcon,
     route: '/app',
   },
   {
@@ -96,13 +98,13 @@ const tabLabel = [
   {
     id: 3,
     label: 'Notofications',
-    icon: Bell,
+    icon: BellIcon,
     route: '/app/notification',
   },
   {
     id: 4,
     label: 'Tags',
-    icon: Tags,
+    icon: HashIcon,
     route: '/app/tags',
   },
 ];

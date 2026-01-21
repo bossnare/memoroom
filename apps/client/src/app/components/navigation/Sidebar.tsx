@@ -59,13 +59,13 @@ export const MobileSidebar = ({
                         'text-xl flex gap-5 px-6 py-3 items-center w-full active:bg-muted dark:active:bg-card text-sidebar-foreground'
                       )}
                     >
-                      {t.label === 'Search' ? (
+                      {t.label === 'Tags' ? (
+                        <t.icon className="size-6" />
+                      ) : (
                         <t.icon
                           className="size-6"
                           weight={isActive ? 'fill' : 'bold'}
                         />
-                      ) : (
-                        <t.icon />
                       )}{' '}
                       {t.label}
                     </button>

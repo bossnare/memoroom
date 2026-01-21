@@ -20,13 +20,13 @@ export const Tab = ({
     <button
       className={cn(defaultClass, isActive ? activeClass : inactiveClass)}
     >
-      {label === 'Search' ? (
+      {label === 'Tags' ? (
+        <Icon weight={'bold'} className="shrink-0 md:size-[21px] size-7" />
+      ) : (
         <Icon
           weight={isActive ? 'fill' : 'bold'}
           className="shrink-0 md:size-[21px] size-7"
         />
-      ) : (
-        <Icon className="shrink-0 md:size-[21px] size-7" />
       )}
       <span className="hidden lg:block">{label}</span>
       {/* underline */}
