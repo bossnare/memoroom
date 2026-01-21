@@ -21,11 +21,11 @@ export const Tab = ({
       className={cn(defaultClass, isActive ? activeClass : inactiveClass)}
     >
       {label === 'Tags' ? (
-        <Icon weight={'bold'} className="shrink-0 md:size-[21px] size-7" />
+        <Icon weight={'bold'} className="shrink-0 md:size-[22px] size-7" />
       ) : (
         <Icon
           weight={isActive ? 'fill' : 'bold'}
-          className="shrink-0 md:size-[21px] size-7"
+          className="shrink-0 md:size-[22px] size-7"
         />
       )}
       <span className="hidden lg:block">{label}</span>
