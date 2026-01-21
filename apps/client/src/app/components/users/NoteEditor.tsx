@@ -274,7 +274,7 @@ export const NoteEditor = ({
 
           {/* edit content */}
           <main className="flex-1">
-            <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 lg:pb-32">
+            <div className="max-w-6xl font-inter px-4 pb-20 mx-auto space-y-3 lg:pb-32">
               <textarea
                 rows={1}
                 className="w-full field-sizing-content min-h-auto mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
