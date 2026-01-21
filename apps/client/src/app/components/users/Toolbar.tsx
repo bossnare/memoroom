@@ -1,41 +1,29 @@
 import { cn } from '@/app/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
-import { Folder, Trash2 } from 'lucide-react';
+import type React from 'react';
 
 export type ActionKey = 'move' | 'delete';
+type ActionLabel = {
+  label: string;
+  icon: React.ElementType;
+  key: ActionKey;
+};
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   disabled?: boolean;
   onAction?: (actionKey: ActionKey) => void;
+  actionLabel?: ActionLabel[];
 };
 
-export function SelectModeNoteTooltip({
-  onAction,
-  className,
-  disabled,
-}: Props) {
+export function Toolbar({ onAction, className, disabled, actionLabel }: Props) {
   const buttonSize = useButtonSize({ mobile: 'lg', landscape: 'default' });
-  const toolTipLabel = [
-    {
-      id: 1,
-      label: 'Move to',
-      icon: Folder,
-      key: 'move',
-    },
-    {
-      id: 2,
-      label: 'Delete',
-      icon: Trash2,
-      key: 'delete',
-    },
-  ];
 
   return (
     <div className={cn(className)}>
-      {toolTipLabel.map((t) => (
+      {actionLabel?.map((t) => (
         <Button
-          key={t.id}
+          key={t.key}
           disabled={disabled}
           onClick={() => {
             onAction?.(t.key as ActionKey);

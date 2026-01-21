@@ -11,6 +11,8 @@ import {
   ListChecks,
   ListRestart,
   X,
+  Folder,
+  Trash2,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
@@ -20,7 +22,7 @@ import { ConfirmDrawer } from '../components/users/ConfirmDrawer';
 import { OrderDrawer } from '../components/users/OrderDrawer';
 import { EmptyEmpty as EmptyNotes } from '../components/users/Empty';
 import { NoteList } from '../components/users/NoteList';
-import { SelectModeNoteTooltip } from '../components/users/SelectModeNoteTooltip';
+import { Toolbar } from '../components/users/Toolbar';
 import { cn } from '../lib/utils';
 import { toast } from 'sonner';
 import { useNoteServices } from '../hooks/use-note-services';
@@ -109,6 +111,25 @@ function Overview() {
 
   // refactor later
   type ActionKey = 'move' | 'delete';
+  type ActionLabel = {
+    label: string;
+    icon: React.ElementType;
+    key: ActionKey;
+  };
+  // toolbar label
+  const toolbarActionLabel: ActionLabel[] = [
+    {
+      label: 'Move to',
+      icon: Folder,
+      key: 'move',
+    },
+    {
+      label: 'Delete',
+      icon: Trash2,
+      key: 'delete',
+    },
+  ];
+
   const deleteConfirmTitle =
     selected.size > 1 ? `Delete notes?` : 'Delete this note?';
   const deleteConfirmDescription =
@@ -247,10 +268,11 @@ function Overview() {
 
                 {/* tooltip */}
                 <div className="justify-end hidden md:flex grow">
-                  <SelectModeNoteTooltip
+                  <Toolbar
                     onAction={handleTooltipAction}
                     className="space-x-2"
                     disabled={!isHasSellected}
+                    actionLabel={toolbarActionLabel}
                   />
                 </div>
 
@@ -324,7 +346,7 @@ function Overview() {
             exit={{ opacity: 0, y: 16 }}
             className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden bg-sidebar z-22"
           >
-            <SelectModeNoteTooltip
+            <Toolbar
               onAction={handleTooltipAction}
               disabled={!isHasSellected}
               className="flex justify-between w-full"
