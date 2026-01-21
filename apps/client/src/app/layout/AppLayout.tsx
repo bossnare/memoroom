@@ -47,6 +47,15 @@ export function AppLayout() {
   })!;
 
   const {
+    isOpen: isOpenSideOver,
+    open: openSideOver,
+    close: closeSideOver,
+  } = useQueryToggle({
+    key: 'sidebar',
+    value: 'sideover',
+  })!;
+
+  const {
     isOpen: isOpenChoose,
     close: closeChoose,
     open: openChoose,
@@ -108,12 +117,12 @@ export function AppLayout() {
         {/* main content */}
         <div
           style={MAIN_TRANSFORM}
-          className="relative transition-transform ease-in-out duration-280 will-change-transform md:duration-150"
+          className="relative transition-transform ease-in-out duration-280 will-change-transform md:duration-500"
         >
-          <TopBar />
+          <TopBar openSideOver={openSideOver} />
           {/* route content */}
           <PullToRefreshWrapper onRefresh={async () => handleRefreshNotes()}>
-            <ScrollArea className="h-[calc(100dvh-120px)] md:h-[calc(100dvh-56px)] scroll-touch overscroll-contain">
+            <ScrollArea className="h-[calc(100dvh-120px)] scroll-smooth md:h-[calc(100dvh-56px)] scroll-touch overscroll-contain">
               <main className="pb-[60px] lg:pb-10 min-h-full">
                 <Outlet />
               </main>
@@ -149,7 +158,7 @@ export function AppLayout() {
           />
         )}
         {/* sideOver */}
-        <SideOver />
+        <SideOver isOpen={isOpenSideOver} close={closeSideOver} />
       </div>
     </>
   );

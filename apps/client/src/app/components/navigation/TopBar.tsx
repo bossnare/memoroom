@@ -1,6 +1,5 @@
 import { UserAvatar } from '@/app/components/users/UserAvatar';
 import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
-import { useLayoutStore } from '@/app/stores/layoutStore';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/shared/components/brand/Logo';
 import { useAuth } from '@/shared/hooks/use-auth';
@@ -15,10 +14,9 @@ import { AnimatePresence } from 'motion/react';
 import { useId } from 'react';
 import { KebabMenu } from './KebabMenu';
 
-export const TopBar = () => {
+export const TopBar = ({ openSideOver }: { openSideOver?: () => void }) => {
   const inputId = useId();
   const { user } = useAuth();
-  const toggleOpenSideOver = useLayoutStore((s) => s.toggleOpenSideOver);
 
   const { open: openMobileSidebar } = useQueryToggle({
     key: 'sidebar',
@@ -72,7 +70,7 @@ export const TopBar = () => {
         </Button> */}
         <div
           role="button"
-          onClick={toggleOpenSideOver}
+          onClick={openSideOver}
           title={user?.user_metadata.name.split('(')[0]}
           className="relative hidden cursor-pointer size-8 md:block active:bg-input md:hover:bg-input active:opacity-70"
         >

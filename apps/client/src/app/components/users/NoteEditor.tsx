@@ -14,9 +14,15 @@ import { useToggle } from '@/shared/hooks/use-toggle';
 import { handleWait } from '@/shared/utils/handle-wait';
 import { Portal } from '@radix-ui/react-portal';
 import { AxiosError } from 'axios';
-import { Ellipsis } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Ellipsis,
+  PanelLeftClose,
+  PanelRightClose,
+} from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ConfirmDialog } from './ConfirmDialog';
@@ -33,7 +39,8 @@ export const NoteEditor = ({
   note,
 }: NoteEditorProps) => {
   const contentAreaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [chars, setChars] = useState(0);
+  const [charCounts, setCharCounts] = useState(0);
+  const [wordCounts, setWordCounts] = useState(0);
   const [title, setTitle] = useState<string | undefined>('');
   const [content, setContent] = useState<string | undefined>('');
   const [initial, setInitial] = useState<{
@@ -120,20 +127,21 @@ export const NoteEditor = ({
     setTimeout(() => {
       if (contentAreaRef.current) {
         contentAreaRef.current.focus();
-        setChars(contentAreaRef.current.value.length); // initial chars value
+        setCharCounts(contentAreaRef.current.value.length); // initial chars value
+        setWordCounts(contentAreaRef.current.value.trim().split(/\s+/).length);
       }
     }, 100);
   }, []);
 
   // transform
-  const { value: isOpenToolTip, toggle: toggleOpenTooltip } = useToggle(true);
+  const { value: isOpenPanel, toggle: toggleOpenPanel } = useToggle(true);
 
   const { pannelWidth: TOOLTIP_WIDTH, mainTransform: MAIN_TRANSFORM } =
-    usePannel(isOpenToolTip, MIN_TOOLTIP_WIDTH, MAX_TOOLTIP_WIDTH);
+    usePannel(isOpenPanel, MIN_TOOLTIP_WIDTH, MAX_TOOLTIP_WIDTH);
 
   const isDirty = title !== initial?.title || content !== initial?.content;
 
-  const autoGrow = (e: React.FormEvent<HTMLTextAreaElement>) => {
+  const autoGrow = (e: FormEvent<HTMLTextAreaElement>) => {
     e.currentTarget.style.height = 'auto'; // initial reset height value
     e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
   };
@@ -233,31 +241,65 @@ export const NoteEditor = ({
         <Portal>
           <aside
             style={{ width: TOOLTIP_WIDTH }}
-            onClick={toggleOpenTooltip}
-            className="fixed inset-y-0 left-0 hidden md:block w-54"
+            className="fixed inset-y-0 left-0 hidden md:block w-54 lg:transition duration-600"
           >
-            <div className="bg-sidebar size-full"></div>
+            <nav className="bg-sidebar size-full">
+              <div className="flex flex-wrap items-center justify-between gap-3 px-2 py-1">
+                <span className="flex flex-wrap gap-3">
+                  <Button
+                    onClick={handleCancel}
+                    variant="ghost"
+                    className="bg-accent/20"
+                    size="icon-lg"
+                  >
+                    <ChevronLeft />
+                  </Button>
+                  <Button
+                    className="bg-accent/20"
+                    variant="ghost"
+                    size="icon-lg"
+                  >
+                    <ChevronRight />
+                  </Button>
+                </span>
+
+                <span className="herit">
+                  <Button onClick={toggleOpenPanel} variant="ghost" size="icon">
+                    {isOpenPanel ? <PanelLeftClose /> : <PanelRightClose />}
+                  </Button>
+                </span>
+              </div>
+            </nav>
           </aside>
         </Portal>
         {/* editor */}
         <div
           style={!isMobile ? MAIN_TRANSFORM : { width: '100vw' }}
-          className="flex flex-col"
+          className="flex flex-col lg:transition-transform lg:duration-600"
         >
           <header className="sticky top-0 left-0 bg-background">
             <div className="flex items-center justify-between h-12 max-w-6xl px-4 pr-2 mx-auto">
               <button
                 onClick={handleCancel}
-                className="p-0 font-semibold text-primary active:opacity-80"
+                className="p-0 font-semibold md:hidden text-primary active:opacity-80"
               >
                 Cancel
               </button>
               <div className="flex items-center gap-1 text-muted-foreground">
                 <span>{editorState} notes</span>{' '}
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" className="md:hidden">
                   <Ellipsis />
                 </Button>
               </div>
+
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hidden md:inline-flex"
+              >
+                <Ellipsis />
+              </Button>
+
               <Button
                 disabled={!canSave || !isDirty}
                 onClick={() => {
@@ -274,10 +316,10 @@ export const NoteEditor = ({
 
           {/* edit content */}
           <main className="flex-1">
-            <div className="max-w-6xl font-inter px-4 pb-20 mx-auto space-y-3 lg:pb-32">
+            <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 font-inter lg:pb-32">
               <textarea
                 rows={1}
-                className="w-full field-sizing-content min-h-auto mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
+                className="w-full mt-2 text-3xl font-bold leading-10 tracking-tight transition-all resize-none selection:bg-primary caret-primary focus:caret-accent field-sizing-content min-h-auto scrollbar-none placeholder:text-2xl focus:outline-0"
                 placeholder="Title"
                 value={title}
                 // onFocus={autoGrowOnFocus}
@@ -299,8 +341,10 @@ export const NoteEditor = ({
                 </span>
                 <span className="w-0.5 border-l dark:border-muted"></span>{' '}
                 <span>
-                  {chars} {chars > 1 ? 'characters' : 'character'}
+                  {charCounts} {charCounts > 1 ? 'characters' : 'character'}
                 </span>
+                <span className="w-0.5 border-l dark:border-muted"></span>{' '}
+                <span> {wordCounts} words </span>
               </div>
               <textarea
                 rows={6}
@@ -308,8 +352,15 @@ export const NoteEditor = ({
                 value={content}
                 // onFocus={autoGrowOnFocus}
                 onChange={(e) => {
-                  setChars(e.target.value.length);
+                  setCharCounts(
+                    e.target.value.trim().split(' ').join('').length
+                  );
                   setContent(e.currentTarget.value);
+                  setWordCounts(
+                    e.target.value.trim() === ''
+                      ? 0
+                      : e.target.value.trim().split(/\s+/).length
+                  );
                 }}
                 onInput={(e) => {
                   autoGrow(e);
@@ -321,7 +372,7 @@ export const NoteEditor = ({
                 }}
                 name=""
                 id=""
-                className="w-full field-sizing-content font-normal leading-8 min-h-12 resize-none placeholder:text-base focus:outline-0"
+                className="w-full font-normal leading-8 transition-all resize-none field-sizing-content selection:text-muted-foreground selection:bg-muted caret-primary focus:caret-accent min-h-12 placeholder:text-base focus:outline-0"
                 placeholder="Start writing..."
               ></textarea>
             </div>

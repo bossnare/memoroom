@@ -10,7 +10,7 @@ function MiniAppLayout() {
     <>
       <div className="relative">
         <div className="relative ease-in-out lg:transition-transform lg:duration-200 will-change-transform">
-          <ScrollArea className="h-[calc(100dvh-70px)] scroll-touch overscroll-contain">
+          <ScrollArea className="h-[calc(100dvh-70px)] scroll-touch scroll-smooth overscroll-contain">
             <main className="h-full">
               <Outlet />
             </main>
