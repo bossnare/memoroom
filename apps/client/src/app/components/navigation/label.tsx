@@ -2,7 +2,7 @@ import {
   Archive,
   Bell,
   KeyRound,
-  Layers,
+  Home,
   Palette,
   PowerOff,
   Settings,
@@ -84,7 +84,7 @@ const tabLabel = [
   {
     id: 1,
     label: 'Overview',
-    icon: Layers,
+    icon: Home,
     route: '/app',
   },
   {

@@ -278,10 +278,10 @@ export const NoteEditor = ({
             <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 lg:pb-32">
               <textarea
                 rows={1}
-                className="w-full mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
+                className="w-full field-sizing-content min-h-12 mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
                 placeholder="Title"
                 value={title}
-                onFocus={autoGrowOnFocus}
+                // onFocus={autoGrowOnFocus}
                 onInput={(e) => {
                   setTitle(e.currentTarget.value);
                   autoGrow(e);
@@ -307,7 +307,7 @@ export const NoteEditor = ({
                 rows={6}
                 ref={contentAreaRef}
                 value={content}
-                onFocus={autoGrowOnFocus}
+                // onFocus={autoGrowOnFocus}
                 onChange={(e) => {
                   setChars(e.target.value.length);
                   setContent(e.currentTarget.value);
@@ -315,14 +315,14 @@ export const NoteEditor = ({
                 onInput={(e) => {
                   autoGrow(e);
                   // scroll to carret
-                  e.currentTarget.scrollIntoView({
-                    block: 'end',
-                    behavior: 'auto',
-                  });
+                  // e.currentTarget.scrollIntoView({
+                  //   block: 'end',
+                  //   behavior: 'auto',
+                  // });
                 }}
                 name=""
                 id=""
-                className="w-full font-normal leading-8 resize-none scroll-mb-24 placeholder:text-base focus:outline-0"
+                className="w-full field-sizing-content font-normal leading-8 min-h-12 resize-none placeholder:text-base focus:outline-0"
                 placeholder="Start writing..."
               ></textarea>
             </div>

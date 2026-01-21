@@ -26,9 +26,9 @@ export function Toolbar({ onAction, className, disabled, actionLabel }: Props) {
           key={t.key}
           disabled={disabled}
           onClick={() => {
-            onAction?.(t.key as ActionKey);
+            onAction?.(t.key);
           }}
-          className="inline-flex gap-1 hover:bg-transparent! active:opacity-50 dark:lg:active:bg-accent/40! lg:active:bg-muted-foreground/40! hover:not-focus:opacity-70 md:gap-1.5 flex-col md:flex-row"
+          className="inline-flex gap-1 hover:bg-transparent! active:opacity-50 dark:lg:active:bg-accent/40! lg:active:bg-muted-foreground/40! hover:not-focus:opacity-70 md:gap-2 flex-col md:flex-row"
           size={buttonSize}
           variant="ghost"
         >

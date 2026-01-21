@@ -21,6 +21,12 @@ type Props = {
 };
 
 type ActionKey = 'empty' | 'fromFile' | 'fromClipboard';
+type ActionLabel = {
+  label: string;
+  icon: React.ElementType;
+  subtitle: string;
+  key: ActionKey;
+};
 
 export function OptionDrawer(props: Props) {
   const NoteServices = useNoteServices();
@@ -50,22 +56,22 @@ export function OptionDrawer(props: Props) {
     return action();
   };
 
-  const options = [
+  const options: ActionLabel[] = [
     {
       label: 'Create empty',
-      action: 'empty',
+      key: 'empty',
       subtitle: 'Start with a blank note.',
       icon: SquarePen,
     },
     {
       label: 'Create from file',
-      action: 'fromFile',
+      key: 'fromFile',
       subtitle: 'Import content from a file.',
       icon: FolderOpen,
     },
     {
       label: 'Paste from clipboard',
-      action: 'fromClipboard',
+      key: 'fromClipboard',
       subtitle: 'Use text from your clipboard.',
       icon: ClipboardPaste,
     },
@@ -115,12 +121,9 @@ export function OptionDrawer(props: Props) {
                       <div
                         role="button"
                         onClick={() =>
-                          handleWait(
-                            () => handleChooseAction(o.action as ActionKey),
-                            250
-                          )
+                          handleWait(() => handleChooseAction(o.key), 250)
                         }
-                        className="flex items-center w-full h-16 gap-2 px-4 rounded-md select-none active:bg-muted dark:active:bg-background"
+                        className="flex items-center w-full h-16 gap-3 px-4 rounded-md select-none active:bg-muted dark:active:bg-background"
                       >
                         <span className="flex items-center justify-center rounded-full size-12 bg-muted">
                           <o.icon />
