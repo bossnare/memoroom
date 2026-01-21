@@ -113,7 +113,7 @@ export function AppLayout() {
           <TopBar />
           {/* route content */}
           <PullToRefreshWrapper onRefresh={async () => handleRefreshNotes()}>
-            <ScrollArea className="h-[calc(100dvh-116px)] md:h-[calc(100dvh-56px)] scroll-touch overscroll-contain">
+            <ScrollArea className="h-[calc(100dvh-120px)] md:h-[calc(100dvh-56px)] scroll-touch overscroll-contain">
               <main className="pb-[60px] lg:pb-10 min-h-full">
                 <Outlet />
               </main>

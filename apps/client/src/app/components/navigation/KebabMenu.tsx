@@ -45,15 +45,13 @@ export const KebabMenu = ({ open, close, toggle }: Props) => {
 
       {/* Kebab menu */}
       <DropdownMenu
-  open={open}
-  onOpenChange={(nextOpen) => (nextOpen ? toggle() : close())}
->
+        open={open}
+        onOpenChange={(nextOpen) => (nextOpen ? toggle() : close())}
+      >
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon-lg"
-            // ref={triggerRef}
-            onClick={toggle}
             className="duration-300 md:hidden"
           >
             <Ellipsis />
@@ -66,7 +64,6 @@ export const KebabMenu = ({ open, close, toggle }: Props) => {
         >
           <motion.div
             variants={kebabMenuVariants}
-            // ref={kebabMenuRef}
             initial="hidden"
             animate="visible"
             exit="exit"

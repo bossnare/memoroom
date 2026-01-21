@@ -350,6 +350,7 @@ function Overview() {
               onAction={handleTooltipAction}
               disabled={!isHasSellected}
               className="flex justify-between w-full"
+              actionLabel={toolbarActionLabel}
             />
           </motion.div>
         )}

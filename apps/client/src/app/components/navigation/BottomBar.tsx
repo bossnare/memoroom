@@ -21,7 +21,7 @@ export const BottomBar = ({
                 : 'translateX(0)',
             }
       }
-      className="fixed inset-x-0 bottom-0 z-20 h-16 py-2 transition-transform ease-in-out border-t duration-280 will-change-transform bg-sidebar backdrop-blur-sm md:hidden border-sidebar-border"
+      className="fixed inset-x-0 bottom-0 z-20 h-16 py-2 transition-transform ease-in-out border-t duration-280 will-change-transform bg-sidebar dark:bg-sidebar/50 backdrop-blur-sm md:hidden border-sidebar-border"
     >
       <nav className="select-none size-full">
         <ul className="flex items-center justify-around pb-1 size-full">

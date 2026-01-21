@@ -20,11 +20,10 @@ export const TopBar = () => {
   const { user } = useAuth();
   const toggleOpenSideOver = useLayoutStore((s) => s.toggleOpenSideOver);
 
-  const { open: openMobileSidebar, isOpen: isOpenMobileSidebar } =
-    useQueryToggle({
-      key: 'sidebar',
-      value: 'mobile',
-    })!;
+  const { open: openMobileSidebar } = useQueryToggle({
+    key: 'sidebar',
+    value: 'mobile',
+  })!;
 
   const {
     isOpen: isOpenKebabMenu,
@@ -94,7 +93,6 @@ export const TopBar = () => {
             toggle={toggleOpenKebabMenu}
             open={isOpenKebabMenu}
             close={closeKebabMenu}
-            isOpenMobileSidebar={isOpenMobileSidebar}
           />
         </AnimatePresence>
       </div>
