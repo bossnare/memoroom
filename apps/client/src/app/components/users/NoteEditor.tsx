@@ -138,10 +138,6 @@ export const NoteEditor = ({
     e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
   };
 
-  const autoGrowOnFocus = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
-  };
-
   const bodyPayload = {
     title: title as string,
     content: content as string,
@@ -244,7 +240,10 @@ export const NoteEditor = ({
           </aside>
         </Portal>
         {/* editor */}
-        <div style={!isMobile ? MAIN_TRANSFORM : {}} className="flex flex-col">
+        <div
+          style={!isMobile ? MAIN_TRANSFORM : { width: '100vw' }}
+          className="flex flex-col"
+        >
           <header className="sticky top-0 left-0 bg-background">
             <div className="flex items-center justify-between h-12 max-w-6xl px-4 pr-2 mx-auto">
               <button
@@ -278,7 +277,7 @@ export const NoteEditor = ({
             <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 lg:pb-32">
               <textarea
                 rows={1}
-                className="w-full field-sizing-content min-h-12 mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
+                className="w-full field-sizing-content min-h-auto mt-2 text-3xl font-bold leading-10 tracking-tight resize-none scrollbar-none placeholder:text-2xl focus:outline-0"
                 placeholder="Title"
                 value={title}
                 // onFocus={autoGrowOnFocus}
