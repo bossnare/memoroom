@@ -69,6 +69,7 @@ export const MobileMenu = ({
                     <NavLink to={l.route}>
                       {({ isActive }) => (
                         <button
+                          onClick={close}
                           className={cn(
                             isActive
                               ? 'text-primary bg-primary/20 dark:bg-primary/16'

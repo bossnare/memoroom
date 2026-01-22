@@ -25,7 +25,6 @@ function Hero() {
     >
       <div className="absolute rounded-full brightness-140 -left-5 -top-2 lg:left-12 lg:top-6 bg-primary h-70 w-50 lg:h-90 lg:w-100 -z-1"></div>
       <div className="absolute right-0 rounded-full bg-primary bottom-10 size-60 lg:size-80 -z-1"></div>
-      <div className="absolute hidden rounded-full fixed-center dark:block bg-muted/50 size-50 -z-1"></div>
       {/* grainy noise */}
       <span className="absolute z-11 opacity-20 mix-blend-overlay size-full bg-[url('./assets/noise.svg')]"></span>
       {/* overlay blur */}
