@@ -22,7 +22,12 @@ export const Overlay = ({ open, className, ...props }: OverlayProps) => {
   );
 };
 
-export const Overla = ({ open, close, className, children }: OverlayProps) => {
+export const DialogOverlay = ({
+  open,
+  close,
+  className,
+  children,
+}: OverlayProps) => {
   return (
     <Dialog.Root open={open} onOpenChange={close}>
       <Dialog.Portal>
@@ -33,7 +38,7 @@ export const Overla = ({ open, close, className, children }: OverlayProps) => {
             className
           )}
         ></Dialog.Overlay>
-        <Dialog.Content className="fixed inset-0 z-200 pointer-events-none!">
+        <Dialog.Content className="fixed inset-0 z-200 pointer-events-none! *:pointer-events-auto">
           {children}
         </Dialog.Content>
       </Dialog.Portal>

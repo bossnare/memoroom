@@ -1,14 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { SectionHeader } from './SectionHeader';
 import { motion } from 'motion/react';
+import { cn } from '@/app/lib/utils';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLElement> & {
   title?: string;
   content?: string;
   number?: number;
 };
 
-function Card({ title, content, number }: Props) {
+function Card({ className, title, content, number }: Props) {
   return (
     <motion.article
       initial="hidden"
@@ -19,15 +20,18 @@ function Card({ title, content, number }: Props) {
         visible: { opacity: 1, x: 0 },
       }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="p-4 space-y-4 transition-transform duration-100 ease-in-out border rounded-md border-input dark:border-0 hover:shadow-sm lg:duration-300 will-change-transform active:translate-x-4 bg-card dark:bg-card/40"
+      className={cn(
+        'p-4 space-y-4 transition-transform duration-100 ease-in-out border rounded-md border-input dark:border-0 hover:shadow-sm lg:duration-300 will-change-transform active:translate-x-4 bg-card dark:bg-card/40',
+        className
+      )}
     >
       <header className="flex flex-col gap-3 md:gap-2 md:flex-row md:items-center">
-        <div className="flex items-center justify-center rounded-full border border-primary bg-primary dark:bg-primary/80 size-8 md:size-7">
+        <div className="number flex items-center justify-center rounded-full border border-primary bg-primary dark:bg-primary/80 size-8 md:size-7">
           <span className="font-black tracking-tight text-primary-foreground">
             0{number}
           </span>
         </div>
-        <h3 className="space-y-3 text-xl font-semibold tracking-tight md:text-lg scroll-m-20">
+        <h3 className="text-xl font-semibold tracking-tight md:text-lg scroll-m-20">
           {title}
         </h3>
       </header>
@@ -66,7 +70,17 @@ export function HowItWorks() {
       <div className="flex max-w-6xl mx-auto gap-2 md:gap-4 mt-10 lg:[&_.card]:not-last:hover:translate-x-2 [&_.divide]:last:hidden lg:[&_.divide]:last:block flex-col md:flex-row flex-wrap md:justify-center md:items-center lg:*:w-[calc(100%/3-1rem)]">
         {cardContents.map((c, i) => (
           <>
-            <Card title={c.title} content={c.content} number={i + 1} />
+            <Card
+              title={c.title}
+              content={c.content}
+              number={i + 1}
+              // this code adjust card content/number to left on mobile if is second card
+              className={cn(
+                i % 2 === 1
+                  ? 'flex flex-col items-end md:items-start [&_.number]:ml-auto md:[&_.number]:ml-0'
+                  : ''
+              )}
+            />
             <span className="h-8 ml-8 border-l-2 border-dashed divide md:ml-0 md:border-b md:h-auto md:w-8 lg:w-auto border-primary dark:border-input"></span>
           </>
         ))}

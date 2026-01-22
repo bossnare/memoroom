@@ -2,7 +2,7 @@ import github from '@/assets/providers/github.svg';
 import google from '@/assets/providers/google.svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Overlay, Overla } from '@/shared/components/Overlay';
+import { Overlay, DialogOverlay } from '@/shared/components/Overlay';
 import { Paragraphe } from '@/shared/components/Paragraphe';
 import { Spinner } from '@/shared/components/Spinner';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
@@ -51,7 +51,7 @@ const LoginCard = ({
   return (
     <>
       {/* <Overlay onClick={close} open={open} className="z-99" /> */}
-      <Overla open={open} close={close}>
+      <DialogOverlay open={open} close={close}>
         <AnimatePresence>
           {open && (
             <motion.div
@@ -187,7 +187,7 @@ const LoginCard = ({
             </motion.div>
           )}
         </AnimatePresence>
-      </Overla>
+      </DialogOverlay>
     </>
   );
 };
