@@ -54,7 +54,7 @@ function Overview() {
     open: openNoteSorting,
     isOpen: isOpenNoteSorting,
     close: closeNoteSorting,
-  } = useQueryToggle({ key: 'sorting', value: 'noteSorting' })!;
+  } = useQueryToggle({ key: 'sorting', value: 'noteSorting' });
   // selection query params state
   const {
     open: openSelectionMode,
@@ -63,12 +63,12 @@ function Overview() {
   } = useQueryToggle({
     key: 'select',
     value: 'notes',
-  })!;
+  });
 
   const { isOpen: isOpenMobileSidebar } = useQueryToggle({
     key: 'sidebar',
     value: 'mobile',
-  })!;
+  });
   // delete confirm drawer query params state - mobile only
   const {
     isOpen: isOpenDeleteConfirm,
@@ -77,7 +77,7 @@ function Overview() {
   } = useQueryToggle({
     key: 'ui',
     value: 'deleteNote',
-  })!;
+  });
 
   // auto clear selected value on selectionMode close
   useEffect(() => {

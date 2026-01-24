@@ -18,11 +18,11 @@ export const Header = () => {
   const [isNeedBg, setIsNeedBg] = useState(false);
   const navbarLabel = useLabel();
   const { t } = useTranslation();
-  const { open: openLogin } = useQueryToggle({ key: 'auth', value: 'login' })!;
+  const { open: openLogin } = useQueryToggle({ key: 'auth', value: 'login' });
   const { open: openMobileMenu } = useQueryToggle({
     key: 'menu',
     value: 'mobile',
-  })!;
+  });
 
   // Logo optional rendering
   const { pathname } = useLocation();
