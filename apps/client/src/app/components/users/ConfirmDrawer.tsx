@@ -24,7 +24,7 @@ type Props = {
 
 export function ConfirmDrawer(props: Props) {
   const handleConfirm = () => {
-    props.onClose?.();
+    props.onClose?.(); // close before confirm
     props.onConfirm?.();
   };
 
@@ -49,8 +49,9 @@ export function ConfirmDrawer(props: Props) {
           </DrawerHeader>
           <DrawerFooter>
             <div className="flex gap-4 justify-center [&_button]:min-w-38">
-              <DrawerClose onClick={props.onClose} asChild>
+              <DrawerClose asChild>
                 <Button
+                  onClick={props.onClose}
                   size="xxl"
                   variant="ghost"
                   className="bg-input rounded-full text-[16px]"
