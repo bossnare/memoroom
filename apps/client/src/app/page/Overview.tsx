@@ -12,7 +12,7 @@ import {
   ListRestart,
   X,
   Folder,
-  Trash2,
+  Trash,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
@@ -125,7 +125,7 @@ function Overview() {
     },
     {
       label: 'Delete',
-      icon: Trash2,
+      icon: Trash,
       key: 'delete',
     },
   ];
@@ -341,10 +341,10 @@ function Overview() {
       <Portal>
         {!isOpenMobileSidebar && isSelectionMode && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 16 }}
-            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden bg-sidebar z-22"
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden bg-linear-to-b from-transparent to-sidebar/50 z-22"
           >
             <Toolbar
               onAction={handleTooltipAction}

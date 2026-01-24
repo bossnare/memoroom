@@ -11,7 +11,7 @@ export function FooterCTA() {
   const isInView = useInView(ref, { once: false, amount: 1 });
   const ctaVariant = isInView ? 'default' : 'outline';
   const { t } = useTranslation();
-  const { open: openLogin } = useQueryToggle({ key: 'auth', value: 'login' })!;
+  const { open: openLogin } = useQueryToggle({ key: 'auth', value: 'login' });
 
   return (
     <section

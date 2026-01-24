@@ -39,12 +39,12 @@ export function AppLayout() {
 
   // query params state
   const { isOpen: isOpenMobileSidebar, close: closeMobileSidebar } =
-    useQueryToggle({ key: 'sidebar', value: 'mobile' })!;
+    useQueryToggle({ key: 'sidebar', value: 'mobile' });
 
   const { isOpen: isSelectionMode } = useQueryToggle({
     key: 'select',
     value: 'notes',
-  })!;
+  });
 
   const {
     isOpen: isOpenSideOver,
@@ -53,7 +53,7 @@ export function AppLayout() {
   } = useQueryToggle({
     key: 'sidebar',
     value: 'sideover',
-  })!;
+  });
 
   const {
     isOpen: isOpenChoose,
@@ -62,7 +62,7 @@ export function AppLayout() {
   } = useQueryToggle({
     key: 'ui',
     value: 'create',
-  })!;
+  });
 
   // local state
   const [mobileSidebarWidth, setMobileSidebarWidth] = useState(0);

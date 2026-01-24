@@ -21,13 +21,13 @@ export const TopBar = ({ openSideOver }: { openSideOver?: () => void }) => {
   const { open: openMobileSidebar } = useQueryToggle({
     key: 'sidebar',
     value: 'mobile',
-  })!;
+  });
 
   const {
     isOpen: isOpenKebabMenu,
     toggle: toggleOpenKebabMenu,
     close: closeKebabMenu,
-  } = useQueryToggle({ key: 'menu', value: 'kebab' })!;
+  } = useQueryToggle({ key: 'menu', value: 'kebab' });
 
   return (
     <nav className="sticky inset-x-0 top-0 flex items-center justify-between gap-2 px-2 py-1 pl-1 shadow-lg h-14 z-99 md:h-14 md:px-2 bg-sidebar">

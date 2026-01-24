@@ -47,6 +47,11 @@ export const NoteEditor = ({
     title: string | undefined;
     content: string | undefined;
   } | null>(null);
+  const [writingOn, setWritingOn] = useState<Record<string, boolean>>({
+    title: false,
+    tag: false,
+    content: false,
+  });
   const [isSaving, setIsSaving] = useState(false);
 
   // query params state
@@ -128,7 +133,11 @@ export const NoteEditor = ({
       if (contentAreaRef.current) {
         contentAreaRef.current.focus();
         setCharCounts(contentAreaRef.current.value.length); // initial chars value
-        setWordCounts(contentAreaRef.current.value.trim().split(/\s+/).length);
+        setWordCounts(
+          contentAreaRef.current.value.trim() === ''
+            ? 0
+            : contentAreaRef.current.value.trim().split(/\s+/).length
+        );
       }
     }, 100);
   }, []);
@@ -241,11 +250,20 @@ export const NoteEditor = ({
         <Portal>
           <aside
             style={{ width: TOOLTIP_WIDTH }}
-            className="fixed inset-y-0 left-0 hidden md:block w-54 lg:transition duration-600"
+            className="fixed inset-y-0 left-0 hidden md:block md:max-w-[54px] lg:max-w-54 lg:transition duration-600"
           >
-            <nav className="bg-sidebar size-full">
-              <div className="flex flex-wrap items-center justify-between gap-3 px-2 py-1">
-                <span className="flex flex-wrap gap-3">
+            <nav className="bg-sidebar size-full py-1">
+              <div className="flex flex-wrap items-center justify-between gap-3 px-2">
+                <span className="hidden lg:inline-flex">
+                  <Button onClick={toggleOpenPanel} variant="ghost" size="icon">
+                    {isOpenPanel ? <PanelLeftClose /> : <PanelRightClose />}
+                  </Button>
+                </span>
+
+                <span
+                  className="
+                    flex flex-wrap gap-3"
+                >
                   <Button
                     onClick={handleCancel}
                     variant="ghost"
@@ -262,13 +280,11 @@ export const NoteEditor = ({
                     <ChevronRight />
                   </Button>
                 </span>
-
-                <span className="herit">
-                  <Button onClick={toggleOpenPanel} variant="ghost" size="icon">
-                    {isOpenPanel ? <PanelLeftClose /> : <PanelRightClose />}
-                  </Button>
-                </span>
               </div>
+              {/* divide */}
+              {isOpenPanel ? null : (
+                <div className="border-t border-sidebar-border mx-2 my-4"></div>
+              )}
             </nav>
           </aside>
         </Portal>
@@ -319,18 +335,23 @@ export const NoteEditor = ({
             <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 font-inter lg:pb-32">
               <textarea
                 rows={1}
-                className="w-full mt-2 text-3xl font-bold leading-10 tracking-tight transition-all resize-none selection:bg-primary caret-primary focus:caret-accent field-sizing-content min-h-auto scrollbar-none placeholder:text-2xl focus:outline-0"
+                className={cn(
+                  writingOn.title ? 'caret-current' : 'caret-primary',
+                  'w-full mt-2 text-3xl font-bold leading-10 tracking-tight transition-all resize-none selection:bg-primary field-sizing-content min-h-auto scrollbar-none placeholder:text-2xl focus:outline-0'
+                )}
                 placeholder="Title"
                 value={title}
-                // onFocus={autoGrowOnFocus}
                 onInput={(e) => {
                   setTitle(e.currentTarget.value);
                   autoGrow(e);
+                  // set to true the title writing state
+                  setWritingOn({ title: true });
                 }}
                 onBlur={(e) => {
                   if (!e.currentTarget.value.trim())
                     e.currentTarget.style.height = 'auto';
                   setTitle(title?.trim());
+                  setWritingOn({ title: false });
                 }}
               ></textarea>
               <div className="left-0 pb-1 space-x-2 text-sm lg:sticky bg-background top-12 text-muted-foreground">
@@ -350,7 +371,7 @@ export const NoteEditor = ({
                 rows={6}
                 ref={contentAreaRef}
                 value={content}
-                // onFocus={autoGrowOnFocus}
+                onBlur={() => setWritingOn({ content: false })}
                 onChange={(e) => {
                   setCharCounts(
                     e.target.value.trim().split(' ').join('').length
@@ -364,15 +385,14 @@ export const NoteEditor = ({
                 }}
                 onInput={(e) => {
                   autoGrow(e);
-                  // scroll to carret
-                  // e.currentTarget.scrollIntoView({
-                  //   block: 'end',
-                  //   behavior: 'auto',
-                  // });
+                  setWritingOn({ content: true });
                 }}
                 name=""
                 id=""
-                className="w-full font-normal leading-8 transition-all resize-none field-sizing-content selection:text-muted-foreground selection:bg-muted caret-primary focus:caret-accent min-h-12 placeholder:text-base focus:outline-0"
+                className={cn(
+                  writingOn.content ? 'caret-current' : 'caret-primary',
+                  'w-full font-normal leading-8 transition-all resize-none field-sizing-content selection:text-muted-foreground selection:bg-muted min-h-12 placeholder:text-base focus:outline-0'
+                )}
                 placeholder="Start writing..."
               ></textarea>
             </div>

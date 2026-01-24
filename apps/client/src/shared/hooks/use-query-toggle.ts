@@ -1,18 +1,33 @@
 import { useSearchParams } from 'react-router-dom';
 
+type UseQueryToggleReturn = {
+  isOpen: boolean;
+  open: () => void;
+  toggle: () => void;
+  close: () => void;
+};
+
 type Config = Partial<{
   key: string;
   value: string;
 }>;
 
 // Params driven UI/UX state
-export const useQueryToggle = (config: Config) => {
+export const useQueryToggle = (config: Config): UseQueryToggleReturn => {
   const { key, value = '1' } = config;
   const [searchParams, setParams] = useSearchParams();
 
+  //  if key or value is missing return a safe no-op implementation so callers never get `undefined`
   if (!key || !value) {
-    console.log("useQueryToggle isn't work without key, value.");
-    return;
+    console.warn(
+      'useQueryToggle called without `key` or `value` - returning no-op toggle.'
+    );
+    return {
+      isOpen: false,
+      open: () => {},
+      toggle: () => {},
+      close: () => {},
+    };
   }
 
   const isOpen = searchParams.get(key) === value;

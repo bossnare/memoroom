@@ -59,7 +59,7 @@ const LoginCard = ({
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="bg-card fixed fixed-center pointer-events-auto dark:bg-background overflow-y-auto scroll-touch w-[96%] lg:w-full min-h-1/2 md:min-h-[calc(100dvh-14rem)] p-6 rounded-xl max-w-md"
+              className="bg-card fixed fixed-center dark:bg-background overflow-y-auto scroll-touch w-[96%] lg:w-full min-h-1/2 md:min-h-[calc(100dvh-14rem)] p-6 rounded-xl max-w-md"
             >
               <div className="relative space-y-4">
                 {/* close button */}
@@ -112,7 +112,7 @@ const LoginCard = ({
                         setIsPending();
                         close();
                         AuthService.githubSign();
-                        // give a exact time for set to false loading state
+                        // give a exact time for set to false loading state - hack fix - fix later
                         setTimeout(() => {
                           setIsPendingFalse();
                         }, 10_000);
@@ -133,9 +133,9 @@ const LoginCard = ({
                 </div>
 
                 <div className="flex items-center justify-center gap-3 py-3">
-                  <span className="inline-flex w-20 border-t md:w-10 border-muted"></span>
+                  <span className="inline-flex w-20 border-t md:w-10 border-sidebar"></span>
                   <span>{t('auth.textDivide')}</span>
-                  <span className="inline-flex w-20 border-t md:w-10 border-muted"></span>
+                  <span className="inline-flex w-20 border-t md:w-10 border-sidebar"></span>
                 </div>
 
                 <form action="#" className="flex flex-col items-center gap-4">
@@ -174,7 +174,7 @@ const LoginCard = ({
                         {t('footer.legal.term')}
                       </Button>{' '}
                     </a>{' '}
-                    {t('auth.textDivide')}{' '}
+                    <span className="lowercase">{t('auth.textDivide')} </span>
                     <a href="#">
                       {' '}
                       <Button className="p-0 text-xs" variant="link">

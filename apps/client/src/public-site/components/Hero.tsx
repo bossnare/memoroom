@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 function Hero() {
   const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
-  const { open: openLogin } = useQueryToggle({ key: 'auth', value: 'login' })!;
+  const { open: openLogin } = useQueryToggle({ key: 'auth', value: 'login' });
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -62,7 +62,7 @@ function Hero() {
           className="z-20 flex flex-col items-center justify-center max-w-3xl gap-6 px-4 md:px-0 pb-30 sm:pb-0"
         >
           <span className="space-y-2">
-            <h1 className="text-4xl font-extrabold tracking-tight text-center md:font-bold lg:text-5xl scroll-m-20 text-balance">
+            <h1 className="text-4xl font-extrabold tracking-tight text-center selection:bg-primary md:font-bold lg:text-5xl scroll-m-20 text-balance">
               {t('hero.title')}
             </h1>
             <Paragraphe className="text-sm font-medium text-center text-foreground/90">

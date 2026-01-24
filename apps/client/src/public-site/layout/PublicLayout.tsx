@@ -16,11 +16,11 @@ export const PublicLayout = () => {
   const { isOpen: isLoginOpen, close: closeLogin } = useQueryToggle({
     key: 'auth',
     value: 'login',
-  })!;
+  });
   const { isOpen: isMobileMenuOpen, close: closeMobileMenu } = useQueryToggle({
     key: 'menu',
     value: 'mobile',
-  })!;
+  });
 
   return (
     <div className="relative h-screen">

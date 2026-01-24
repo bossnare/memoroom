@@ -50,7 +50,13 @@ export const Header = () => {
         )}
       >
         <div className="flex items-center shrink-0 lg:min-w-1/5">
-          {isHome ? <Logo /> : <Back />}
+          {isHome ? (
+            <a href="#hero">
+              <Logo />
+            </a>
+          ) : (
+            <Back />
+          )}
         </div>
 
         {/* nav */}

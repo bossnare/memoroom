@@ -32,8 +32,8 @@ export function Toolbar({ onAction, className, disabled, actionLabel }: Props) {
           size={buttonSize}
           variant="ghost"
         >
-          <t.icon className="size-5 lg:size-4" />
-          <span>{t.label}</span>
+          <t.icon className="size-6 md:size-4" />
+          <span className="font-normal">{t.label}</span>
         </Button>
       ))}
     </div>
