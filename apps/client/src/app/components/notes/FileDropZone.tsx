@@ -1,21 +1,42 @@
 import { cn } from '@/app/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useButtonSize } from '@/shared/hooks/use-button-size';
 import { FileText, FolderOpen } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 type Props = React.HTMLAttributes<HTMLDivElement> & { onContinue?: () => void };
 
-export const FileDropZone = ({ className, onContinue }: Props) => {
+export const FileDropZone = ({ className, onContinue, ...props }: Props) => {
   const [fileInfo, setFileInfo] = useState<Record<string, string> | null>(null);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
 
+  const buttonSize = useButtonSize({ mobile: 'lg', landscape: 'default' });
+
   const [isDrag, setIsDrag] = useState(false);
 
+  const textFileExtension = [
+    'md',
+    'js',
+    'ts',
+    'js',
+    'txt',
+    'css',
+    'json',
+    'html',
+    'tsx',
+    'py',
+    'rs',
+    'php',
+  ];
+
   const handleFiles = async (file: File) => {
-    // const ext = file.name.split('.').pop()?.toLocaleLowerCase();
-    if (!file.type.startsWith('text') && file.type !== 'application/json') {
-      toast.error('Not a text file');
+    const ext = file.name.split('.').pop()?.toLocaleLowerCase();
+    if (!textFileExtension?.includes(ext!)) {
+      toast.error(`${file.name} is not a text file`);
+      if (inputFileRef.current) {
+        inputFileRef.current.value = '';
+      }
       return;
     }
 
@@ -44,7 +65,7 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
   };
 
   return (
-    <div className={cn(className)}>
+    <div className={cn(className)} {...props}>
       {fileInfo ? (
         <div className="flex flex-col items-center justify-center h-full gap-3 p-2 cursor-pointer rounded-3xl bg-input/70">
           <FileText />
@@ -52,10 +73,15 @@ export const FileDropZone = ({ className, onContinue }: Props) => {
             {fileInfo.name}
           </span>
           <span className="flex flex-col items-center justify-center gap-2">
-            <Button className="rounded-full" onClick={onContinue}>
+            <Button
+              size={buttonSize}
+              className="rounded-full"
+              onClick={onContinue}
+            >
               Continue
             </Button>
             <Button
+              size={buttonSize}
               onClick={handleCancel}
               variant="outline"
               className="rounded-full"

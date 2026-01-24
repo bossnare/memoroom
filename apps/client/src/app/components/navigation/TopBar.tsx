@@ -57,6 +57,7 @@ export const TopBar = ({ openSideOver }: { openSideOver?: () => void }) => {
         <input
           id={inputId}
           type="text"
+          spellCheck={false}
           name="current-search"
           className="focus:outline-none pl-0.5 text-foreground/90 grow placeholder:text-sm placeholder:text-muted-foreground"
           placeholder="Search your notes, workspaces, ..."

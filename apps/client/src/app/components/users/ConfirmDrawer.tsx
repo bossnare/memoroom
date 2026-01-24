@@ -4,9 +4,9 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerFooter,
 } from '@/components/ui/drawer';
 import { useIsMobile } from '@/shared/hooks/use-mobile';
 
