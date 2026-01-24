@@ -59,7 +59,7 @@ export const NoteEditor = ({
     open: openDirtyConfirm,
     isOpen: isOpenDirtyConfirm,
     close: closeDirtyConfirm,
-  } = useQueryToggle({ key: 'ui', value: 'isDirty' })!;
+  } = useQueryToggle({ key: 'ui', value: 'isDirty' });
 
   // use mutation
   const createNote = useCreateNote();
