@@ -51,9 +51,10 @@ export const MobileSidebar = ({
             {/* tab label map & interact */}
             {tabLabel.map((t) => (
               <li key={t.route}>
-                <NavLink title={t.label} to={t.route} end={t.route === '/app'}>
+                <NavLink to={t.route} end={t.route === '/app'}>
                   {({ isActive }) => (
                     <button
+                      onClick={close}
                       className={cn(
                         isActive ? 'font-bold' : 'font-normal',
                         'text-xl flex gap-5 px-6 py-3 items-center w-full active:bg-muted dark:active:bg-card text-sidebar-foreground'
@@ -81,6 +82,7 @@ export const MobileSidebar = ({
                     <NavLink to={s.route}>
                       {({ isActive }) => (
                         <button
+                          onClick={close}
                           className={cn(
                             isActive
                               ? 'font-bold text-sidebar-foreground'
@@ -148,7 +150,7 @@ export const DesktopSidebar = ({
           </ul>
         </nav>
 
-        <div className="my-6 border-t border-sidebar-border"></div>
+        <div className="my-6 border-t border-sidebar-border/80"></div>
 
         {/* drag and drop file */}
         <div

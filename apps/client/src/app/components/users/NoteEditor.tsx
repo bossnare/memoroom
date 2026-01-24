@@ -295,12 +295,14 @@ export const NoteEditor = ({
         >
           <header className="sticky top-0 left-0 bg-background">
             <div className="flex items-center justify-between h-12 max-w-6xl px-4 pr-2 mx-auto">
-              <button
+              <Button
                 onClick={handleCancel}
-                className="p-0 font-semibold md:hidden text-primary active:opacity-80"
+                variant="ghost"
+                className="bg-accent/20 md:hidden"
+                size="icon-lg"
               >
-                Cancel
-              </button>
+                <ChevronLeft />
+              </Button>
               <div className="flex items-center gap-1 text-muted-foreground">
                 <span>{editorState} notes</span>{' '}
                 <Button size="icon" variant="ghost" className="md:hidden">

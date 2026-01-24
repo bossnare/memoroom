@@ -42,8 +42,8 @@ function Notification() {
     return (
       <div className="py-5">
         <EmptyNotification
+          noAction
           icon={IconBellZFilled}
-          noAction={true}
           title="No notifications at the moment"
           description="You are all caught up! No new notififcation yet."
         />

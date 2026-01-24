@@ -39,10 +39,14 @@ export function EmptyEmpty(props: Props) {
       {!props.noAction && (
         <EmptyContent>
           <div className="flex gap-2">
-            <Button onClick={props.onPrimaryAction}>
+            <Button size="lg" onClick={props.onPrimaryAction}>
               {props.primaryLabel}{' '}
             </Button>
-            <Button onClick={props.onSecondaryAction} variant="outline">
+            <Button
+              size="lg"
+              onClick={props.onSecondaryAction}
+              variant="outline"
+            >
               {props.secondaryLabel}{' '}
             </Button>
           </div>

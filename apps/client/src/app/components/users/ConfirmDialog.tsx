@@ -24,9 +24,9 @@ type Props = {
 };
 
 export function ConfirmDialog(props: Props) {
-  const handleConfirm = async () => {
-    await props.onConfirm?.();
-    props.onClose?.();
+  const handleConfirm = () => {
+    props.onClose?.(); // close before confirm
+    props.onConfirm?.();
   };
 
   const isMobile = useIsMobile();
