@@ -130,6 +130,9 @@ export const DesktopSidebar = ({
       ref={ref}
       className="fixed inset-y-0 z-20 hidden duration-300 ease-in-out border-r transition-all md:max-w-[62px] lg:max-w-64 text-sidebar-foreground bg-sidebar md:block border-sidebar-border"
     >
+      {/* subtle overlay */}
+      <div className="absolute inset-0 hidden pointer-events-none bg-primary/2 dark:block -z-1"></div>
+
       <div className="items-center justify-between hidden w-full px-3 py-3 pr-2 lg:flex ">
         {isOpenPanel && <Logo mono={true} />}
         <Button
@@ -156,8 +159,8 @@ export const DesktopSidebar = ({
         <div
           className={cn(
             isOpenPanel
-              ? 'pointer-events-auto opacity-100'
-              : 'pointer-events-none opacity-0',
+              ? 'pointer-events-auto opacity-100 translate-x-0'
+              : 'pointer-events-none opacity-0 -translate-x-full',
             'mt-4 transition overflow-hidden rounded-3xl bg-background/20'
           )}
         >

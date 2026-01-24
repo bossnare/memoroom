@@ -4,11 +4,15 @@ import { Button } from '@/components/ui/button';
 import { waitVibrate } from '@/shared/utils/vibration';
 import { SquarePen } from 'lucide-react';
 
-export function ButtonFab({ openChoose }: { openChoose?: () => void }) {
+export function ButtonFab({
+  openCreateOptions,
+}: {
+  openCreateOptions?: () => void;
+}) {
   const { openNewNote } = useNoteServices();
   const longPress = useLongPress({
     onLongPress: () => {
-      openChoose?.();
+      openCreateOptions?.();
       waitVibrate(400, 'low');
     },
   });

@@ -37,7 +37,7 @@
     transition: none !important;
   }
 
-  #home-screen {
+  #home-screen-icon {
     animation: scale-bump 2s ease both infinite;
   }
 

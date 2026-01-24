@@ -23,8 +23,11 @@ function Hero() {
       id="hero"
       className="relative flex items-center justify-center px-4 overflow-hidden h-dvh"
     >
-      <div className="absolute rounded-full brightness-140 -left-5 -top-2 lg:left-12 lg:top-6 bg-primary h-70 w-50 lg:h-90 lg:w-100 -z-1"></div>
+      <div className="absolute rounded-full brightness-120 -left-5 -top-2 lg:left-12 lg:top-6 bg-primary h-70 w-50 lg:h-90 lg:w-90 -z-1"></div>
       <div className="absolute right-0 rounded-full bg-primary bottom-10 size-60 lg:size-80 -z-1"></div>
+      <div className="absolute left-0 rounded-full bg-chart-2 top-20 size-30 lg:size-60 -z-1"></div>
+      <div className="absolute rigth-0 rounded-full bg-chart-2 -bottom-20 size-40 lg:size-50 -z-1"></div>
+
       {/* grainy noise */}
       <span className="absolute z-11 opacity-20 mix-blend-overlay size-full bg-[url('./assets/noise.svg')]"></span>
       {/* overlay blur */}
@@ -61,14 +64,14 @@ function Hero() {
           }}
           className="z-20 flex flex-col items-center justify-center max-w-3xl gap-6 px-4 md:px-0 pb-30 sm:pb-0"
         >
-          <span className="space-y-2">
+          <div className="space-y-2">
             <h1 className="text-4xl font-extrabold tracking-tight text-center selection:bg-primary md:font-bold lg:text-5xl scroll-m-20 text-balance">
               {t('hero.title')}
             </h1>
             <Paragraphe className="text-sm font-medium text-center text-foreground/90">
               {t('hero.subtitle')}
             </Paragraphe>
-          </span>
+          </div>
 
           <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4">
             <Button

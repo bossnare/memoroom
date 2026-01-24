@@ -44,7 +44,7 @@ const LoginCard = ({
 }) => {
   const providerButtonSize = useButtonSize({
     landscape: 'default',
-    mobile: 'lg',
+    mobile: 'xl',
   });
   const { t } = useTranslation();
 

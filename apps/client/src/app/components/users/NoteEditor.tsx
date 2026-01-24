@@ -242,9 +242,10 @@ export const NoteEditor = ({
       />
 
       <motion.div
-        initial={{ opacity: 0, y: 100 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 1 }}
         className={cn('min-h-screen relative', className)}
       >
         <Portal>
@@ -252,7 +253,7 @@ export const NoteEditor = ({
             style={{ width: TOOLTIP_WIDTH }}
             className="fixed inset-y-0 left-0 hidden md:block md:max-w-[54px] lg:max-w-54 lg:transition duration-600"
           >
-            <nav className="bg-sidebar size-full py-1">
+            <nav className="py-1 bg-sidebar size-full">
               <div className="flex flex-wrap items-center justify-between gap-3 px-2">
                 <span className="hidden lg:inline-flex">
                   <Button onClick={toggleOpenPanel} variant="ghost" size="icon">
@@ -260,10 +261,7 @@ export const NoteEditor = ({
                   </Button>
                 </span>
 
-                <span
-                  className="
-                    flex flex-wrap gap-3"
-                >
+                <span className="flex flex-wrap gap-3">
                   <Button
                     onClick={handleCancel}
                     variant="ghost"
@@ -283,7 +281,7 @@ export const NoteEditor = ({
               </div>
               {/* divide */}
               {isOpenPanel ? null : (
-                <div className="border-t border-sidebar-border mx-2 my-4"></div>
+                <div className="mx-2 my-4 border-t border-sidebar-border"></div>
               )}
             </nav>
           </aside>
@@ -294,7 +292,7 @@ export const NoteEditor = ({
           className="flex flex-col lg:transition-transform lg:duration-600"
         >
           <header className="sticky top-0 left-0 bg-background">
-            <div className="flex items-center justify-between h-12 max-w-6xl px-4 pr-2 mx-auto">
+            <div className="flex items-center justify-between h-12 max-w-6xl px-2 pr-2 mx-auto md:px-4">
               <Button
                 onClick={handleCancel}
                 variant="ghost"
@@ -333,7 +331,7 @@ export const NoteEditor = ({
           </header>
 
           {/* edit content */}
-          <main className="flex-1">
+          <main className="flex-1 mt-2 md:mt-0">
             <div className="max-w-6xl px-4 pb-20 mx-auto space-y-3 font-inter lg:pb-32">
               <textarea
                 rows={1}

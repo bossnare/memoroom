@@ -103,7 +103,7 @@ export function OptionDrawer(props: Props) {
                   <FileDropZone
                     onContinue={() => {
                       props.onClose?.(); // close drawer
-                      p.delete('action');
+                      params.delete('action');
                       handleWait(NoteServices.openCreateFromFile, 200);
                     }}
                     className="h-58 w-[92%] mx-auto"

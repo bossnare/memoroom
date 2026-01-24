@@ -56,9 +56,9 @@ export function AppLayout() {
   });
 
   const {
-    isOpen: isOpenChoose,
-    close: closeChoose,
-    open: openChoose,
+    isOpen: isOpenCreateOptions,
+    close: closeCreateOptions,
+    open: openCreateOptions,
   } = useQueryToggle({
     key: 'ui',
     value: 'create',
@@ -126,6 +126,8 @@ export function AppLayout() {
               <main className="pb-[60px] lg:pb-10 min-h-full">
                 <Outlet />
               </main>
+              {/* subtle overlay */}
+              <div className="absolute inset-0 hidden pointer-events-none dark:block bg-linear-to-b from-primary/1 to-primary/0.5 -z-1"></div>
             </ScrollArea>
           </PullToRefreshWrapper>
         </div>
@@ -139,15 +141,15 @@ export function AppLayout() {
               exit="exit"
               className="fixed bottom-24 md:bottom-12 lg:hidden right-5"
             >
-              <ButtonFab openChoose={openChoose} />
+              <ButtonFab openCreateOptions={openCreateOptions} />
             </motion.div>
           )}
         </AnimatePresence>
         {/* Create More Options */}
         <OptionDrawer
           showOn="mobile"
-          isOpen={isOpenChoose}
-          onClose={closeChoose}
+          isOpen={isOpenCreateOptions}
+          onClose={closeCreateOptions}
         />
         {/* quick Editor */}
         {/* mobile */}

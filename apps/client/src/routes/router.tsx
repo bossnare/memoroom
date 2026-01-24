@@ -12,7 +12,6 @@ import { About } from '@/public-site/page/About';
 import { Contact } from '@/public-site/page/Contact';
 import { Home } from '@/public-site/page/Home';
 import { Pricing } from '@/public-site/page/Pricing';
-import { SignUp } from '@/public-site/page/Signup';
 import { HomeScreenLoader } from '@/shared/components/HomeScreenLoader';
 import { NotFound } from '@/shared/components/not-found';
 import { useAuth } from '@/shared/hooks/use-auth';
@@ -21,6 +20,8 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import { PublicRoutes } from './PublicRoutes';
+import { Search } from '@/app/page/Search';
+import { Tag } from '@/app/page/Tag';
 
 export const AppRoutes = () => {
   const { pending, session } = useAuth();
@@ -51,24 +52,14 @@ export const AppRoutes = () => {
               <Route path="pricing" element={<Pricing />} />
               <Route path="contact" element={<Contact />} />
             </Route>
-            {/* auth - public */}
-            <Route path="/auth">
-              <Route path="register" element={<SignUp />} />
-            </Route>
           </Route>
           {/* protected */}
           <Route element={<ProtectedRoutes session={session} />}>
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Overview />} />
-              <Route
-                path="search"
-                element={<div className="px-3 pt-8 md:px-6">Search Route</div>}
-              />
+              <Route path="search" element={<Search />} />
               <Route path="notification" element={<Notification />} />
-              <Route
-                path="tags"
-                element={<div className="px-3 pt-8 md:px-6">Tags Route</div>}
-              />
+              <Route path="tags" element={<Tag />} />
             </Route>
 
             {/* notes */}
