@@ -13,8 +13,7 @@ export const Tab = ({
     ' font-semibold text-sidebar-foreground dark:md:bg-input/80 md:bg-secondary md:text-secondary-foreground dark:md:text-sidebar-foreground';
   const defaultClass =
     'relative transition-colors overflow-hidden duration-300 md:duration-100 ease-in-out rounded-full active:bg-muted-foreground/10 flex items-center justify-center md:justify-start md:rounded-sm w-full cursor-pointer gap-4 p-3 md:px-2 md:h-9 ease-in-out';
-  const inactiveClass =
-    'font-medium md:hover:opacity-80 text-muted-foreground md:text-current md:hover:bg-muted';
+  const inactiveClass = 'font-medium md:text-current md:hover:bg-input/80';
 
   return (
     <button

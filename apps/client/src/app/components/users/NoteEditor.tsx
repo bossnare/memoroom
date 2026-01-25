@@ -27,6 +27,16 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ConfirmDialog } from './ConfirmDialog';
 import { ConfirmDrawer } from './ConfirmDrawer';
+import {
+  useEditor,
+  EditorContent,
+  useEditorState,
+  type Editor,
+} from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
+
+const extensions = [StarterKit];
 
 type NoteEditorProps = React.HTMLAttributes<HTMLDivElement> & {
   mode?: 'new' | 'edit' | 'view';
@@ -53,6 +63,17 @@ export const NoteEditor = ({
     content: false,
   });
   const [isSaving, setIsSaving] = useState(false);
+
+  // init tiptap editor
+  const editor = useEditor({
+    extensions: [
+      ...extensions,
+      Placeholder.configure({
+        placeholder: 'Start writing...',
+      }),
+    ],
+    content: ``,
+  });
 
   // query params state
   const {
@@ -87,8 +108,17 @@ export const NoteEditor = ({
   const editorState = editorMode[mode];
   const saveButtonText = saveMode[mode];
 
+  // editor focus state
+  useEffect(() => {
+    if (!editor) return;
+
+    if (isNew) editor.commands.focus('end');
+  }, [editor, isNew]);
+
   // if paste from clipboard action
   useEffect(() => {
+    if (!editor) return;
+
     if (isNew && fromClipboard) {
       const draft = sessionStorage.getItem('draft:clipboard');
       if (!draft?.trim()) toast.info('No text found in clipboard.');
@@ -96,14 +126,17 @@ export const NoteEditor = ({
       if (draft) {
         setTitle(draft.split('\n')[0].slice(0, 50).trim());
         setContent(draft);
+        editor.commands.setContent(`<p>${draft}</p>`);
         // remove draft after getting it
         sessionStorage.removeItem('draft:clipboard');
       }
     }
-  }, [fromClipboard, isNew]);
+  }, [fromClipboard, isNew, editor]);
 
   // from file
   useEffect(() => {
+    if (!editor) return;
+
     if (isNew && fromFile) {
       const raw = sessionStorage.getItem('draft:fileInfo');
       const draft = raw ? JSON.parse(raw) : null;
@@ -112,35 +145,40 @@ export const NoteEditor = ({
       if (draft) {
         setTitle(draft.title);
         setContent(draft.content);
+        editor.commands.setContent(`<p>${draft.content}</p>`);
+
         // remove draft after getting it
         sessionStorage.removeItem('draft:fileInfo');
       }
     }
-  }, [fromFile, isNew]);
+  }, [fromFile, isNew, editor]);
 
   // initial fill
   useEffect(() => {
+    if (!editor) return;
+
     if (isEdit) {
       setTitle(note?.title);
       setContent(note?.content);
       setInitial({ title: note?.title, content: note?.content });
+      editor.commands.setContent(`<p>${note?.content}</p>`);
     }
-  }, [isEdit, note]);
+  }, [isEdit, note, editor]);
 
-  useEffect(() => {
-    // add a delay for initial any content on load...
-    setTimeout(() => {
-      if (contentAreaRef.current) {
-        contentAreaRef.current.focus();
-        setCharCounts(contentAreaRef.current.value.length); // initial chars value
-        setWordCounts(
-          contentAreaRef.current.value.trim() === ''
-            ? 0
-            : contentAreaRef.current.value.trim().split(/\s+/).length
-        );
-      }
-    }, 100);
-  }, []);
+  // useEffect(() => {
+  //   // add a delay for initial any content on load...
+  //   setTimeout(() => {
+  //     if (contentAreaRef.current) {
+  //       contentAreaRef.current.focus();
+  //       setCharCounts(contentAreaRef.current.value.length); // initial chars value
+  //       setWordCounts(
+  //         contentAreaRef.current.value.trim() === ''
+  //           ? 0
+  //           : contentAreaRef.current.value.trim().split(/\s+/).length
+  //       );
+  //     }
+  //   }, 100);
+  // }, []);
 
   // transform
   const { value: isOpenPanel, toggle: toggleOpenPanel } = useToggle(true);
@@ -202,7 +240,8 @@ export const NoteEditor = ({
   };
 
   const handleSave = () => {
-    if (isEdit) handleUpdateNote(); // update if edit mode
+    if (isEdit)
+      handleUpdateNote(); // update if edit mode
     else handleCreateNote();
   };
 
@@ -291,13 +330,13 @@ export const NoteEditor = ({
           style={!isMobile ? MAIN_TRANSFORM : { width: '100vw' }}
           className="flex flex-col lg:transition-transform lg:duration-600"
         >
-          <header className="sticky top-0 left-0 bg-background">
+          <header className="sticky top-0 z-10 left-0 bg-background">
             <div className="flex items-center justify-between h-12 max-w-6xl px-2 pr-2 mx-auto md:px-4">
               <Button
                 onClick={handleCancel}
                 variant="ghost"
                 className="bg-accent/20 md:hidden"
-                size="icon-lg"
+                size="icon-xl"
               >
                 <ChevronLeft />
               </Button>
@@ -354,7 +393,7 @@ export const NoteEditor = ({
                   setWritingOn({ title: false });
                 }}
               ></textarea>
-              <div className="left-0 pb-1 space-x-2 text-sm lg:sticky bg-background top-12 text-muted-foreground">
+              <div className="left-0 pb-1 space-x-2 text-sm lg:sticky z-9 bg-background top-12 text-muted-foreground">
                 <span>
                   {isEdit
                     ? dateFormatLong(note?.updatedAt ?? new Date())
@@ -367,7 +406,12 @@ export const NoteEditor = ({
                 <span className="w-0.5 border-l dark:border-muted"></span>{' '}
                 <span> {wordCounts} words </span>
               </div>
-              <textarea
+              <EditorContent
+                className="z-1 leading-8 selection:bg-primary/30 placeholder:text-muted-foreground"
+                onFocus={(e) => console.log(e.currentTarget.classList)}
+                editor={editor}
+              />
+              {/* <textarea
                 rows={6}
                 ref={contentAreaRef}
                 value={content}
@@ -394,7 +438,7 @@ export const NoteEditor = ({
                   'w-full font-normal leading-8 transition-all resize-none field-sizing-content selection:text-muted-foreground selection:bg-muted min-h-12 placeholder:text-base focus:outline-0'
                 )}
                 placeholder="Start writing..."
-              ></textarea>
+              ></textarea> */}
             </div>
           </main>
         </div>

@@ -32,6 +32,11 @@
     @apply cursor-pointer touch-manipulation;
   }
 
+  /* for EditorContent-tiptap */
+  [contenteditable]:focus {
+    outline: none;
+  }
+
   /* util for disable transition logic on @/components/theme-provider.tsx */
   html.disable-transition * {
     transition: none !important;

@@ -40,10 +40,13 @@ export const MobileSidebar = ({
         ref={ref}
         className={`${
           open ? 'translate-x-0' : '-translate-x-full'
-        } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-300 py-2 z-50 ease-in-out w-5/6 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
+        } md:hidden transition-transform will-change-transform text-sidebar-foreground overflow-y-auto duration-300 z-50 ease-in-out w-5/6 bg-background fixed inset-y-0 border-r border-sidebar-border/30 overflow-hidden`}
       >
+        {/* subtle overlay */}
+        <div className="absolute inset-0 hidden pointer-events-none bg-primary/2 dark:block -z-1"></div>
+
         <aside className={`relative size-full rounded-xl`}>
-          <MiniProfile className="px-4 py-2 active:bg-muted dark:active:bg-card active:opacity-80" />
+          <MiniProfile className="px-4 mt-2 py-2 active:bg-muted dark:active:bg-card active:opacity-80" />
 
           <div className="mx-4 mb-4 border-t border-sidebar"></div>
 
