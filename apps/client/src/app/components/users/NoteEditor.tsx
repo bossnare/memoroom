@@ -1,6 +1,6 @@
 import {
-  MAX_TOOLTIP_WIDTH,
-  MIN_TOOLTIP_WIDTH,
+  MAX_TOOLBAR_WIDTH,
+  MIN_TOOLBAR_WIDTH,
 } from '@/app/constants/layout.constant';
 import { useCreateNote, useUpdateNote } from '@/app/hooks/use-note';
 import { usePannel } from '@/app/hooks/use-pannel';
@@ -13,35 +13,45 @@ import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { useToggle } from '@/shared/hooks/use-toggle';
 import { handleWait } from '@/shared/utils/handle-wait';
 import { Portal } from '@radix-ui/react-portal';
+import { Placeholder } from '@tiptap/extensions';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 import { AxiosError } from 'axios';
 import {
+  Bold,
   ChevronLeft,
   ChevronRight,
   Ellipsis,
+  Heading,
+  Italic,
   PanelLeftClose,
   PanelRightClose,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ConfirmDialog } from './ConfirmDialog';
 import { ConfirmDrawer } from './ConfirmDrawer';
-import {
-  useEditor,
-  EditorContent,
-  useEditorState,
-  type Editor,
-} from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { Placeholder } from '@tiptap/extensions';
-
-const extensions = [StarterKit];
+import { Toolbar } from './Toolbar';
+import type { EditorToolbarActionLabel } from '@/app/types/action.type';
 
 type NoteEditorProps = React.HTMLAttributes<HTMLDivElement> & {
   mode?: 'new' | 'edit' | 'view';
   note?: NoteInterface;
 };
+
+const extensions = [StarterKit];
+
+const toolbarLabel: EditorToolbarActionLabel[] = [
+  {
+    label: 'Heading',
+    icon: Heading,
+    key: 'heading',
+  },
+  { label: 'Bold', icon: Bold, key: 'bold' },
+  { label: 'Bold', icon: Italic, key: 'italic' },
+];
 
 export const NoteEditor = ({
   className,
@@ -183,8 +193,8 @@ export const NoteEditor = ({
   // transform
   const { value: isOpenPanel, toggle: toggleOpenPanel } = useToggle(true);
 
-  const { pannelWidth: TOOLTIP_WIDTH, mainTransform: MAIN_TRANSFORM } =
-    usePannel(isOpenPanel, MIN_TOOLTIP_WIDTH, MAX_TOOLTIP_WIDTH);
+  const { pannelWidth: TOOLBAR_WIDTH, mainTransform: MAIN_TRANSFORM } =
+    usePannel(isOpenPanel, MIN_TOOLBAR_WIDTH, MAX_TOOLBAR_WIDTH);
 
   const isDirty = title !== initial?.title || content !== initial?.content;
 
@@ -289,7 +299,7 @@ export const NoteEditor = ({
       >
         <Portal>
           <aside
-            style={{ width: TOOLTIP_WIDTH }}
+            style={{ width: TOOLBAR_WIDTH }}
             className="fixed inset-y-0 left-0 hidden md:block md:max-w-[54px] lg:max-w-54 lg:transition duration-600"
           >
             <nav className="py-1 bg-sidebar size-full">
@@ -322,6 +332,12 @@ export const NoteEditor = ({
               {isOpenPanel ? null : (
                 <div className="mx-2 my-4 border-t border-sidebar-border"></div>
               )}
+
+              {/* editor toolbar */}
+              <Toolbar
+                actionLabel={toolbarLabel}
+                className="flex flex-col py-6 px-1 gap-2 [&_button]:justify-start [&_button]:gap-5"
+              />
             </nav>
           </aside>
         </Portal>
@@ -377,7 +393,7 @@ export const NoteEditor = ({
                 name="title"
                 className={cn(
                   writingOn.title ? 'caret-current' : 'caret-primary',
-                  'w-full mt-2 text-3xl font-bold leading-10 tracking-tight transition-all resize-none selection:bg-primary field-sizing-content min-h-auto scrollbar-none placeholder:text-2xl focus:outline-0'
+                  'w-full mt-2 text-3xl font-bold leading-10 tracking-tight transition-all resize-none selection:bg-primary/50 field-sizing-content min-h-auto scrollbar-none placeholder:text-2xl focus:outline-0'
                 )}
                 placeholder="Title"
                 value={title}
@@ -399,7 +415,7 @@ export const NoteEditor = ({
                 name="tags"
                 className={cn(
                   writingOn.tag ? 'caret-current' : 'caret-primary',
-                  'w-full mt-1 text-xl font-medium leading-relaxed tracking-tight transition-all resize-none selection:bg-primary field-sizing-content min-h-auto scrollbar-none placeholder:text-xl focus:outline-0'
+                  'w-full text-xl font-medium leading-relaxed tracking-tight transition-all resize-none selection:bg-primary/50 field-sizing-content min-h-auto scrollbar-none placeholder:text-xl focus:outline-0'
                 )}
                 placeholder="#tags"
                 onInput={(e) => {

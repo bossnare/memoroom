@@ -4,6 +4,7 @@ import { useButtonSize } from '@/shared/hooks/use-button-size';
 import type React from 'react';
 
 export type ActionKey = 'move' | 'delete';
+
 type ActionLabel = {
   label: string;
   icon: React.ElementType;
@@ -28,7 +29,7 @@ export function Toolbar({ onAction, className, disabled, actionLabel }: Props) {
           onClick={() => {
             onAction?.(t.key);
           }}
-          className="inline-flex gap-1 hover:bg-transparent! active:opacity-50 dark:lg:active:bg-accent/40! lg:active:bg-muted-foreground/40! hover:not-focus:opacity-70 md:gap-2 flex-col md:flex-row"
+          className="inline-flex gap-1 overflow-hidden hover:bg-transparent! active:opacity-50 dark:lg:active:bg-accent/40! lg:active:bg-muted-foreground/40! hover:not-focus:opacity-70 md:gap-2 flex-col md:flex-row"
           size={buttonSize}
           variant="ghost"
         >

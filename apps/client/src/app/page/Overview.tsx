@@ -205,7 +205,7 @@ function Overview() {
     <>
       <div className="min-h-screen relative pb-2 bg-muted dark:bg-background">
         {/* subtle overlay */}
-        <div className="absolute inset-0 hidden pointer-events-none dark:block bg-primary/1 z-20"></div>
+        <div className="absolute inset-0 hidden pointer-events-none dark:block bg-primary/2 z-20"></div>
         {/* drawer - mobile only */}
         <ConfirmDrawer
           showOn="mobile"
@@ -346,7 +346,7 @@ function Overview() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden bg-linear-to-b from-transparent to-sidebar/50 z-22"
+            className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden bg-linear-to-b from-transparent to-sidebar/20 z-22"
           >
             <Toolbar
               onAction={handleTooltipAction}

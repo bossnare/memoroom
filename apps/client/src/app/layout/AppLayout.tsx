@@ -127,7 +127,7 @@ export function AppLayout() {
                 <Outlet />
               </main>
               {/* subtle overlay */}
-              <div className="absolute inset-0 hidden pointer-events-none dark:block bg-linear-to-b from-primary/1 to-primary/0.5 -z-1"></div>
+              <div className="absolute inset-0 hidden pointer-events-none dark:block bg-primary/1 -z-1"></div>
             </ScrollArea>
           </PullToRefreshWrapper>
         </div>
