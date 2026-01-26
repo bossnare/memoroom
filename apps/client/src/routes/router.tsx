@@ -1,11 +1,14 @@
-import { useUserProfile } from '@/app/hooks/use-user';
 import { NoteEditor } from '@/app/components/users/NoteEditor';
+import { useUser } from '@/app/hooks/use-user';
 import { AppLayout } from '@/app/layout/AppLayout';
 import MiniAppLayout from '@/app/layout/MiniAppLayout';
 import { EditNotePage } from '@/app/page/EditNotePage';
 import { NewNotePage } from '@/app/page/NewNotePage';
 import Notification from '@/app/page/Notification';
 import Overview from '@/app/page/Overview';
+import { Profile } from '@/app/page/Profile';
+import { Search } from '@/app/page/Search';
+import { Tag } from '@/app/page/Tag';
 import { useTheme, type Theme } from '@/components/theme-provider';
 import { PublicLayout } from '@/public-site/layout/PublicLayout';
 import { About } from '@/public-site/page/About';
@@ -20,15 +23,13 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import { PublicRoutes } from './PublicRoutes';
-import { Search } from '@/app/page/Search';
-import { Tag } from '@/app/page/Tag';
 
 export const AppRoutes = () => {
   const { pending, session } = useAuth();
   const isPublicRoute = useIsPublicRoute();
 
   const { setTheme } = useTheme();
-  const { data: userProfiles } = useUserProfile();
+  const { data: userProfiles } = useUser();
 
   const userTheme = (userProfiles?.themeMode ?? 'dark') as Theme;
 
@@ -67,6 +68,11 @@ export const AppRoutes = () => {
               <Route path=":id" element={<NoteEditor mode="view" />} />
               <Route path="new" element={<NewNotePage />} />
               <Route path=":id/edit" element={<EditNotePage />} />
+            </Route>
+
+            {/* profile */}
+            <Route path="/:username" element={<MiniAppLayout />}>
+              <Route index element={<Profile />} />
             </Route>
           </Route>
           {/* not found route */}

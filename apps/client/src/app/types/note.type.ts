@@ -1,7 +1,9 @@
+import type { JSONContent } from '@tiptap/react';
+
 export interface NoteInterface {
   id: string;
   title: string;
-  content: string;
+  content: JSONContent;
   edited: boolean;
   numberOfEdits: number;
   userId: string;
@@ -11,7 +13,7 @@ export interface NoteInterface {
 
 export type Create = {
   title: string;
-  content: string;
+  content: JSONContent;
   color?: string;
 };
 

@@ -1,4 +1,3 @@
-import { fetcher } from '@/app/lib/fetcher';
 import type * as Note from '@/app/types/note.type';
 
 import * as noteApi from '@/app/api/note.api';
@@ -15,10 +14,7 @@ export function useNote() {
 
   return useQuery<Note.NoteInterface[]>({
     queryKey: ['notes', sort, order],
-    queryFn: async () => {
-      const res = await fetcher(`/notes?${params}`);
-      return res.data; // return {.., data}
-    },
+    queryFn: () => noteApi.getNotes(params),
     staleTime: 0,
   });
 }
@@ -26,10 +22,7 @@ export function useNote() {
 export function useNoteId(id?: string) {
   return useQuery<Note.NoteInterface>({
     queryKey: ['notes', id],
-    queryFn: async () => {
-      const res = await fetcher(`/notes/${id}`);
-      return res.data; // return {.., data}
-    },
+    queryFn: () => noteApi.getNoteById(id),
     enabled: !!id,
     staleTime: 0,
   });

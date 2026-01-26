@@ -1,5 +1,16 @@
 import type * as Note from '@/app/types/note.type';
 import api from '../lib/api';
+import { fetcher } from '../lib/fetcher';
+
+export const getNotes = async (params?: URLSearchParams) => {
+  const res = await fetcher(`/notes?${params}`);
+  return res.data; // return {.., data}
+};
+
+export const getNoteById = async (id?: string) => {
+  const res = await fetcher(`/notes/${id}`);
+  return res.data; // return {.., data}
+};
 
 export const createNote = async (data: Note.Create) => {
   const res = await api.post('/notes', data);

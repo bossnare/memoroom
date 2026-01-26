@@ -12,4 +12,6 @@ export type SelectionActionLabel = ActionLabelBase & {
 
 export type EditorToolbarActionLabel = ActionLabelBase & {
   key: EditorToolbarActionKey;
+  activeKey: 'isActiveBold' | 'isActiveItalic' | 'isActiveHeading';
+  canActivate: 'canActivateHeading' | 'canActivateItalic' | 'canActivateBold';
 };

@@ -13,8 +13,13 @@ import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { useToggle } from '@/shared/hooks/use-toggle';
 import { handleWait } from '@/shared/utils/handle-wait';
 import { Portal } from '@radix-ui/react-portal';
-import { Placeholder } from '@tiptap/extensions';
-import { EditorContent, useEditor } from '@tiptap/react';
+import { Placeholder, CharacterCount } from '@tiptap/extensions';
+import {
+  EditorContent,
+  type JSONContent,
+  useEditor,
+  useEditorState,
+} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { AxiosError } from 'axios';
 import {
@@ -26,15 +31,16 @@ import {
   Italic,
   PanelLeftClose,
   PanelRightClose,
+  Undo2,
+  Redo2,
+  Check,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { ConfirmDialog } from './ConfirmDialog';
 import { ConfirmDrawer } from './ConfirmDrawer';
-import { Toolbar } from './Toolbar';
-import type { EditorToolbarActionLabel } from '@/app/types/action.type';
 
 type NoteEditorProps = React.HTMLAttributes<HTMLDivElement> & {
   mode?: 'new' | 'edit' | 'view';
@@ -43,35 +49,27 @@ type NoteEditorProps = React.HTMLAttributes<HTMLDivElement> & {
 
 const extensions = [StarterKit];
 
-const toolbarLabel: EditorToolbarActionLabel[] = [
-  {
-    label: 'Heading',
-    icon: Heading,
-    key: 'heading',
-  },
-  { label: 'Bold', icon: Bold, key: 'bold' },
-  { label: 'Bold', icon: Italic, key: 'italic' },
-];
-
 export const NoteEditor = ({
   className,
   mode = 'edit',
   note,
 }: NoteEditorProps) => {
   // const contentAreaRef = useRef<HTMLDivElement | null>(null);
-  const [charCounts, setCharCounts] = useState(0);
-  const [wordCounts, setWordCounts] = useState(0);
   const [title, setTitle] = useState<string | undefined>('');
-  const [tag, setTag] = useState<Set<string>>(new Set());
-  const [content, setContent] = useState<string | undefined>('');
+  // const [tags, setTags] = useState<Set<string>>(new Set());
+  const [tag, setTag] = useState('');
   const [initial, setInitial] = useState<{
     title: string | undefined;
-    content: string | undefined;
+    tag?: string;
+    content: JSONContent;
   } | null>(null);
   const [writingOn, setWritingOn] = useState<Record<string, boolean>>({
     title: false,
     tag: false,
-    content: false,
+  });
+  const [focusedOn, setFocusedOn] = useState<Record<string, boolean>>({
+    title: false,
+    tag: false,
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -82,7 +80,27 @@ export const NoteEditor = ({
       Placeholder.configure({
         placeholder: 'Start writing ...',
       }),
+      CharacterCount.configure({
+        limit: 5000,
+      }),
     ],
+    content: ``,
+  });
+
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => {
+      return {
+        wordCount: ctx.editor.storage.characterCount.words(),
+        charCount: ctx.editor.storage.characterCount.characters(),
+        canUndo: ctx.editor.can().chain().undo().run() ?? false,
+        canRedo: ctx.editor.can().chain().redo().run() ?? false,
+        isBold: ctx.editor.isActive('bold') ?? false,
+        isItalic: ctx.editor.isActive('italic') ?? false,
+        isHeading2: ctx.editor.isActive('heading', { level: 2 }) ?? false,
+        editorContent: ctx.editor.getJSON(),
+      };
+    },
   });
 
   // query params state
@@ -115,8 +133,9 @@ export const NoteEditor = ({
     edit: 'Save changes',
     view: 'Read note',
   };
-  const editorState = editorMode[mode];
-  const saveButtonText = saveMode[mode];
+
+  const editorModeState = editorMode[mode];
+  const saveButtonTitle = saveMode[mode];
 
   // editor focus state
   useEffect(() => {
@@ -135,8 +154,7 @@ export const NoteEditor = ({
 
       if (draft) {
         setTitle(draft.split('\n')[0].slice(0, 50).trim());
-        setContent(draft);
-        editor.commands.setContent(`<p>${draft}</p>`);
+        editor.commands.setContent(`${draft}`);
         // remove draft after getting it
         sessionStorage.removeItem('draft:clipboard');
       }
@@ -154,8 +172,7 @@ export const NoteEditor = ({
 
       if (draft) {
         setTitle(draft.title);
-        setContent(draft.content);
-        editor.commands.setContent(`<p>${draft.content}</p>`);
+        editor.commands.setContent(`${draft.content}`);
 
         // remove draft after getting it
         sessionStorage.removeItem('draft:fileInfo');
@@ -165,30 +182,14 @@ export const NoteEditor = ({
 
   // initial fill
   useEffect(() => {
-    if (!editor) return;
+    if (!editor || !note) return;
 
     if (isEdit) {
       setTitle(note?.title);
-      setContent(note?.content);
-      setInitial({ title: note?.title, content: note?.content });
-      editor.commands.setContent(`<p>${note?.content}</p>`);
+      setInitial({ title: note.title, content: note.content });
+      editor.commands.setContent(`${note?.content}`);
     }
   }, [isEdit, note, editor]);
-
-  // useEffect(() => {
-  //   // add a delay for initial any content on load...
-  //   setTimeout(() => {
-  //     if (contentAreaRef.current) {
-  //       contentAreaRef.current.focus();
-  //       setCharCounts(contentAreaRef.current.value.length); // initial chars value
-  //       setWordCounts(
-  //         contentAreaRef.current.value.trim() === ''
-  //           ? 0
-  //           : contentAreaRef.current.value.trim().split(/\s+/).length
-  //       );
-  //     }
-  //   }, 100);
-  // }, []);
 
   // transform
   const { value: isOpenPanel, toggle: toggleOpenPanel } = useToggle(true);
@@ -196,7 +197,14 @@ export const NoteEditor = ({
   const { pannelWidth: TOOLBAR_WIDTH, mainTransform: MAIN_TRANSFORM } =
     usePannel(isOpenPanel, MIN_TOOLBAR_WIDTH, MAX_TOOLBAR_WIDTH);
 
-  const isDirty = title !== initial?.title || content !== initial?.content;
+  const isDirty = useMemo(() => {
+    return (
+      title !== initial?.title ||
+      JSON.stringify(editorState.editorContent) !==
+        JSON.stringify(initial?.content) ||
+      tag !== initial?.tag
+    );
+  }, [editorState, initial, tag, title]);
 
   const autoGrow = (e: FormEvent<HTMLTextAreaElement>) => {
     e.currentTarget.style.height = 'auto'; // initial reset height value
@@ -205,7 +213,7 @@ export const NoteEditor = ({
 
   const bodyPayload = {
     title: title as string,
-    content: content as string,
+    content: editorState.editorContent,
   };
 
   const handleCreateNote = async () => {
@@ -239,7 +247,7 @@ export const NoteEditor = ({
     }
   };
 
-  const canSave = title?.trim() || content?.trim();
+  const canSave = title?.trim() || tag?.trim();
 
   const handleCancel = () => {
     if (canSave && isDirty) {
@@ -334,10 +342,49 @@ export const NoteEditor = ({
               )}
 
               {/* editor toolbar */}
-              <Toolbar
-                actionLabel={toolbarLabel}
-                className="flex flex-col py-6 px-1 gap-2 [&_button]:justify-start [&_button]:gap-5"
-              />
+              <div
+                className={cn(
+                  isOpenPanel ? 'py-6' : 'py-0',
+                  'flex flex-col px-1 gap-2 [&_button]:overflow-hidden [&_button]:justify-start [&_button]:gap-5 [&_button]:px-3'
+                )}
+              >
+                <Button
+                  onClick={() =>
+                    editor?.chain().focus().toggleHeading({ level: 2 }).run()
+                  }
+                  className={cn(
+                    editorState.isHeading2
+                      ? 'text-primary hover:text-primary!'
+                      : ''
+                  )}
+                  size="lg"
+                  variant="ghost"
+                >
+                  <Heading className="size-5" /> Heading
+                </Button>
+                <Button
+                  onClick={() => editor?.chain().focus().toggleBold().run()}
+                  size="lg"
+                  variant="ghost"
+                  className={cn(
+                    editorState.isBold ? 'text-primary hover:text-primary!' : ''
+                  )}
+                >
+                  <Bold className="size-5" /> Bold
+                </Button>
+                <Button
+                  onClick={() => editor?.chain().focus().toggleItalic().run()}
+                  size="lg"
+                  variant="ghost"
+                  className={cn(
+                    editorState.isItalic
+                      ? 'text-primary hover:text-primary!'
+                      : ''
+                  )}
+                >
+                  <Italic className="size-5" /> Italic
+                </Button>
+              </div>
             </nav>
           </aside>
         </Portal>
@@ -357,21 +404,49 @@ export const NoteEditor = ({
                 <ChevronLeft />
               </Button>
               <div className="flex items-center gap-1 text-muted-foreground">
-                <span>{editorState} notes</span>{' '}
-                <Button size="icon" variant="ghost" className="md:hidden">
+                <span>{editorModeState} notes</span>{' '}
+                <Button size="icon-lg" variant="ghost" className="md:hidden">
                   <Ellipsis />
                 </Button>
               </div>
 
-              <Button
-                size="icon"
-                variant="ghost"
-                className="hidden md:inline-flex"
-              >
-                <Ellipsis />
-              </Button>
+              <div className="space-x-2">
+                <Button
+                  size="icon-lg"
+                  variant="ghost"
+                  className="hidden md:inline-flex"
+                >
+                  <Ellipsis />
+                </Button>
+                {focusedOn.title || focusedOn.tag ? null : (
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0 }}
+                    className="space-x-2"
+                  >
+                    <Button
+                      onClick={() => editor?.chain().focus().undo().run()}
+                      disabled={!editorState.canUndo}
+                      size="icon-lg"
+                      variant="ghost"
+                    >
+                      <Undo2 />
+                    </Button>
+                    <Button
+                      onClick={() => editor?.chain().focus().redo().run()}
+                      disabled={!editorState.canRedo}
+                      size="icon-lg"
+                      variant="ghost"
+                    >
+                      <Redo2 />
+                    </Button>
+                  </motion.span>
+                )}
+              </div>
 
               <Button
+                title={saveButtonTitle}
                 disabled={!canSave || !isDirty}
                 onClick={() => {
                   handleSave();
@@ -379,8 +454,9 @@ export const NoteEditor = ({
                 }}
                 className="font-bold rounded-full select-none"
                 variant="ghost"
+                size="icon-lg"
               >
-                {isSaving ? 'saving...' : saveButtonText}
+                {isSaving ? null : <Check />}
               </Button>
             </div>
           </header>
@@ -397,6 +473,7 @@ export const NoteEditor = ({
                 )}
                 placeholder="Title"
                 value={title}
+                onFocus={() => setFocusedOn({ title: true })}
                 onInput={(e) => {
                   setTitle(e.currentTarget.value);
                   autoGrow(e);
@@ -404,33 +481,35 @@ export const NoteEditor = ({
                   setWritingOn({ title: true });
                 }}
                 onBlur={(e) => {
-                  if (!e.currentTarget.value.trim())
-                    e.currentTarget.style.height = 'auto';
+                  e.currentTarget.style.height = 'auto';
                   setTitle(title?.trim());
                   setWritingOn({ title: false });
+                  setFocusedOn({ title: false });
                 }}
               ></textarea>
               <textarea
                 rows={1}
-                name="tags"
+                name="tag"
                 className={cn(
-                  writingOn.tag ? 'caret-current' : 'caret-primary',
-                  'w-full text-xl font-medium leading-relaxed tracking-tight transition-all resize-none selection:bg-primary/50 field-sizing-content min-h-auto scrollbar-none placeholder:text-xl focus:outline-0'
+                  writingOn.tag
+                    ? 'caret-current text-foreground'
+                    : 'caret-primary text-chart-2',
+                  'w-full placeholder:text-muted-foreground text-xl font-medium leading-relaxed tracking-tight transition-all resize-none selection:bg-primary/50 field-sizing-content min-h-auto scrollbar-none placeholder:text-xl focus:outline-0'
                 )}
                 placeholder="#tags"
+                value={tag}
+                onFocus={() => setFocusedOn({ tag: true })}
                 onInput={(e) => {
-                  // setTag((prev) => {
-                  //   const newSet = new Set(prev);
-                  //   return newSet.add(e.currentTarget.value.split(' '));
-                  // });
+                  setTag(e.currentTarget.value);
                   autoGrow(e);
                   // set to true the title writing state
                   setWritingOn({ tag: true });
                 }}
-                onBlur={() => {
-                  // if (!e.currentTarget.value.trim())
-                  //   e.currentTarget.style.height = 'auto';
+                onBlur={(e) => {
+                  e.currentTarget.style.height = 'auto';
+                  setTag(tag?.trim());
                   setWritingOn({ tag: false });
+                  setFocusedOn({ tag: false });
                 }}
               ></textarea>
 
@@ -440,46 +519,16 @@ export const NoteEditor = ({
                     ? dateFormatLong(note?.updatedAt ?? new Date())
                     : dateFormatLong(new Date())}
                 </span>
-                <span className="w-0.5 border-l dark:border-muted"></span>{' '}
-                <span>
-                  {charCounts} {charCounts > 1 ? 'characters' : 'character'}
-                </span>
-                <span className="w-0.5 border-l dark:border-muted"></span>{' '}
-                <span> {wordCounts} words </span>
+                <span className="w-0.5 border-l dark:border-muted"></span>
+                <span>{editorState.charCount} characters</span>
+                <span className="w-0.5 border-l dark:border-muted"></span>
+                <span> {editorState.wordCount} words </span>
               </div>
               <EditorContent
                 id="iditor-content"
-                className="z-1 leading-8 selection:bg-primary/30"
+                className="z-1 selection:bg-primary/30 prose prose-neutral dark:prose-invert"
                 editor={editor}
               />
-              {/* <textarea
-                rows={6}
-                ref={contentAreaRef}
-                value={content}
-                onBlur={() => setWritingOn({ content: false })}
-                onChange={(e) => {
-                  setCharCounts(
-                    e.target.value.trim().split(' ').join('').length
-                  );
-                  setContent(e.currentTarget.value);
-                  setWordCounts(
-                    e.target.value.trim() === ''
-                      ? 0
-                      : e.target.value.trim().split(/\s+/).length
-                  );
-                }}
-                onInput={(e) => {
-                  autoGrow(e);
-                  setWritingOn({ content: true });
-                }}
-                name=""
-                id=""
-                className={cn(
-                  writingOn.content ? 'caret-current' : 'caret-primary',
-                  'w-full font-normal leading-8 transition-all resize-none field-sizing-content selection:text-muted-foreground selection:bg-muted min-h-12 placeholder:text-base focus:outline-0'
-                )}
-                placeholder="Start writing..."
-              ></textarea> */}
             </div>
           </main>
         </div>
@@ -487,7 +536,42 @@ export const NoteEditor = ({
         {/* fixed footer for mobile only */}
         <Portal>
           <footer className="fixed inset-x-0 bottom-0 border-t md:hidden bg-background border-sidebar-border/50">
-            <div className="max-w-6xl px-4 mx-auto h-14 bg-sidebar/50"></div>
+            <div className="max-w-6xl px-4 flex items-center gap-4 mx-auto h-14 bg-sidebar/50">
+              <Button
+                onClick={() =>
+                  editor?.chain().focus().toggleHeading({ level: 2 }).run()
+                }
+                className={cn(
+                  editorState.isHeading2
+                    ? 'text-primary hover:text-primary!'
+                    : ''
+                )}
+                size="lg"
+                variant="ghost"
+              >
+                <Heading className="size-5" />
+              </Button>
+              <Button
+                onClick={() => editor?.chain().focus().toggleBold().run()}
+                size="lg"
+                variant="ghost"
+                className={cn(
+                  editorState.isBold ? 'text-primary hover:text-primary!' : ''
+                )}
+              >
+                <Bold className="size-5" />
+              </Button>
+              <Button
+                onClick={() => editor?.chain().focus().toggleItalic().run()}
+                size="lg"
+                variant="ghost"
+                className={cn(
+                  editorState.isItalic ? 'text-primary hover:text-primary!' : ''
+                )}
+              >
+                <Italic className="size-5" />
+              </Button>
+            </div>
           </footer>
         </Portal>
       </motion.div>
