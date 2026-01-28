@@ -2,9 +2,13 @@ import { Navigate, Outlet } from 'react-router-dom';
 import type { Session } from '@supabase/supabase-js';
 
 export const ProtectedRoutes = ({ session }: { session: Session | null }) => {
-  if (!session && process.env.NODE_ENV === 'production') {
-    return <Navigate to="/" replace />;
-  }
+  if (process.env.NODE_ENV === 'production') {
+    if (session) {
+      return <Navigate to="/" replace />;
+    }
 
-  return <Outlet />;
+    return <Outlet />;
+  } else {
+    return <Outlet />;
+  }
 };

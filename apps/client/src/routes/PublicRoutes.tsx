@@ -2,9 +2,13 @@ import type { Session } from '@supabase/supabase-js';
 import { Navigate, Outlet } from 'react-router-dom';
 
 export const PublicRoutes = ({ session }: { session: Session | null }) => {
-  if (session && process.env.NODE_ENV === 'production') {
-    return <Navigate to="/app" replace />;
-  }
+  if (process.env.NODE_ENV === 'production') {
+    if (session) {
+      return <Navigate to="/app" replace />;
+    }
 
-  return <Outlet />;
+    return <Outlet />;
+  } else {
+    return <Outlet />;
+  }
 };

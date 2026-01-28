@@ -31,6 +31,7 @@ import { ConfirmDialog } from '../../ui/ConfirmDialog';
 import { ConfirmDrawer } from '../../ui/ConfirmDrawer';
 import { EditorToolbarButton } from './EditorToolbarButton';
 import { EditorToolbar } from './EditorToolbar';
+import { useIsDesktop } from '@/shared/hooks/use-desktop';
 
 type NoteEditorProps = React.HTMLAttributes<HTMLDivElement> & {
   mode?: 'new' | 'edit' | 'view';
@@ -44,25 +45,6 @@ export const NoteEditor = ({
   mode = 'edit',
   note,
 }: NoteEditorProps) => {
-  // const contentAreaRef = useRef<HTMLDivElement | null>(null);
-  const [title, setTitle] = useState<string | undefined>('');
-  // const [tags, setTags] = useState<Set<string>>(new Set());
-  const [tag, setTag] = useState('');
-  const [initial, setInitial] = useState<{
-    title: string | undefined;
-    tag?: string;
-    jsonContent: JSONContent;
-  } | null>(null);
-  const [writingOn, setWritingOn] = useState<Record<string, boolean>>({
-    title: false,
-    tag: false,
-  });
-  const [focusedOn, setFocusedOn] = useState<Record<string, boolean>>({
-    title: false,
-    tag: false,
-  });
-  const [isSaving, setIsSaving] = useState(false);
-
   // init tiptap editor
   const editor = useEditor({
     extensions: [
@@ -74,7 +56,6 @@ export const NoteEditor = ({
         limit: 5000,
       }),
     ],
-    content: ``,
   });
 
   const editorState = useEditorState({
@@ -96,6 +77,29 @@ export const NoteEditor = ({
     },
   });
 
+  // const contentAreaRef = useRef<HTMLDivElement | null>(null);
+  const [title, setTitle] = useState<string | undefined>('');
+  // const [tags, setTags] = useState<Set<string>>(new Set());
+  const [tag, setTag] = useState('');
+  const [initial, setInitial] = useState<{
+    title: string | undefined;
+    tag?: string;
+    jsonContent: JSONContent;
+  } | null>({
+    title: '',
+    tag: '',
+    jsonContent: editorState.jsonContent,
+  });
+  const [writingOn, setWritingOn] = useState<Record<string, boolean>>({
+    title: false,
+    tag: false,
+  });
+  const [focusedOn, setFocusedOn] = useState<Record<string, boolean>>({
+    title: false,
+    tag: false,
+  });
+  const [isSaving, setIsSaving] = useState(false);
+
   // query params state
   const {
     open: openDirtyConfirm,
@@ -108,6 +112,7 @@ export const NoteEditor = ({
   const updateNote = useUpdateNote();
 
   const isMobile = useIsMobile();
+  const isDesktop = useIsDesktop();
   const navigate = useNavigate();
   const [params] = useSearchParams();
 
@@ -175,29 +180,41 @@ export const NoteEditor = ({
 
   // initial fill
   useEffect(() => {
-    if (!editor || !note) return;
+    if (!editor || !note || !isEdit) return;
 
-    if (isEdit) {
-      setTitle(note?.title);
-      setInitial({ title: note.title, jsonContent: note.jsonContent });
-      editor.commands.setContent(`${note?.jsonContent}`);
-    }
+    editor.commands.setContent(note.jsonContent);
+
+    setTitle(note?.title);
+    setInitial({ title: note.title, jsonContent: note.jsonContent });
   }, [isEdit, note, editor]);
 
   // transform
-  const { value: isOpenPanel, toggle: toggleOpenPanel } = useToggle(true);
+  const {
+    value: isOpenPanel,
+    toggle: toggleOpenPanel,
+    setFalse: setIsOpenPanelFalse,
+    setTrue: setIsOpenPanel,
+  } = useToggle(true);
 
   const { pannelWidth: TOOLBAR_WIDTH, mainTransform: MAIN_TRANSFORM } =
     usePannel(isOpenPanel, MIN_TOOLBAR_WIDTH, MAX_TOOLBAR_WIDTH);
 
+  // auto-collapse
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    isDesktop ? setIsOpenPanel() : setIsOpenPanelFalse();
+  }, [isDesktop, setIsOpenPanel, setIsOpenPanelFalse]);
+
   const isDirty = useMemo(() => {
+    if (!initial) return false;
+
     return (
-      title !== initial?.title ||
+      title !== initial.title ||
       JSON.stringify(editorState.jsonContent) !==
-        JSON.stringify(initial?.jsonContent) ||
-      tag !== initial?.tag
+        JSON.stringify(initial.jsonContent) ||
+      tag !== initial.tag
     );
-  }, [editorState, initial, tag, title]);
+  }, [editorState.jsonContent, initial, tag, title]);
 
   const autoGrow = (e: FormEvent<HTMLTextAreaElement>) => {
     e.currentTarget.style.height = 'auto'; // initial reset height value
@@ -241,7 +258,8 @@ export const NoteEditor = ({
     }
   };
 
-  const canSave = title?.trim() || tag?.trim();
+  const canSave =
+    title?.trim() || tag?.trim() || editorState.textContent.trim();
 
   const handleCancel = () => {
     if (canSave && isDirty) {
@@ -331,7 +349,7 @@ export const NoteEditor = ({
           style={!isMobile ? MAIN_TRANSFORM : { width: '100vw' }}
           className="flex flex-col lg:transition-transform lg:duration-600"
         >
-          <header className="sticky top-0 z-10 left-0 bg-background">
+          <header className="sticky top-0 left-0 z-10 bg-background">
             <div className="flex items-center justify-between h-12 max-w-6xl px-2 pr-2 mx-auto md:px-4">
               <Button
                 onClick={handleCancel}
@@ -467,10 +485,8 @@ export const NoteEditor = ({
                 <span> {editorState.wordCount} words </span>
               </div>
               <EditorContent
-                id="iditor-content"
-                className="z-1 selection:bg-primary/30 prose prose-neutral dark:prose-invert max-w-full"
+                className="max-w-full prose z-1 selection:bg-primary/30 prose-neutral dark:prose-invert"
                 editor={editor}
-                onFocus={() => console.log(editor.getText())}
               />
             </div>
           </main>
@@ -479,7 +495,7 @@ export const NoteEditor = ({
         {/* fixed footer for mobile only */}
         <Portal>
           <footer className="fixed inset-x-0 bottom-0 border-t md:hidden bg-background border-sidebar-border/50">
-            <div className="max-w-6xl px-4 flex items-center gap-4 mx-auto h-14 bg-sidebar/50">
+            <div className="flex items-center max-w-6xl gap-4 px-4 mx-auto h-14 bg-sidebar/50">
               <EditorToolbarButton editor={editor} />
             </div>
           </footer>
