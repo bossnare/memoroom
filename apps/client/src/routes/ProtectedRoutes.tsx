@@ -3,7 +3,7 @@ import type { Session } from '@supabase/supabase-js';
 
 export const ProtectedRoutes = ({ session }: { session: Session | null }) => {
   if (process.env.NODE_ENV === 'production') {
-    if (session) {
+    if (!session) {
       return <Navigate to="/" replace />;
     }
 

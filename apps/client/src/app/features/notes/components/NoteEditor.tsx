@@ -487,6 +487,7 @@ export const NoteEditor = ({
               <EditorContent
                 className="max-w-full prose z-1 selection:bg-primary/30 prose-neutral dark:prose-invert"
                 editor={editor}
+                onInput={() => console.log(bodyPayload)}
               />
             </div>
           </main>
