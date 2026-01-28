@@ -47,7 +47,7 @@
 }
 
 .tiptap blockquote {
-  @apply border-0 relative text-foreground/70;
+  @apply border-0 relative text-foreground/80;
 }
 .tiptap blockquote::before {
   content: '';
