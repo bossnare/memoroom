@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { IsString, IsNotEmpty, IsOptional, ValidateIf } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsJSON } from 'class-validator';
 
 export class CreateNoteDto {
-  @ValidateIf((o) => !o.title || o.title.trim() === '')
   @IsString()
   @IsNotEmpty()
   title!: string;
@@ -12,8 +9,7 @@ export class CreateNoteDto {
   @IsNotEmpty()
   content!: string;
 
-  @ValidateIf((o) => !o.content || o.content.trim() === '')
-  @IsString()
+  @IsJSON()
   @IsNotEmpty()
   jsonContent!: any;
 
