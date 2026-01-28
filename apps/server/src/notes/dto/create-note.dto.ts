@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsJSON } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsObject } from 'class-validator';
 
 export class CreateNoteDto {
   @IsString()
@@ -9,7 +9,7 @@ export class CreateNoteDto {
   @IsNotEmpty()
   content!: string;
 
-  @IsJSON()
+  @IsObject()
   @IsNotEmpty()
   jsonContent!: any;
 

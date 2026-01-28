@@ -51,7 +51,7 @@ model Note {
   updatedAt     DateTime? @updatedAt() @map("updated_at")
   userId        String    @map("user_id") @db.Uuid
 
-  // tags Tag[] @relation("NoteTags")
+  tags Tag[] @relation("NoteTags")
 
   user Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -72,12 +72,12 @@ model Notification {
   @@map("notifications")
 }
 
-// model Tag {
-//   id        String   @id @unique @default(cuid()) @db.Uuid
-//   name      String
-//   createdAt DateTime @default(now()) @map("created_at")
+model Tag {
+  id        String   @id @unique @default(cuid()) @db.Uuid
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
 
-//   notes Note[] @relation("NoteTags")
+  notes Note[] @relation("NoteTags")
 
-//   @@map("tags")
-// }
+  @@map("tags")
+}
