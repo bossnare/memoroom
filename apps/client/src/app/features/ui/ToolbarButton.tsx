@@ -1,4 +1,3 @@
-import { cn } from '@/app/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useButtonSize } from '@/shared/hooks/use-button-size';
 import type React from 'react';
@@ -14,15 +13,15 @@ type ActionLabel = {
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   disabled?: boolean;
   onAction?: (actionKey: ActionKey) => void;
-  actionLabel?: ActionLabel[];
+  labelItems?: ActionLabel[];
 };
 
-export function Toolbar({ onAction, className, disabled, actionLabel }: Props) {
+export function ToolbarButton({ onAction, disabled, labelItems }: Props) {
   const buttonSize = useButtonSize({ mobile: 'lg', landscape: 'default' });
 
   return (
-    <div className={cn(className)}>
-      {actionLabel?.map((t) => (
+    <>
+      {labelItems?.map((t) => (
         <Button
           key={t.key}
           disabled={disabled}
@@ -37,6 +36,6 @@ export function Toolbar({ onAction, className, disabled, actionLabel }: Props) {
           <span className="font-normal">{t.label}</span>
         </Button>
       ))}
-    </div>
+    </>
   );
 }

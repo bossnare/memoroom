@@ -42,18 +42,20 @@ export function NoteList(props: Props) {
             exit={{ opacity: 0, scale: 0 }}
             transition={{ duration: 0.05 }}
             key={note.id}
-            role="button"
-            onTouchStart={() => longPress.handleTouchStart(note.id)}
-            onClick={() => handleClickNote(note.id)}
-            onTouchEnd={longPress.handleTouchEnd}
-            onTouchMove={longPress.handleTouchMove}
-            onTouchCancel={longPress.handleTouchCancel}
-            className={cn(
-              isSelected(note.id) && 'bg-background/80! dark:bg-muted!',
-              'relative flex flex-col font-inter gap-4 p-4 transition cursor-pointer select-none bg-card group active:scale-99 lg:active:scale-100 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl'
-            )}
           >
-            <NoteCard note={note}>
+            <NoteCard
+              role="button"
+              onTouchStart={() => longPress.handleTouchStart(note.id)}
+              onClick={() => handleClickNote(note.id)}
+              onTouchEnd={longPress.handleTouchEnd}
+              onTouchMove={longPress.handleTouchMove}
+              onTouchCancel={longPress.handleTouchCancel}
+              className={cn(
+                isSelected(note.id) && 'bg-background/80! dark:bg-muted!',
+                'relative flex flex-col font-inter gap-4 p-4 transition cursor-pointer select-none bg-card group active:scale-99 lg:active:scale-100 dark:shadow-none hover:bg-background/80 dark:hover:bg-muted active:opacity-60 dark:bg-muted/80 lg:shadow-sm rounded-2xl lg:rounded-xl'
+              )}
+              note={note}
+            >
               {/* options toggle - desktop */}
               {!props.isSelectionMode && (
                 <Button

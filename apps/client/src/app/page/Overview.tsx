@@ -5,15 +5,7 @@ import { useQueryToggle } from '@/shared/hooks/use-query-toggle';
 import { Portal } from '@radix-ui/react-portal';
 import { IconNote } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  ArrowDownNarrowWide,
-  Folder,
-  LassoSelect,
-  ListChecks,
-  ListRestart,
-  Trash,
-  X,
-} from 'lucide-react';
+import { Folder, ListChecks, Trash, X } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -22,15 +14,19 @@ import { ConfirmDrawer } from '../features/ui/ConfirmDrawer';
 import { EmptyEmpty as EmptyNotes } from '../features/ui/Empty';
 import { NoteList } from '../features/notes/components/NoteList';
 import { OrderDrawer } from '../features/ui/OrderDrawer';
-import { Toolbar } from '../features/ui/Toolbar';
+import { ToolbarButton as SelectionModeToolbarButton } from '../features/ui/ToolbarButton';
 import { useNote, useSoftDeleteMany } from '../hooks/use-note';
 import { useNoteServices } from '../hooks/use-note-services';
 import { cn } from '../lib/utils';
+import { OverviewToolbar } from '../features/ui/OverviewToolbar';
+import type {
+  SelectionModeActionKey,
+  SelectionModeLabel,
+} from '@/app/types/label.type';
 
 function Overview() {
   const { data, isPending, isError, error, refetch } = useNote();
   const notes = data ?? [];
-  const buttonSize = useButtonSize({ mobile: 'icon-lg', landscape: 'icon' });
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const isAllSelected = selected.size === notes.map((n) => n.id).length;
   const isHasSellected = selected.size > 0;
@@ -108,15 +104,8 @@ function Overview() {
 
   const { openNewNote, pasteFromClipboard } = useNoteServices();
 
-  // refactor later
-  type ActionKey = 'move' | 'delete';
-  type ActionLabel = {
-    label: string;
-    icon: React.ElementType;
-    key: ActionKey;
-  };
   // toolbar label
-  const toolbarActionLabel: ActionLabel[] = [
+  const selectionModeLabelItem: SelectionModeLabel[] = [
     {
       label: 'Move to',
       icon: Folder,
@@ -153,7 +142,7 @@ function Overview() {
     }
   };
 
-  const handleTooltipAction = (actionKey: ActionKey) => {
+  const handleSelectionModeAction = (actionKey: SelectionModeActionKey) => {
     switch (actionKey) {
       case 'move':
         console.log('move');
@@ -267,13 +256,12 @@ function Overview() {
                   {selected.size} selected
                 </span>
 
-                {/* tooltip */}
-                <div className="justify-end hidden md:flex grow">
-                  <Toolbar
-                    onAction={handleTooltipAction}
-                    className="space-x-2"
+                {/* toolbar */}
+                <div className="justify-end hidden md:flex gap-2 grow">
+                  <SelectionModeToolbarButton
+                    onAction={handleSelectionModeAction}
                     disabled={!isHasSellected}
-                    actionLabel={toolbarActionLabel}
+                    labelItems={selectionModeLabelItem}
                   />
                 </div>
 
@@ -298,31 +286,11 @@ function Overview() {
                 <h3 className="text-2xl font-medium tracking-tight scroll-m-20">
                   All notes
                 </h3>
-                <div className="flex gap-4">
-                  <Button
-                    onClick={openSelectionMode}
-                    variant="ghost"
-                    size={buttonSize}
-                  >
-                    <LassoSelect />
-                  </Button>
-                  <Button
-                    onClick={handleRefreshNotes}
-                    variant="ghost"
-                    className="hidden md:inline-flex"
-                    size="icon"
-                  >
-                    <ListRestart />
-                  </Button>
-                  <Button
-                    onClick={openNoteSorting}
-                    variant="ghost"
-                    className="transition-colors!"
-                    size={buttonSize}
-                  >
-                    <ArrowDownNarrowWide />
-                  </Button>
-                </div>
+                <OverviewToolbar
+                  openNoteSorting={openNoteSorting}
+                  openSelectionMode={openSelectionMode}
+                  handleRefreshNotes={handleRefreshNotes}
+                />
               </div>
             )}
           </header>
@@ -347,12 +315,13 @@ function Overview() {
             exit={{ opacity: 0, y: 20 }}
             className="fixed inset-x-0 bottom-0! flex items-center h-16 px-4 md:hidden z-22"
           >
-            <Toolbar
-              onAction={handleTooltipAction}
-              disabled={!isHasSellected}
-              className="flex justify-between w-full"
-              actionLabel={toolbarActionLabel}
-            />
+            <div className="flex justify-between w-full">
+              <SelectionModeToolbarButton
+                onAction={handleSelectionModeAction}
+                disabled={!isHasSellected}
+                labelItems={selectionModeLabelItem}
+              />
+            </div>
           </motion.div>
         )}
       </Portal>
